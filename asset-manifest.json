@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/portugalasmanchetes/static/css/main.86aed4bd.chunk.css",
+    "main.js": "/portugalasmanchetes/static/js/main.4829b8a5.chunk.js",
+    "main.js.map": "/portugalasmanchetes/static/js/main.4829b8a5.chunk.js.map",
+    "runtime-main.js": "/portugalasmanchetes/static/js/runtime-main.aff7e2d8.js",
+    "runtime-main.js.map": "/portugalasmanchetes/static/js/runtime-main.aff7e2d8.js.map",
+    "static/css/2.f87e9f44.chunk.css": "/portugalasmanchetes/static/css/2.f87e9f44.chunk.css",
+    "static/js/2.6a7e03ce.chunk.js": "/portugalasmanchetes/static/js/2.6a7e03ce.chunk.js",
+    "static/js/2.6a7e03ce.chunk.js.map": "/portugalasmanchetes/static/js/2.6a7e03ce.chunk.js.map",
+    "index.html": "/portugalasmanchetes/index.html",
+    "precache-manifest.41178093908efb78296d36b0d3116cef.js": "/portugalasmanchetes/precache-manifest.41178093908efb78296d36b0d3116cef.js",
+    "service-worker.js": "/portugalasmanchetes/service-worker.js",
+    "static/css/2.f87e9f44.chunk.css.map": "/portugalasmanchetes/static/css/2.f87e9f44.chunk.css.map",
+    "static/css/main.86aed4bd.chunk.css.map": "/portugalasmanchetes/static/css/main.86aed4bd.chunk.css.map",
+    "static/js/2.6a7e03ce.chunk.js.LICENSE.txt": "/portugalasmanchetes/static/js/2.6a7e03ce.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.aff7e2d8.js",
+    "static/css/2.f87e9f44.chunk.css",
+    "static/js/2.6a7e03ce.chunk.js",
+    "static/css/main.86aed4bd.chunk.css",
+    "static/js/main.4829b8a5.chunk.js"
+  ]
+}
