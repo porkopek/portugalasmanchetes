@@ -10,7 +10,7 @@ import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 export default function ArticlesContainer() {
   const [articles, setArticles] = useState<IArticle[]>([]);
   const [pageNumber, setPageNumber] = useState(1);
-  const [language, setLanguage] = useState('ES');
+  const [language, setLanguage] = useState('');
   const [direction, setDirection] = useState<'row' | 'column'>('row');
 
   const url = (pageNumber: number) =>
@@ -19,18 +19,21 @@ export default function ArticlesContainer() {
   useEffect(() => {
     const fetcharts = async () => {
       const arts = await (await fetch(url(pageNumber))).json();
-      const newArts = [...articles, ...arts];
+      const newArts = [...new Set([...articles, ...arts])];
       setArticles(newArts);
     };
     fetcharts();
-  }, [pageNumber, language]);
+  }, [language]);
 
-  const loadMore = async () => {
-    const arts = await (await fetch(url(pageNumber))).json();
+  const loadMore = async (pg: number) => {
+    if (pg === 1) {
+      return;
+    }
+    const arts = await (await fetch(url(pg))).json();
     const newArts = [...articles, ...arts];
     setArticles(newArts);
 
-    setPageNumber(pageNumber + 1);
+    setPageNumber(pg);
   };
 
   return (
@@ -75,7 +78,14 @@ export default function ArticlesContainer() {
       <Grid container spacing={2} justify="center">
         {articles.map((article) => {
           return (
-            <Grid item key={article.url} xs={direction === 'row' ? 8 : 4}>
+            <Grid
+              item
+              key={article.url}
+              xs={12}
+              sm={direction === 'row' ? 12 : 6}
+              md={direction === 'row' ? 10 : 4}
+              lg={direction === 'row' ? 8 : 4}
+            >
               <Article direction={direction} {...article} />
             </Grid>
           );
