@@ -47,6 +47,7 @@ const useStyles = makeStyles((theme: Theme) =>
       lineHeight: '1.25em',
       overflow: 'hidden',
       maxHeight: 1.25 * 3 + 'em',
+      fontFamily: 'Quattrocento',
       marginBottom: '.75rem',
       color: 'rgba(0,0,0,.8)',
       textDecoration: 'none',
@@ -57,7 +58,7 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     description: {
-      fontSize: '1rem',
+      fontFamily: 'Montserrat',
       lineHeight: '1.4em',
       maxHeight: 1.4 * 4 + 'em',
       color: 'rgba(0,0,0,.64)',

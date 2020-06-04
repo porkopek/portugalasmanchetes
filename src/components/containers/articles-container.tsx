@@ -13,32 +13,34 @@ export default function ArticlesContainer() {
   const [language, setLanguage] = useState('');
   const [direction, setDirection] = useState<'row' | 'column'>('row');
 
-  const url = (pageNumber: number) =>
+  const getApiUrl = () =>
     `https://pokopek.com/api/articles?language=${language}&pagenumber=${pageNumber}`;
 
   useEffect(() => {
     const fetcharts = async () => {
-      const arts = await (await fetch(url(pageNumber))).json();
-      const newArts = [...new Set([...articles, ...arts])];
+      const apiUrl = getApiUrl();
+      const response = await fetch(apiUrl);
+      const arts = await response.json();
+      const newArts = [...articles, ...arts];
       setArticles(newArts);
+      setPageNumber(pageNumber + 1);
     };
     fetcharts();
   }, [language]);
 
-  const loadMore = async (pg: number) => {
-    if (pg === 1) {
-      return;
-    }
-    const arts = await (await fetch(url(pg))).json();
+  const loadMore = async () => {
+    const apiUrl = getApiUrl();
+    const arts = await (await fetch(apiUrl)).json();
     const newArts = [...articles, ...arts];
     setArticles(newArts);
 
-    setPageNumber(pg);
+    setPageNumber(pageNumber + 1);
   };
 
   return (
     <InfiniteScroll
       pageStart={0}
+      initialLoad={false}
       loadMore={loadMore}
       hasMore={true}
       loader={
@@ -53,6 +55,7 @@ export default function ArticlesContainer() {
     >
       <Button
         onClick={() => {
+          if (language === 'ES') return;
           setLanguage('ES');
           setArticles([]);
           setPageNumber(1);
@@ -62,6 +65,7 @@ export default function ArticlesContainer() {
       </Button>
       <Button
         onClick={() => {
+          if (language === 'PT') return;
           setLanguage('PT');
           setArticles([]);
           setPageNumber(1);
