@@ -2,39 +2,46 @@ import React, { useState, useEffect } from 'react';
 import { IArticle } from 'models/IArticle';
 import { Grid, Button, colors } from '@material-ui/core';
 import InfiniteScroll from 'react-infinite-scroller';
-import Article from 'components/article/article2';
-import Loader from 'react-loader-spinner';
+import Article from 'components/article/article';
+
 import GridIcon from '@material-ui/icons/AppsTwoTone';
 import ListIcon from '@material-ui/icons/ListTwoTone';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
+import { grey } from '@material-ui/core/colors';
+import NewsLoader from 'components/loader/loader';
+
 export default function ArticlesContainer() {
+  //state
   const [articles, setArticles] = useState<IArticle[]>([]);
-  const [pageNumber, setPageNumber] = useState(1);
-  const [language, setLanguage] = useState('');
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [pageNumber, setPageNumber] = useState<number>(1);
+  const [language, setLanguage] = useState<string>('');
   const [direction, setDirection] = useState<'row' | 'column'>('row');
 
   const getApiUrl = () =>
     `https://pokopek.com/api/articles?language=${language}&pagenumber=${pageNumber}`;
 
   useEffect(() => {
-    const fetcharts = async () => {
+    const fetchArts = async () => {
       const apiUrl = getApiUrl();
       const response = await fetch(apiUrl);
       const arts = await response.json();
       const newArts = [...articles, ...arts];
       setArticles(newArts);
       setPageNumber(pageNumber + 1);
+      setIsLoading(false);
     };
-    fetcharts();
+    fetchArts();
   }, [language]);
 
   const loadMore = async () => {
     const apiUrl = getApiUrl();
     const arts = await (await fetch(apiUrl)).json();
     const newArts = [...articles, ...arts];
-    setArticles(newArts);
 
+    setArticles(newArts);
     setPageNumber(pageNumber + 1);
+    setIsLoading(false);
   };
 
   return (
@@ -43,17 +50,11 @@ export default function ArticlesContainer() {
       initialLoad={false}
       loadMore={loadMore}
       hasMore={true}
-      loader={
-        <Loader
-          type="ThreeDots"
-          color={colors.blue[400]}
-          height={100}
-          width={100}
-        />
-      }
+      loader={undefined}
       threshold={2800}
     >
       <Button
+        style={{ color: grey[600] }}
         onClick={() => {
           if (language === 'ES') return;
           setLanguage('ES');
@@ -64,6 +65,7 @@ export default function ArticlesContainer() {
         ES
       </Button>
       <Button
+        style={{ color: grey[600] }}
         onClick={() => {
           if (language === 'PT') return;
           setLanguage('PT');
@@ -74,12 +76,14 @@ export default function ArticlesContainer() {
         PT
       </Button>
       <Button
+        style={{ color: grey[600] }}
         onClick={() => setDirection(direction === 'row' ? 'column' : 'row')}
       >
         {direction === 'row' ? <GridIcon /> : <ListIcon />}
       </Button>
 
       <Grid container spacing={2} justify="center">
+        {isLoading && <NewsLoader text="A carregar" />}
         {articles.map((article) => {
           return (
             <Grid

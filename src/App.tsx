@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import ArticlesContainer from 'components/containers/articles-container';
-import { ArticleProps } from 'components/article/article';
-import { Container } from '@material-ui/core';
-import { IArticle } from 'models/IArticle';
+import { colors } from '@material-ui/core';
+import Loader from 'react-loader-spinner';
+import NewsLoader from 'components/loader/loader';
 
 function App() {
   return (
