@@ -47,6 +47,7 @@ const useStyles = makeStyles((theme: Theme) =>
       lineHeight: '1.25em',
       overflow: 'hidden',
       maxHeight: 1.25 * 3 + 'em',
+      [theme.breakpoints.up('xs')]: { maxHeight: 1.25 * 7 + 'em' },
       fontFamily: 'Quattrocento',
       marginBottom: '.75rem',
       color: 'rgba(0,0,0,.8)',
@@ -63,6 +64,9 @@ const useStyles = makeStyles((theme: Theme) =>
       maxHeight: 1.4 * 4 + 'em',
       color: 'rgba(0,0,0,.64)',
       overflow: 'hidden',
+      [theme.breakpoints.only('xs')]: {
+        display: (props) => (props.direction === 'row' ? 'none' : 'block'),
+      },
     },
     meta: { fontSize: 14 },
     avatar: {
@@ -77,7 +81,6 @@ const useStyles = makeStyles((theme: Theme) =>
       float: 'right',
       display: 'flex',
       height: 40,
-      width: 80,
       justifyContent: 'space-evenly',
       alignItems: 'center',
     },
@@ -91,7 +94,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 export default function Article({
-  direction = 'row',
+  direction,
   description,
   title,
   domain,
@@ -125,7 +128,9 @@ export default function Article({
               ></img>
             </span>
             <span style={{ display: 'inline-flex', flexDirection: 'column' }}>
-              <span style={{ color: 'rgba(0,0,0,.8)' }}>{domain}</span>
+              <span style={{ color: 'rgba(0,0,0,.8)', fontWeight: 'bold' }}>
+                {domain}
+              </span>
               <span style={{ color: 'rgba(0,0,0,.6)' }}>{friendlyDate}</span>
             </span>
             <span className={classes.actions}>

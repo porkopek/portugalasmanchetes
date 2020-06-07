@@ -9,10 +9,12 @@ import {
   CssBaseline,
 } from '@material-ui/core';
 
+import { BrowserRouter as Router } from 'react-router-dom';
+
 const theme = createMuiTheme({
   typography: {
     fontFamily:
-      "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Ubuntu', 'sans-serif'",
+      "Montserrat,-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Ubuntu', 'sans-serif'",
   },
 });
 
@@ -20,7 +22,9 @@ ReactDOM.render(
   <React.StrictMode>
     <MuiThemeProvider theme={theme}>
       <CssBaseline />
-      <App />
+      <Router>
+        <App />
+      </Router>
     </MuiThemeProvider>
   </React.StrictMode>,
   document.getElementById('root')
