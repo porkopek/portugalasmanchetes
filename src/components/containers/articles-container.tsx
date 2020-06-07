@@ -14,7 +14,7 @@ export interface IArticlesContainerProps {
 }
 export default function ArticlesContainer({
   direction,
-  searchTerm = '',
+  searchTerm,
 }: IArticlesContainerProps) {
   //state
   const [articles, setArticles] = useState<IArticle[]>([]);
@@ -65,11 +65,29 @@ export default function ArticlesContainer({
       hasMore={true}
       loader={undefined}
       threshold={300}
-      style={{ overflow: 'hidden', padding: '0 8px' }}
+      style={{ overflow: 'hidden', padding: '0 8px', minHeight: '100vh' }}
     >
-      {searchTerm && (
-        <Typography component="h2" style={{ textAlign: 'center' }}>
-          Artigos contendo a palavra <mark>{searchTerm}</mark>
+      {searchTerm && articles.length > 0 && (
+        <Typography
+          component="h2"
+          align="center"
+          color="textPrimary"
+          gutterBottom
+          variant="h5"
+        >
+          Artigos que contêm a palavra <strong>{searchTerm}</strong>
+        </Typography>
+      )}
+      {searchTerm && articles.length === 0 && (
+        <Typography
+          component="h2"
+          align="center"
+          color="textPrimary"
+          gutterBottom
+          variant="h5"
+        >
+          Não foram encontados artigos relacionados com a palavra{' '}
+          <strong>{searchTerm}</strong>
         </Typography>
       )}
       <Grid container spacing={2} justify="center">
@@ -85,7 +103,6 @@ export default function ArticlesContainer({
                 md={direction === 'row' ? 10 : 4}
                 lg={direction === 'row' ? 8 : 4}
               >
-                {article.id}
                 <Article direction={direction} {...article} />
               </Grid>
             );

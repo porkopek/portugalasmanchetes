@@ -21,7 +21,10 @@ const useStyles = makeStyles((theme: Theme) =>
     card: {
       borderRadius: '4px',
       backgroundColor: 'white',
-      padding: theme.spacing(2),
+      padding: (props) =>
+        props.imageUrl
+          ? theme.spacing(2)
+          : `${theme.spacing(2)}px ${theme.spacing(3)}px`,
       display: 'flex',
       flexDirection: (props: any) => props.direction,
       maxWidth: (props) => (props.direction === 'row' ? '100%' : '32%'),
@@ -103,11 +106,17 @@ export default function Article({
   imageUrl,
   url,
 }: IArticleProps) {
-  const classes = useStyles({ direction });
+  const classes = useStyles({ direction, imageUrl });
   return (
     <>
       <div className={classes.card}>
-        <img className={classes.media} src={imageUrl} title={imageTitle}></img>
+        {imageUrl && (
+          <img
+            className={classes.media}
+            src={imageUrl}
+            title={imageTitle}
+          ></img>
+        )}
         <div>
           <h2>
             <a
