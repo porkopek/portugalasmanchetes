@@ -72,16 +72,17 @@ const useStyles = makeStyles((theme: Theme) =>
       // vertical padding + font size from searchIcon
       paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
       transition: theme.transitions.create('width'),
-      width: '100%',
+      width: '10ch',
+
       backgroundColor: 'rgba(0,0,0,.08)',
       borderRadius: '2em',
       '&:focus': {
-        boxShadow: '0 0 0 1px rgba(0,0,0,.3)',
+        width: '20ch',
       },
-      [theme.breakpoints.up('sm')]: {
-        width: '12ch',
+      [theme.breakpoints.only('xs')]: {
+        width: '2ch',
         '&:focus': {
-          width: '20ch',
+          width: '8ch',
         },
       },
     },
@@ -136,7 +137,6 @@ export default function Nav({
                   onChange={(e) => {
                     setSearchTerm(e.currentTarget.value);
                   }}
-                  placeholder="Search…"
                   classes={{
                     root: classes.inputRoot,
                     input: classes.inputInput,

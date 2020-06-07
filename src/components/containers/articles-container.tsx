@@ -67,29 +67,15 @@ export default function ArticlesContainer({
       threshold={300}
       style={{ overflow: 'hidden', padding: '0 8px', minHeight: '100vh' }}
     >
-      {searchTerm && articles.length > 0 && (
-        <Typography
-          component="h2"
-          align="center"
-          color="textPrimary"
-          gutterBottom
-          variant="h5"
-        >
-          Artigos que contêm a palavra <strong>{searchTerm}</strong>
-        </Typography>
-      )}
-      {searchTerm && articles.length === 0 && (
-        <Typography
-          component="h2"
-          align="center"
-          color="textPrimary"
-          gutterBottom
-          variant="h5"
-        >
-          Não foram encontados artigos relacionados com a palavra{' '}
-          <strong>{searchTerm}</strong>
-        </Typography>
-      )}
+      {searchTerm &&
+        articles.length > 0 &&
+        Message('Artigos que contêm a palavra', searchTerm)}
+      {searchTerm &&
+        articles.length === 0 &&
+        Message(
+          'Não foram encontados artigos relacionados com a palavra ',
+          searchTerm
+        )}
       <Grid container spacing={2} justify="center">
         {isLoading && <NewsLoader text="A carregar" />}
         {!isLoading &&
@@ -109,5 +95,18 @@ export default function ArticlesContainer({
           })}
       </Grid>
     </InfiniteScroll>
+  );
+}
+function Message(message: string, searchTerm: string): React.ReactNode {
+  return (
+    <Typography
+      component="h2"
+      align="center"
+      color="textPrimary"
+      style={{ margin: '2rem' }}
+      variant="h5"
+    >
+      {message} <strong>{searchTerm}</strong>
+    </Typography>
   );
 }
