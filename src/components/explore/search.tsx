@@ -56,10 +56,8 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export interface ISearchProps {
-  onHandleSearch: (searchTerm: string) => void;
-}
-export default function Search({ onHandleSearch }: ISearchProps) {
+export interface ISearchProps {}
+export default function Search() {
   const [searchTerm, setSearchTerm] = useState('');
   const classes = useStyles();
   const { push } = useHistory();

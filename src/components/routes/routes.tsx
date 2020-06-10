@@ -1,27 +1,21 @@
-import React from "react";
+import React from 'react';
 
-import { Route, Switch, useLocation } from "react-router";
-import Search from "components/explore/search";
-import ArticlesContainer from "components/containers/articles-container";
+import { Route, Switch, useLocation } from 'react-router';
+import Search from 'components/explore/search';
+import ArticlesContainer from 'components/containers/articles-container';
+import Explore from 'components/explore/explore';
+import { Container } from '@material-ui/core';
 
 interface IRoutesProps {
-  direction: "row" | "column";
+  direction: 'row' | 'column';
 }
 
 export default function Routes({ direction }: IRoutesProps) {
   const location = useLocation();
   return (
-    <div
-      style={{
-        maxWidth: 1140,
-        margin: "2em auto",
-      }}
-    >
+    <Container style={{ padding: '28px 0' }}>
       <Switch>
-        <Route
-          path="/explore"
-          render={(_) => <Search onHandleSearch={(_) => {}} />}
-        />
+        <Route path="/explore" render={(_) => <Explore />} />
         <Route
           path="/search/:searchTerm"
           render={(props) => (
@@ -49,6 +43,6 @@ export default function Routes({ direction }: IRoutesProps) {
         />
         <Route path="*" render={(_) => <>404</>} />
       </Switch>
-    </div>
+    </Container>
   );
 }

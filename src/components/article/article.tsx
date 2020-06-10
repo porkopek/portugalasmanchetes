@@ -9,6 +9,7 @@ import {
   Hidden,
   IconButton,
   colors,
+  useTheme,
 } from '@material-ui/core';
 import { red } from '@material-ui/core/colors';
 import { IArticle } from 'models/IArticle';
@@ -54,7 +55,7 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.up('xs')]: { maxHeight: 1.25 * 7 + 'em' },
       fontFamily: 'Quattrocento',
       marginBottom: '.75rem',
-      color: 'rgba(0,0,0,.8)',
+      color: theme.palette.text.primary,
       textDecoration: 'none',
       display: 'block',
       '&:hover': {
@@ -108,6 +109,7 @@ export default function Article({
   url,
 }: IArticleProps) {
   const classes = useStyles({ direction, imageUrl });
+  const theme = useTheme();
   return (
     <>
       <div className={classes.card}>
@@ -141,7 +143,11 @@ export default function Article({
             </span>
             <span style={{ display: 'inline-flex', flexDirection: 'column' }}>
               <div style={{ color: 'rgba(0,0,0,.8)', fontWeight: 'bold' }}>
-                <Link to={`/source/${domain}`}>{domain}</Link>
+                <Link to={`/source/${domain}`}>
+                  <span style={{ color: theme.palette.text.primary }}>
+                    {domain}
+                  </span>
+                </Link>
               </div>
               <span style={{ color: 'rgba(0,0,0,.6)' }}>{friendlyDate}</span>
             </span>

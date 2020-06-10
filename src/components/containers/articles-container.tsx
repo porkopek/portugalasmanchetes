@@ -77,7 +77,7 @@ export default function ArticlesContainer({
           'Não foram encontrados artigos relacionados com a palavra ',
           searchTerm
         )}
-      <Grid container spacing={2} justify="center">
+      <Grid container spacing={2}>
         {isLoading && <NewsLoader text="A carregar" />}
         {!isLoading &&
           articles.map((article) => {
@@ -102,7 +102,6 @@ function Message(message: string, searchTerm: string): React.ReactNode {
   return (
     <Typography
       component="h2"
-      align="center"
       color="textPrimary"
       style={{ margin: '1rem' }}
       variant="h6"
