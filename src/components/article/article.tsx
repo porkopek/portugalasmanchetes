@@ -12,11 +12,10 @@ import {
 } from '@material-ui/core';
 import { red } from '@material-ui/core/colors';
 import { IArticle } from 'models/IArticle';
-import * as unescape from 'html-escaper';
 import { htmlDecode } from 'lib/utils';
+import { Link } from 'react-router-dom';
 export interface IArticleProps extends IArticle {
   direction?: 'row' | 'column';
-  onSelectDomain: (domain: string) => void;
 }
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -107,7 +106,6 @@ export default function Article({
   imageTitle,
   imageUrl,
   url,
-  onSelectDomain,
 }: IArticleProps) {
   const classes = useStyles({ direction, imageUrl });
   return (
@@ -118,6 +116,7 @@ export default function Article({
             className={classes.media}
             src={imageUrl}
             title={imageTitle}
+            onError={(e) => (e.currentTarget.style.display = 'none')}
           ></img>
         )}
         <div>
@@ -141,13 +140,9 @@ export default function Article({
               ></img>
             </span>
             <span style={{ display: 'inline-flex', flexDirection: 'column' }}>
-              <a
-                href="#"
-                onClick={(_) => onSelectDomain(domain)}
-                style={{ color: 'rgba(0,0,0,.8)', fontWeight: 'bold' }}
-              >
-                {domain}
-              </a>
+              <div style={{ color: 'rgba(0,0,0,.8)', fontWeight: 'bold' }}>
+                <Link to={`/source/${domain}`}>{domain}</Link>
+              </div>
               <span style={{ color: 'rgba(0,0,0,.6)' }}>{friendlyDate}</span>
             </span>
             <span className={classes.actions}>

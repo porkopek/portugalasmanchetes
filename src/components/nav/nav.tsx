@@ -123,16 +123,16 @@ export default function Nav({
             </Link>
           </Grid>
           <Grid item>
-            <IconButton onClick={onDirectionChanges}>
-              <ColumnsIcon style={{ display: 'block' }} />
-            </IconButton>
-          </Grid>
-          <Grid item>
             <Link to="/explore">
               <IconButton>
                 <SearchIcon />
               </IconButton>
             </Link>
+          </Grid>
+          <Grid item>
+            <IconButton onClick={onDirectionChanges}>
+              <ColumnsIcon style={{ display: 'block' }} />
+            </IconButton>
           </Grid>
         </Grid>
       </Container>

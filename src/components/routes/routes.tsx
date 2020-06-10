@@ -1,18 +1,20 @@
-import React from 'react';
+import React from "react";
 
-import { Route, Switch } from 'react-router';
-import Search from 'components/explore/search';
-import ArticlesContainer from 'components/containers/articles-container';
+import { Route, Switch, useLocation } from "react-router";
+import Search from "components/explore/search";
+import ArticlesContainer from "components/containers/articles-container";
+
 interface IRoutesProps {
-  direction: 'row' | 'column';
+  direction: "row" | "column";
 }
 
 export default function Routes({ direction }: IRoutesProps) {
+  const location = useLocation();
   return (
     <div
       style={{
         maxWidth: 1140,
-        margin: '2em auto',
+        margin: "2em auto",
       }}
     >
       <Switch>
@@ -28,6 +30,12 @@ export default function Routes({ direction }: IRoutesProps) {
         />
         <Route
           path="/language/:language"
+          render={(props) => (
+            <ArticlesContainer {...props} direction={direction} />
+          )}
+        />
+        <Route
+          path="/source/:domain"
           render={(props) => (
             <ArticlesContainer {...props} direction={direction} />
           )}

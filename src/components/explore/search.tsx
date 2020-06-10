@@ -77,6 +77,7 @@ export default function Search({ onHandleSearch }: ISearchProps) {
         <InputBase
           value={searchTerm}
           placeholder="Procurar em Portugal às Manchetes"
+          autoFocus={true}
           onChange={(e) => {
             setSearchTerm(e.currentTarget.value);
           }}
