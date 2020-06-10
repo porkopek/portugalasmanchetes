@@ -9,7 +9,7 @@ import {
   createMuiTheme,
   CssBaseline,
 } from '@material-ui/core';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { HashRouter as Router } from 'react-router-dom';
 if (process.env.NODE_ENV !== 'production') {
   const whyDidYouRender = require('@welldone-software/why-did-you-render');
   whyDidYouRender(React, {
