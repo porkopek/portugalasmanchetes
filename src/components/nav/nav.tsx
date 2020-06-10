@@ -13,7 +13,7 @@ import {
 import { Link } from 'react-router-dom';
 import ColumnsIcon from '@material-ui/icons/ViewModule';
 import RowsIcon from '@material-ui/icons/ViewStream';
-import SearchIcon from '@material-ui/icons/SearchOutlined';
+import SearchIcon from '@material-ui/icons/ExploreOutlined';
 
 export interface INavProps {
   height?: number;
@@ -72,17 +72,21 @@ const useStyles = makeStyles((theme: Theme) =>
       // vertical padding + font size from searchIcon
       paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
       transition: theme.transitions.create('width'),
-      width: '10ch',
+      width: '100%',
 
       backgroundColor: 'rgba(0,0,0,.08)',
       borderRadius: '2em',
-      '&:focus': {
-        width: '20ch',
-      },
+
       [theme.breakpoints.only('xs')]: {
         width: '2ch',
         '&:focus': {
-          width: '8ch',
+          width: '100%',
+          position: 'fixed',
+          left: 0,
+          right: 0,
+          padding: 20,
+
+          backgroundColor: 'white',
         },
       },
     },
@@ -100,19 +104,21 @@ export default function Nav({
       <Container>
         <Grid container alignItems="center" spacing={0}>
           <Grid item>
-            <img
-              style={{ height: 30 }}
-              src={process.env.PUBLIC_URL + '/favicon.png'}
-              alt=""
-            />
+            <Link to="/">
+              <img
+                style={{ height: 30 }}
+                src={process.env.PUBLIC_URL + '/favicon.png'}
+                alt=""
+              />
+            </Link>
           </Grid>
           <Grid item>
-            <Link to="/es">
+            <Link to="/language/es">
               <Button>ES</Button>
             </Link>
           </Grid>
           <Grid item>
-            <Link to="/pt">
+            <Link to="/language/pt">
               <Button>PT</Button>
             </Link>
           </Grid>
@@ -122,29 +128,11 @@ export default function Nav({
             </IconButton>
           </Grid>
           <Grid item>
-            <div className={classes.search}>
-              <div className={classes.searchIcon}>
+            <Link to="/explore">
+              <IconButton>
                 <SearchIcon />
-              </div>
-              <form
-                onSubmit={(_) => {
-                  _.preventDefault();
-                  onHandleSearch(searchTerm);
-                }}
-              >
-                <InputBase
-                  value={searchTerm}
-                  onChange={(e) => {
-                    setSearchTerm(e.currentTarget.value);
-                  }}
-                  classes={{
-                    root: classes.inputRoot,
-                    input: classes.inputInput,
-                  }}
-                  inputProps={{ 'aria-label': 'search' }}
-                />
-              </form>
-            </div>
+              </IconButton>
+            </Link>
           </Grid>
         </Grid>
       </Container>

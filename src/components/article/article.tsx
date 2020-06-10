@@ -12,9 +12,11 @@ import {
 } from '@material-ui/core';
 import { red } from '@material-ui/core/colors';
 import { IArticle } from 'models/IArticle';
-
+import * as unescape from 'html-escaper';
+import { htmlDecode } from 'lib/utils';
 export interface IArticleProps extends IArticle {
   direction?: 'row' | 'column';
+  onSelectDomain: (domain: string) => void;
 }
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -105,6 +107,7 @@ export default function Article({
   imageTitle,
   imageUrl,
   url,
+  onSelectDomain,
 }: IArticleProps) {
   const classes = useStyles({ direction, imageUrl });
   return (
@@ -125,7 +128,7 @@ export default function Article({
               target="_blank"
               rel="noreferrer noopener"
             >
-              {title}
+              {htmlDecode(title)}
             </a>
           </h2>
           <p className={classes.description}>{description}</p>
@@ -134,12 +137,17 @@ export default function Article({
               <img
                 src={`https://${domain}/favicon.ico`}
                 className={classes.avatar}
+                onError={(e) => (e.currentTarget.style.display = 'none')}
               ></img>
             </span>
             <span style={{ display: 'inline-flex', flexDirection: 'column' }}>
-              <span style={{ color: 'rgba(0,0,0,.8)', fontWeight: 'bold' }}>
+              <a
+                href="#"
+                onClick={(_) => onSelectDomain(domain)}
+                style={{ color: 'rgba(0,0,0,.8)', fontWeight: 'bold' }}
+              >
                 {domain}
-              </span>
+              </a>
               <span style={{ color: 'rgba(0,0,0,.6)' }}>{friendlyDate}</span>
             </span>
             <span className={classes.actions}>

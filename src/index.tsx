@@ -1,4 +1,5 @@
 import React from 'react';
+
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
@@ -8,9 +9,13 @@ import {
   createMuiTheme,
   CssBaseline,
 } from '@material-ui/core';
-
 import { BrowserRouter as Router } from 'react-router-dom';
-
+if (process.env.NODE_ENV !== 'production') {
+  const whyDidYouRender = require('@welldone-software/why-did-you-render');
+  whyDidYouRender(React, {
+    trackAllPureComponents: true,
+  });
+}
 const theme = createMuiTheme({
   typography: {
     fontFamily:
@@ -22,7 +27,7 @@ ReactDOM.render(
   <React.StrictMode>
     <MuiThemeProvider theme={theme}>
       <CssBaseline />
-      <Router>
+      <Router basename={process.env.PUBLIC_URL}>
         <App />
       </Router>
     </MuiThemeProvider>

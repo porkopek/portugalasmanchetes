@@ -10,24 +10,24 @@ import { useParams } from 'react-router-dom';
 
 export interface IArticlesContainerProps {
   direction: 'row' | 'column';
-  searchTerm?: string;
 }
 export default function ArticlesContainer({
   direction,
-  searchTerm,
 }: IArticlesContainerProps) {
   //state
   const [articles, setArticles] = useState<IArticle[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+
   //pageNumber starts at 2 because first page is loaded by useffect
   const [pageNumber, setPageNumber] = useState<number>(2);
 
-  const { language } = useParams();
+  const { language, searchTerm } = useParams();
+  const [domain, setDomain] = useState('');
 
   const getApiUrl = (pageNumber: number) =>
     `https://pokopek.com/api/articles?language=${
       language ?? ''
-    }&pagenumber=${pageNumber}&search=${searchTerm}`;
+    }&pagenumber=${pageNumber}&search=${searchTerm ?? ''}&domain=${domain}`;
 
   useEffect(() => {
     const fetchArts = async () => {
@@ -44,7 +44,7 @@ export default function ArticlesContainer({
     setIsLoading(false);
     //2 (two), because the first page has been got here, and the infinite scroll should take the second page
     setPageNumber(2);
-  }, [language, searchTerm]);
+  }, [language, domain]);
 
   //when reaches end of page
   const loadMore = async (p: number) => {
@@ -71,6 +71,7 @@ export default function ArticlesContainer({
         articles.length > 0 &&
         Message('Artigos que contêm a palavra', searchTerm)}
       {searchTerm &&
+        isLoading === false &&
         articles.length === 0 &&
         Message(
           'Não foram encontados artigos relacionados com a palavra ',
@@ -89,7 +90,11 @@ export default function ArticlesContainer({
                 md={direction === 'row' ? 10 : 4}
                 lg={direction === 'row' ? 8 : 4}
               >
-                <Article direction={direction} {...article} />
+                <Article
+                  direction={direction}
+                  {...article}
+                  onSelectDomain={setDomain}
+                />
               </Grid>
             );
           })}
