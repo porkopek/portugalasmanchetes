@@ -36,13 +36,13 @@ export default function ArticlesContainer({
       const response = await fetch(apiUrl);
       const newArticles = await response.json();
       setThereIsNoResults(newArticles.length === 0 ? true : false);
+      window.scrollTo(0, 0);
       setArticles(newArticles);
     };
 
     setIsLoading(true);
     fetchArts();
 
-    window.scrollTo(0, 0);
     setIsLoading(false);
     //2 (two), because the first page has been got here, and the infinite scroll should take the second page
     setPageNumber(2);
@@ -66,7 +66,6 @@ export default function ArticlesContainer({
       loadMore={loadMore}
       hasMore={true}
       loader={undefined}
-      threshold={800}
       style={{ overflow: 'hidden', padding: '0 8px', minHeight: '100vh' }}
     >
       {searchTerm &&

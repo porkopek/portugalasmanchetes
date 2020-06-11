@@ -69,13 +69,14 @@ export default function Search() {
       <form
         onSubmit={(_) => {
           _.preventDefault();
+          window.scrollTo(0, 0);
           push(`/search/${searchTerm}`);
         }}
       >
+        {/* // WATCH TODO Show last searches */}
         <InputBase
           value={searchTerm}
           placeholder="Procurar em Portugal às Manchetes"
-          autoFocus={true}
           onChange={(e) => {
             setSearchTerm(e.currentTarget.value);
           }}

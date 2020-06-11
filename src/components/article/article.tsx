@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: (props) =>
         props.imageUrl
           ? theme.spacing(2)
-          : `${theme.spacing(2)}px ${theme.spacing(3)}px`,
+          : `${theme.spacing(4)}px ${theme.spacing(6)}px`,
       display: 'flex',
       flexDirection: (props: any) => props.direction,
       maxWidth: (props) => (props.direction === 'row' ? '100%' : '32%'),
@@ -34,6 +34,7 @@ const useStyles = makeStyles((theme: Theme) =>
       width: '100%',
       boxShadow: '0 2px 5px rgba(0,0,0,.2)',
     },
+    body: { width: '100%' },
     media: {
       borderRadius: '4px',
       marginRight: (props) =>
@@ -106,6 +107,8 @@ export default function Article({
   friendlyDate,
   imageTitle,
   imageUrl,
+  fullText,
+
   url,
 }: IArticleProps) {
   const classes = useStyles({ direction, imageUrl });
@@ -121,7 +124,7 @@ export default function Article({
             onError={(e) => (e.currentTarget.style.display = 'none')}
           ></img>
         )}
-        <div>
+        <div className={classes.body}>
           <h2>
             <a
               className={classes.title}

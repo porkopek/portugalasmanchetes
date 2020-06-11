@@ -7,6 +7,7 @@ import {
   ListItemText,
   IconButton,
   useTheme,
+  Typography,
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import StarIcon from '@material-ui/icons/Notifications';
@@ -17,10 +18,24 @@ export interface ITrendsProps {
 export default function Trends({ trends }: ITrendsProps) {
   const theme = useTheme();
   return (
-    <List>
-      {trends.map((trend, index) => {
-        return (
-          <>
+    <>
+      <Typography
+        component="h2"
+        variant="h6"
+        style={{
+          fontWeight: 'bold',
+          marginTop: theme.spacing(2),
+          marginLeft: theme.spacing(2),
+          paddingBottom: 3,
+          borderBottom: '1px solid ',
+          display: 'inline-block',
+        }}
+      >
+        Tendências
+      </Typography>
+      <List>
+        {trends.map((trend, index) => {
+          return (
             <ListItem key={trend}>
               <IconButton>
                 <StarIcon />
@@ -34,9 +49,9 @@ export default function Trends({ trends }: ITrendsProps) {
                 </Link>
               </ListItemText>
             </ListItem>
-          </>
-        );
-      })}
-    </List>
+          );
+        })}
+      </List>
+    </>
   );
 }

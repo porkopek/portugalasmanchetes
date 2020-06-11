@@ -7,4 +7,5 @@ export interface IArticle {
   friendlyDate: string;
   url: string;
   domain: string;
+  fullText: string;
 }
