@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "08e7242360074644329c60cc5495de10",
+    "revision": "33346131a02939796183e105fbab96f0",
     "url": "/portugalasmanchetes/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/portugalasmanchetes/static/css/2.f87e9f44.chunk.css"
   },
   {
-    "revision": "87e31323babe34bb1ae4",
+    "revision": "baf6aab07f91ece2ff42",
     "url": "/portugalasmanchetes/static/css/main.23192fa3.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/portugalasmanchetes/static/js/2.6861e72d.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "87e31323babe34bb1ae4",
-    "url": "/portugalasmanchetes/static/js/main.e10e4488.chunk.js"
+    "revision": "baf6aab07f91ece2ff42",
+    "url": "/portugalasmanchetes/static/js/main.14ea84da.chunk.js"
   },
   {
     "revision": "7f5aadb5dd327b29e5a6",

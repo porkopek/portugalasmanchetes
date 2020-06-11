@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/portugalasmanchetes/precache-manifest.2b9687607e745a53f81deed4cd1cdf4e.js"
+  "/portugalasmanchetes/precache-manifest.9eaa77aae1166084a0f993bcd3045600.js"
 );
 
 self.addEventListener('message', (event) => {
