@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import FavoriteIcon from '@material-ui/icons/FavoriteBorder';
+import ShowIcon from '@material-ui/icons/ChromeReaderModeOutlined';
+import CloseIcon from '@material-ui/icons/CloseOutlined';
 
 import {
   makeStyles,
@@ -10,8 +12,17 @@ import {
   IconButton,
   colors,
   useTheme,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  Container,
+  DialogContentText,
+  hexToRgb,
+  useMediaQuery,
+  Fab,
+  Button,
 } from '@material-ui/core';
-import { red } from '@material-ui/core/colors';
+import { red, green } from '@material-ui/core/colors';
 import { IArticle } from 'models/IArticle';
 import { htmlDecode } from 'lib/utils';
 import { Link } from 'react-router-dom';
@@ -92,10 +103,36 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     heart: {
       display: 'flex',
-      color: 'rgba(0,0,0,.2)',
+      color: 'rgba(0,0,0,.3)',
       '&:hover': {
         color: red[500],
       },
+    },
+    readMore: {
+      display: 'flex',
+      color: 'rgba(0,0,0,.3)',
+      '&:hover': {
+        color: green[500],
+        backgroundColor: 'rgba(0, 100, 0, 0.03)',
+      },
+    },
+    closeButton: {
+      [theme.breakpoints.up('md')]: {
+        display: 'none',
+      },
+      [theme.breakpoints.down('sm')]: {
+        position: 'fixed',
+        backgroundColor: 'rgba(200,0,0,.4)',
+        color: 'white',
+        right: 2,
+        top: 2,
+      },
+    },
+    dialogTitle: {
+      fontWeight: 'bold',
+      fontFamily: 'Quattrocento',
+      fontSize: '1.8em',
+      lineHeight: 1.3,
     },
   })
 );
@@ -113,8 +150,56 @@ export default function Article({
 }: IArticleProps) {
   const classes = useStyles({ direction, imageUrl });
   const theme = useTheme();
+  const [showDialog, setShowDialog] = useState(false);
   return (
     <>
+      <Dialog
+        maxWidth="md"
+        fullWidth={true}
+        scroll="body"
+        fullScreen={useMediaQuery(theme.breakpoints.down('sm'))}
+        open={showDialog}
+        onClose={() => setShowDialog(false)}
+      >
+        <IconButton
+          size="small"
+          color="secondary"
+          onClick={(_) => setShowDialog(false)}
+          className={classes.closeButton}
+        >
+          <CloseIcon />
+        </IconButton>
+        <img
+          src={imageUrl}
+          alt=""
+          style={{ width: '100%', objectFit: 'cover' }}
+        />
+        <div
+          style={{
+            padding: useMediaQuery(theme.breakpoints.up('md'))
+              ? '20px 40px 200px'
+              : '0',
+          }}
+        >
+          <DialogTitle disableTypography={true} className={classes.dialogTitle}>
+            {title}
+          </DialogTitle>
+          <DialogContent>
+            {fullText.split(/[\n]/g).map((p, i) => (
+              <p
+                style={{
+                  color: theme.palette.grey[800],
+                  textAlign: 'justify',
+                }}
+                key={i}
+              >
+                {p}
+              </p>
+            ))}
+          </DialogContent>
+        </div>
+      </Dialog>
+
       <div className={classes.card}>
         {imageUrl && (
           <img
@@ -155,10 +240,20 @@ export default function Article({
               <span style={{ color: 'rgba(0,0,0,.6)' }}>{friendlyDate}</span>
             </span>
             <span className={classes.actions}>
+              {fullText && (
+                <IconButton
+                  color="primary"
+                  onClick={(_) => {
+                    setShowDialog(!showDialog);
+                  }}
+                  className={classes.readMore}
+                >
+                  <ShowIcon />
+                </IconButton>
+              )}
               <IconButton color={'secondary'} className={classes.heart}>
                 <FavoriteIcon />
               </IconButton>
-              <span>50</span>
             </span>
           </div>
         </div>
