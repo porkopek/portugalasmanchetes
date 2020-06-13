@@ -11,11 +11,11 @@ import {
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import StarIcon from '@material-ui/icons/Notifications';
-export interface ITrendsProps {
-  trends: string[];
+export interface ISubscriptionsProps {
+  subscriptions: string[];
 }
 
-export default function Trends({ trends }: ITrendsProps) {
+export default function SubscriptionsList({ subscriptions }: ISubscriptionsProps) {
   const theme = useTheme();
   return (
     <>
@@ -34,7 +34,7 @@ export default function Trends({ trends }: ITrendsProps) {
         Tendências
       </Typography>
       <List>
-        {trends.map((trend, index) => {
+        {subscriptions.map((trend, index) => {
           return (
             <ListItem key={trend}>
               <IconButton>

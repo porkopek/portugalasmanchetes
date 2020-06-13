@@ -1,21 +1,24 @@
 import React from 'react';
 import Search from 'components/explore/search';
-import Trends from 'components/explore/trends';
+import SubscriptionsList from 'components/explore/subscriptions-list';
 
 export default function Explore() {
   return (
     <>
       <Search />
-      <Trends
-        trends={[
-          'marlaska',
-          'pedro sanchez',
-          'pablo iglesias',
-          'ayuso',
-          'alvarez de toledo',
+      <SubscriptionsList
+        subscriptions={[
           'coronavirus',
+          'maddie',
+          'estatua',
+          'floyd',
+          'centeno',
+          'iglesias',
+          'governo',
+          'gobierno',
+          'praias',
           'covid-19',
-          'minimo',
+          'vox',
           'españa',
           'portugal',
         ]}
