@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Container,
   Grid,
   IconButton,
   Button,
-  InputBase,
   makeStyles,
   Theme,
   createStyles,
@@ -12,7 +11,6 @@ import {
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import ColumnsIcon from '@material-ui/icons/ViewModule';
-import RowsIcon from '@material-ui/icons/ViewStream';
 import SearchIcon from '@material-ui/icons/ExploreOutlined';
 
 export interface INavProps {
@@ -92,12 +90,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
-export default function Nav({
-  height = 100,
-  onDirectionChanges,
-  onHandleSearch,
-}: INavProps) {
-  const [searchTerm, setSearchTerm] = useState('');
+export default function Nav({ onDirectionChanges }: INavProps) {
   const classes = useStyles();
   return (
     <nav style={{}} className={classes.root}>

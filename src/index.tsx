@@ -10,6 +10,7 @@ import {
   CssBaseline,
 } from '@material-ui/core';
 import { HashRouter as Router } from 'react-router-dom';
+import ScrollToTop from 'components/routes/scroll-to-top';
 if (process.env.NODE_ENV !== 'production') {
   const whyDidYouRender = require('@welldone-software/why-did-you-render');
   whyDidYouRender(React, {
@@ -28,6 +29,7 @@ ReactDOM.render(
     <MuiThemeProvider theme={theme}>
       <CssBaseline />
       <Router basename={process.env.PUBLIC_URL}>
+        <ScrollToTop />
         <App />
       </Router>
     </MuiThemeProvider>

@@ -7,7 +7,7 @@ import {
   InputBase,
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/SearchOutlined';
-import { Redirect, useHistory } from 'react-router';
+import { useHistory } from 'react-router';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -69,7 +69,7 @@ export default function Search() {
       <form
         onSubmit={(_) => {
           _.preventDefault();
-          window.scrollTo(0, 0);
+
           push(`/search/${searchTerm}`);
         }}
       >

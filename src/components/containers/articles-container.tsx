@@ -48,13 +48,14 @@ export default function ArticlesContainer({
     fetchSources();
   }, []);
 
+  // for fetch articles
   useEffect(() => {
     const fetchArts = async () => {
       const apiUrl = getApiUrl(1);
       const response = await fetch(apiUrl);
       const newArticles = await response.json();
       setThereIsNoResults(newArticles.length === 0 ? true : false);
-      window.scrollTo(0, 0);
+
       setArticles(newArticles);
       setIsLoading(false);
     };

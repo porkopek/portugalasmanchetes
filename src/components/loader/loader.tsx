@@ -1,6 +1,4 @@
 import React from 'react';
-import { Box } from '@material-ui/core';
-import Loader from 'react-loader-spinner';
 import { grey } from '@material-ui/core/colors';
 interface ILoaderProps {
   text?: string;

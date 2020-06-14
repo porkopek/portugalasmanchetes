@@ -1,7 +1,6 @@
 import React from 'react';
 
-import { Route, Switch, useLocation } from 'react-router';
-import Search from 'components/explore/search';
+import { Route, Switch } from 'react-router';
 import ArticlesContainer from 'components/containers/articles-container';
 import Explore from 'components/explore/explore';
 import { Container } from '@material-ui/core';
@@ -11,7 +10,6 @@ interface IRoutesProps {
 }
 
 export default function Routes({ direction }: IRoutesProps) {
-  const location = useLocation();
   return (
     <Container style={{ padding: '28px 0' }}>
       <Switch>

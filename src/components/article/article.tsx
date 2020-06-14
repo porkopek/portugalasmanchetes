@@ -200,7 +200,8 @@ export default function Article({
             src={imageUrl}
             title={imageTitle}
             onError={(e) => (e.currentTarget.style.display = 'none')}
-          ></img>
+            alt={imageTitle}
+          />
         )}
         <div className={classes.body}>
           <h2>
@@ -220,6 +221,7 @@ export default function Article({
                 src={`https://${domain}/favicon.ico`}
                 className={classes.avatar}
                 onError={(e) => (e.currentTarget.style.display = 'none')}
+                alt="icon"
               ></img>
             </span>
             <span style={{ display: 'inline-flex', flexDirection: 'column' }}>
