@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { IArticle } from 'models/IArticle';
-import { Grid, Typography, useMediaQuery, Theme } from '@material-ui/core';
-import InfiniteScroll from 'react-infinite-scroller';
+import { Grid, Typography, useMediaQuery, useTheme } from '@material-ui/core';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import Article from 'components/article/article';
 
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
@@ -16,6 +16,9 @@ export default function ArticlesContainer({
   direction,
 }: IArticlesContainerProps) {
   //state
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'), { noSsr: true });
+
   const [articles, setArticles] = useState<IArticle[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [thereIsNoResults, setThereIsNoResults] = useState(false);
@@ -23,9 +26,6 @@ export default function ArticlesContainer({
   const [pageNumber, setPageNumber] = useState<number>(2);
   const [sources, setSources] = useState<string[]>([]);
   const { language, searchTerm, domain } = useParams();
-  const isMobile = useMediaQuery((theme: Theme) =>
-    theme.breakpoints.down('md')
-  );
   const getApiUrl = (pageNumber: number) =>
     `https://pokopek.com/api/articles?language=${
       language ?? ''
@@ -35,6 +35,9 @@ export default function ArticlesContainer({
 
   //for sources
   useEffect(() => {
+    if (isMobile) {
+      return;
+    }
     const fetchSources = async () => {
       const papers = await (
         await fetch('https://pokopek.com/api/articles/newspapers')
@@ -64,7 +67,7 @@ export default function ArticlesContainer({
   }, [language, domain]);
 
   //when reaches end of page
-  const loadMore = async (p: number) => {
+  const loadMore = async () => {
     const apiUrl = getApiUrl(pageNumber);
     const arts = await (await fetch(apiUrl)).json();
     const newArts = [...articles, ...arts];
@@ -78,9 +81,8 @@ export default function ArticlesContainer({
     <Grid container>
       <Grid item sm={12} md={8}>
         <InfiniteScroll
-          pageStart={0}
-          initialLoad={false}
-          loadMore={loadMore}
+          dataLength={articles.length}
+          next={loadMore}
           hasMore={true}
           loader={<NewsLoader fontSize={24} />}
           style={{ overflow: 'hidden', padding: '0 8px', minHeight: '100vh' }}
@@ -94,6 +96,7 @@ export default function ArticlesContainer({
               searchTerm
             )}
           <Grid container spacing={2}>
+            {isLoading && <NewsLoader fontSize={24} />}
             {!isLoading &&
               articles.map((article) => {
                 return (
@@ -112,9 +115,14 @@ export default function ArticlesContainer({
           </Grid>
         </InfiniteScroll>
       </Grid>
-      <Grid item xs={1} md={3}>
-        <SubscriptionsList subscriptions={sources} subscriptionType="sources" />
-      </Grid>
+      {!isMobile && (
+        <Grid item xs={1} md={3}>
+          <SubscriptionsList
+            subscriptions={sources}
+            subscriptionType="sources"
+          />
+        </Grid>
+      )}
     </Grid>
   );
 }
