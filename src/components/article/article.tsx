@@ -19,6 +19,7 @@ import { red, green } from '@material-ui/core/colors';
 import { IArticle } from 'models/IArticle';
 import { htmlDecode } from 'lib/utils';
 import { Link } from 'react-router-dom';
+import FullTextArticle from './fulltext-article';
 export interface IArticleProps extends IArticle {
   direction?: 'row' | 'column';
 }
@@ -109,24 +110,6 @@ const useStyles = makeStyles((theme: Theme) =>
         backgroundColor: 'rgba(0, 100, 0, 0.03)',
       },
     },
-    closeButton: {
-      [theme.breakpoints.up('md')]: {
-        display: 'none',
-      },
-      [theme.breakpoints.down('sm')]: {
-        position: 'fixed',
-        backgroundColor: 'rgba(200,0,0,.4)',
-        color: 'white',
-        right: 2,
-        top: 2,
-      },
-    },
-    dialogTitle: {
-      fontWeight: 'bold',
-      fontFamily: 'Quattrocento',
-      fontSize: '1.8em',
-      lineHeight: 1.3,
-    },
   })
 );
 export default function Article({
@@ -138,7 +121,6 @@ export default function Article({
   imageTitle,
   imageUrl,
   fullText,
-
   url,
 }: IArticleProps) {
   const classes = useStyles({ direction, imageUrl });
@@ -146,53 +128,6 @@ export default function Article({
   const [showDialog, setShowDialog] = useState(false);
   return (
     <>
-      <Dialog
-        maxWidth="md"
-        fullWidth={true}
-        scroll="body"
-        fullScreen={useMediaQuery(theme.breakpoints.down('sm'))}
-        open={showDialog}
-        onClose={() => setShowDialog(false)}
-      >
-        <IconButton
-          size="small"
-          color="secondary"
-          onClick={(_) => setShowDialog(false)}
-          className={classes.closeButton}
-        >
-          <CloseIcon />
-        </IconButton>
-        <img
-          src={imageUrl}
-          alt=""
-          style={{ width: '100%', objectFit: 'cover' }}
-        />
-        <div
-          style={{
-            padding: useMediaQuery(theme.breakpoints.up('md'))
-              ? '20px 40px 200px'
-              : '0',
-          }}
-        >
-          <DialogTitle disableTypography={true} className={classes.dialogTitle}>
-            {title}
-          </DialogTitle>
-          <DialogContent>
-            {fullText.split(/[\n]/g).map((p, i) => (
-              <p
-                style={{
-                  color: theme.palette.grey[800],
-                  textAlign: 'justify',
-                }}
-                key={i}
-              >
-                {p}
-              </p>
-            ))}
-          </DialogContent>
-        </div>
-      </Dialog>
-
       <div className={classes.card}>
         {imageUrl && (
           <img
@@ -247,6 +182,13 @@ export default function Article({
                 </IconButton>
               )}
               <IconButton color={'secondary'} className={classes.heart}>
+                <FullTextArticle
+                  title={title}
+                  imageUrl={imageUrl}
+                  fullText={fullText}
+                  showDialog={showDialog}
+                  onShowDialog={setShowDialog}
+                />
                 <FavoriteIcon />
               </IconButton>
             </span>
