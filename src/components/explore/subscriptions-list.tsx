@@ -2,8 +2,6 @@ import React from 'react';
 import {
   List,
   ListItem,
-  Divider,
-  ListItemIcon,
   ListItemText,
   IconButton,
   useTheme,
@@ -13,9 +11,13 @@ import { Link } from 'react-router-dom';
 import StarIcon from '@material-ui/icons/Notifications';
 export interface ISubscriptionsProps {
   subscriptions: string[];
+  subscriptionType: 'trends' | 'sources';
 }
 
-export default function SubscriptionsList({ subscriptions }: ISubscriptionsProps) {
+export default function SubscriptionsList({
+  subscriptions,
+  subscriptionType,
+}: ISubscriptionsProps) {
   const theme = useTheme();
   return (
     <>
@@ -31,26 +33,34 @@ export default function SubscriptionsList({ subscriptions }: ISubscriptionsProps
           display: 'inline-block',
         }}
       >
-        Tendências
+        {subscriptionType === 'trends' && 'Tendências'}
+        {subscriptionType === 'sources' && 'Jornais'}
       </Typography>
       <List>
-        {subscriptions.map((trend, index) => {
-          return (
-            <ListItem key={trend}>
-              <IconButton>
-                <StarIcon />
-              </IconButton>
+        {subscriptions.length > 0 &&
+          subscriptions.map((subscription) => {
+            return (
+              <ListItem key={subscription}>
+                <IconButton>
+                  <StarIcon />
+                </IconButton>
 
-              <ListItemText>
-                <Link to={`/search/${trend}`}>
-                  <span style={{ color: theme.palette.text.primary }}>
-                    {trend}
-                  </span>
-                </Link>
-              </ListItemText>
-            </ListItem>
-          );
-        })}
+                <ListItemText>
+                  <Link
+                    to={
+                      (subscriptionType === 'trends'
+                        ? '/search/'
+                        : '/source/') + subscription
+                    }
+                  >
+                    <span style={{ color: theme.palette.text.primary }}>
+                      {subscription}
+                    </span>
+                  </Link>
+                </ListItemText>
+              </ListItem>
+            );
+          })}
       </List>
     </>
   );

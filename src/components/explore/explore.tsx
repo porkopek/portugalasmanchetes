@@ -7,6 +7,7 @@ export default function Explore() {
     <>
       <Search />
       <SubscriptionsList
+        subscriptionType="trends"
         subscriptions={[
           'coronavirus',
           'maddie',

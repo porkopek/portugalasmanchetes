@@ -7,20 +7,13 @@ import {
   makeStyles,
   Theme,
   createStyles,
-  Typography,
-  Hidden,
   IconButton,
   colors,
   useTheme,
   Dialog,
   DialogTitle,
   DialogContent,
-  Container,
-  DialogContentText,
-  hexToRgb,
   useMediaQuery,
-  Fab,
-  Button,
 } from '@material-ui/core';
 import { red, green } from '@material-ui/core/colors';
 import { IArticle } from 'models/IArticle';
