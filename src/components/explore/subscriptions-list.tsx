@@ -6,21 +6,42 @@ import {
   IconButton,
   useTheme,
   Typography,
+  makeStyles,
+  Theme,
+  createStyles,
+  colors,
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import StarIcon from '@material-ui/icons/Notifications';
+import { red, green } from '@material-ui/core/colors';
 export interface ISubscriptionsProps {
   subscriptions: string[];
   subscriptionType: 'trends' | 'sources';
+  position?: 'sticky';
 }
-
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    stickyPannel: {
+      position: 'sticky',
+      top: 80,
+      maxHeight: '90vh',
+      overflow: 'hidden',
+      '&:hover': {
+        overflowY: 'scroll',
+      },
+    },
+  })
+);
 export default function SubscriptionsList({
   subscriptions,
   subscriptionType,
+  position,
 }: ISubscriptionsProps) {
   const theme = useTheme();
+  const classes = useStyles();
+
   return (
-    <>
+    <div className={position === 'sticky' ? classes.stickyPannel : undefined}>
       <Typography
         component="h2"
         variant="h6"
@@ -62,6 +83,6 @@ export default function SubscriptionsList({
             );
           })}
       </List>
-    </>
+    </div>
   );
 }

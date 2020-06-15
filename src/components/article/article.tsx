@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme: Theme) =>
       width: '100%',
       boxShadow: '0 2px 5px rgba(0,0,0,.2)',
     },
-    body: { width: '100%' },
+    body: { width: '100%', overflow: 'hidden' },
     media: {
       borderRadius: '4px',
       marginRight: (props) =>

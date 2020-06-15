@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { IArticle } from 'models/IArticle';
 import { Grid, Typography, useMediaQuery, useTheme } from '@material-ui/core';
-import InfiniteScroll from 'react-infinite-scroll-component';
+
 import Article from 'components/article/article';
 
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import NewsLoader from 'components/loader/loader';
 import { useParams } from 'react-router-dom';
 import SubscriptionsList from 'components/explore/subscriptions-list';
+import InfiniteScroll from 'components/infinite-scroll/infinite-scroll';
 
 export interface IArticlesContainerProps {
   direction: 'row' | 'column';
@@ -40,7 +41,7 @@ export default function ArticlesContainer({
     }
     const fetchSources = async () => {
       const papers = await (
-        await fetch('https://pokopek.com/api/articles/newspapers')
+        await fetch('https://pokopek.com/api/articles/sources')
       ).json();
 
       setSources(papers.sort());
@@ -54,8 +55,8 @@ export default function ArticlesContainer({
       const apiUrl = getApiUrl(1);
       const response = await fetch(apiUrl);
       const newArticles = await response.json();
+      window.document.body.style.height = '100vh';
       setThereIsNoResults(newArticles.length === 0 ? true : false);
-
       setArticles(newArticles);
       setIsLoading(false);
     };
@@ -86,7 +87,7 @@ export default function ArticlesContainer({
           next={loadMore}
           hasMore={true}
           loader={<NewsLoader fontSize={24} />}
-          style={{ overflow: 'hidden', padding: '0 8px', minHeight: '100vh' }}
+          style={{ overflow: 'hidden', padding: '0 8px' }}
         >
           {searchTerm &&
             articles.length > 0 &&
@@ -121,6 +122,7 @@ export default function ArticlesContainer({
           <SubscriptionsList
             subscriptions={sources}
             subscriptionType="sources"
+            position="sticky"
           />
         </Grid>
       )}
