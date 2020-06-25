@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import FavoriteIcon from '@material-ui/icons/FavoriteBorder';
 import ShowIcon from '@material-ui/icons/ChromeReaderModeOutlined';
-import CloseIcon from '@material-ui/icons/CloseOutlined';
 
 import {
   makeStyles,
@@ -10,10 +9,6 @@ import {
   IconButton,
   colors,
   useTheme,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  useMediaQuery,
 } from '@material-ui/core';
 import { red, green } from '@material-ui/core/colors';
 import { IArticle } from 'models/IArticle';

@@ -5,6 +5,7 @@ export default function ScrollToTop() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    document.body.style.height = '100vh';
   }, [pathname]);
 
   return null;

@@ -17,6 +17,7 @@ export default function NewsLoader({
         justifyContent: 'center',
         alignItems: 'center',
         padding: 20,
+        clear: 'both',
       }}
     >
       <span

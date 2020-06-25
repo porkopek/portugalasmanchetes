@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Dialog,
   useMediaQuery,
@@ -21,6 +21,7 @@ interface IFullTextArticle {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     closeButton: {
+      zIndex: 1111,
       [theme.breakpoints.up('md')]: {
         display: 'none',
       },

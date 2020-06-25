@@ -7,19 +7,16 @@ import {
   useTheme,
   Typography,
   makeStyles,
-  Theme,
   createStyles,
-  colors,
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import StarIcon from '@material-ui/icons/Notifications';
-import { red, green } from '@material-ui/core/colors';
 export interface ISubscriptionsProps {
   subscriptions: string[];
   subscriptionType: 'trends' | 'sources';
   position?: 'sticky';
 }
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
     stickyPannel: {
       position: 'sticky',

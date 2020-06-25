@@ -51,11 +51,12 @@ export default function ArticlesContainer({
 
   // for fetch articles
   useEffect(() => {
+    const apagar = window.scrollY;
     const fetchArts = async () => {
       const apiUrl = getApiUrl(1);
       const response = await fetch(apiUrl);
       const newArticles = await response.json();
-      window.document.body.style.height = '100vh';
+
       setThereIsNoResults(newArticles.length === 0 ? true : false);
       setArticles(newArticles);
       setIsLoading(false);
@@ -70,6 +71,7 @@ export default function ArticlesContainer({
 
   //when reaches end of page
   const loadMore = async () => {
+    if (isLoading) return;
     const apiUrl = getApiUrl(pageNumber);
     const arts = await (await fetch(apiUrl)).json();
     const newArts = [...articles, ...arts];

@@ -17,10 +17,7 @@ export interface Props {
   height?: number | string;
   scrollableTarget?: ReactNode;
   hasChildren?: boolean;
-  pullDownToRefresh?: boolean;
-  pullDownToRefreshContent?: ReactNode;
-  releaseToRefreshContent?: ReactNode;
-  pullDownToRefreshThreshold?: number;
+
   refreshFunction?: Fn;
   onScroll?: (e: MouseEvent) => any;
   dataLength: number;
@@ -57,7 +54,6 @@ export default class InfiniteScroll extends Component<Props, State> {
   private _infScroll: HTMLDivElement | undefined;
   private lastScrollTop = 0;
   private actionTriggered = false;
-  private _pullDown: HTMLDivElement | undefined;
 
   // variables to keep track of pull down behaviour
   private startY = 0;
@@ -96,33 +92,6 @@ export default class InfiniteScroll extends Component<Props, State> {
     ) {
       this.el.scrollTo(0, this.props.initialScrollY);
     }
-
-    if (this.props.pullDownToRefresh && this.el) {
-      this.el.addEventListener('touchstart', this.onStart);
-      this.el.addEventListener('touchmove', this.onMove);
-      this.el.addEventListener('touchend', this.onEnd);
-
-      this.el.addEventListener('mousedown', this.onStart);
-      this.el.addEventListener('mousemove', this.onMove);
-      this.el.addEventListener('mouseup', this.onEnd);
-
-      // get BCR of pullDown element to position it above
-      this.maxPullDownDistance =
-        (this._pullDown &&
-          this._pullDown.firstChild &&
-          (this._pullDown.firstChild as HTMLDivElement).getBoundingClientRect()
-            .height) ||
-        0;
-      this.forceUpdate();
-
-      if (typeof this.props.refreshFunction !== 'function') {
-        throw new Error(
-          `Mandatory prop "refreshFunction" missing.
-          Pull Down To Refresh functionality will not work
-          as expected. Check README.md for usage'`
-        );
-      }
-    }
   }
 
   componentWillUnmount() {
@@ -131,16 +100,6 @@ export default class InfiniteScroll extends Component<Props, State> {
         'scroll',
         this.throttledOnScrollListener as EventListenerOrEventListenerObject
       );
-
-      if (this.props.pullDownToRefresh) {
-        this.el.removeEventListener('touchstart', this.onStart);
-        this.el.removeEventListener('touchmove', this.onMove);
-        this.el.removeEventListener('touchend', this.onEnd);
-
-        this.el.removeEventListener('mousedown', this.onStart);
-        this.el.removeEventListener('mousemove', this.onMove);
-        this.el.removeEventListener('mouseup', this.onEnd);
-      }
     }
   }
 
@@ -203,15 +162,6 @@ export default class InfiniteScroll extends Component<Props, State> {
 
     // user is scrolling down to up
     if (this.currentY < this.startY) return;
-
-    if (
-      this.currentY - this.startY >=
-      Number(this.props.pullDownToRefreshThreshold)
-    ) {
-      this.setState({
-        pullToRefreshThresholdBreached: true,
-      });
-    }
 
     // so you can drag upto 1.5 times of the maxPullDownDistance
     if (this.currentY - this.startY > this.maxPullDownDistance * 1.5) return;
@@ -317,10 +267,7 @@ export default class InfiniteScroll extends Component<Props, State> {
 
     // because heighted infiniteScroll visualy breaks
     // on drag down as overflow becomes visible
-    const outerDivStyle =
-      this.props.pullDownToRefresh && this.props.height
-        ? { overflow: 'auto' }
-        : {};
+    const outerDivStyle = this.props.height ? { overflow: 'auto' } : {};
     return (
       <div
         style={outerDivStyle}
@@ -331,25 +278,6 @@ export default class InfiniteScroll extends Component<Props, State> {
           ref={(infScroll: HTMLDivElement) => (this._infScroll = infScroll)}
           style={style}
         >
-          {this.props.pullDownToRefresh && (
-            <div
-              style={{ position: 'relative' }}
-              ref={(pullDown: HTMLDivElement) => (this._pullDown = pullDown)}
-            >
-              <div
-                style={{
-                  position: 'absolute',
-                  left: 0,
-                  right: 0,
-                  top: -1 * this.maxPullDownDistance,
-                }}
-              >
-                {this.state.pullToRefreshThresholdBreached
-                  ? this.props.releaseToRefreshContent
-                  : this.props.pullDownToRefreshContent}
-              </div>
-            </div>
-          )}
           {this.props.children}
           {!this.state.showLoader &&
             !hasChildren &&
