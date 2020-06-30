@@ -8,6 +8,8 @@ import {
   Typography,
   makeStyles,
   createStyles,
+  ThemeProvider,
+  Theme,
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import StarIcon from '@material-ui/icons/Notifications';
@@ -16,7 +18,7 @@ export interface ISubscriptionsProps {
   subscriptionType: 'trends' | 'sources';
   position?: 'sticky';
 }
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     stickyPannel: {
       position: 'sticky',
@@ -25,6 +27,21 @@ const useStyles = makeStyles(() =>
       overflow: 'hidden',
       '&:hover': {
         overflowY: 'scroll',
+      },
+    },
+    header: {
+      fontWeight: 'bold',
+      marginTop: theme.spacing(2),
+      marginLeft: theme.spacing(2),
+      paddingBottom: 3,
+      borderBottom: '1px solid ',
+      display: 'inline-block',
+    },
+    link: {
+      color: theme.palette.text.primary,
+      '&:hover': {
+        color: '#1e88e5',
+        transition: 'color .2s',
       },
     },
   })
@@ -39,18 +56,7 @@ export default function SubscriptionsList({
 
   return (
     <div className={position === 'sticky' ? classes.stickyPannel : undefined}>
-      <Typography
-        component="h2"
-        variant="h6"
-        style={{
-          fontWeight: 'bold',
-          marginTop: theme.spacing(2),
-          marginLeft: theme.spacing(2),
-          paddingBottom: 3,
-          borderBottom: '1px solid ',
-          display: 'inline-block',
-        }}
-      >
+      <Typography component="h2" variant="h6" className={classes.header}>
         {subscriptionType === 'trends' && 'Tendências'}
         {subscriptionType === 'sources' && 'Jornais'}
       </Typography>
@@ -71,9 +77,7 @@ export default function SubscriptionsList({
                         : '/source/') + subscription
                     }
                   >
-                    <span style={{ color: theme.palette.text.primary }}>
-                      {subscription}
-                    </span>
+                    <span className={classes.link}>{subscription}</span>
                   </Link>
                 </ListItemText>
               </ListItem>

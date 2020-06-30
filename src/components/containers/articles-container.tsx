@@ -55,6 +55,8 @@ export default function ArticlesContainer({
     const fetchArts = async () => {
       const apiUrl = getApiUrl(1);
       const response = await fetch(apiUrl);
+      var paginationHeaders = response.headers.get('X-Pagination');
+      var pagination = JSON.parse(paginationHeaders || 'null');
       const newArticles = await response.json();
 
       setThereIsNoResults(newArticles.length === 0 ? true : false);
@@ -88,7 +90,7 @@ export default function ArticlesContainer({
           dataLength={articles.length}
           next={loadMore}
           hasMore={true}
-          loader={<NewsLoader fontSize={24} />}
+          loader={null}
           style={{ overflow: 'hidden', padding: '0 8px' }}
         >
           {searchTerm &&
@@ -120,7 +122,7 @@ export default function ArticlesContainer({
         </InfiniteScroll>
       </Grid>
       {!isMobile && (
-        <Grid item xs={1} md={3}>
+        <Grid md={3}>
           <SubscriptionsList
             subscriptions={sources}
             subscriptionType="sources"
