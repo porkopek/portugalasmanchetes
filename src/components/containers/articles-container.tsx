@@ -9,10 +9,12 @@ import NewsLoader from 'components/loader/loader';
 import { useParams } from 'react-router-dom';
 import SubscriptionsList from 'components/explore/subscriptions-list';
 import InfiniteScroll from 'components/infinite-scroll/infinite-scroll';
+import { IPagination } from 'models/IPagination';
 
 export interface IArticlesContainerProps {
   direction: 'row' | 'column';
 }
+
 export default function ArticlesContainer({
   direction,
 }: IArticlesContainerProps) {
@@ -56,7 +58,9 @@ export default function ArticlesContainer({
       const apiUrl = getApiUrl(1);
       const response = await fetch(apiUrl);
       var paginationHeaders = response.headers.get('X-Pagination');
-      var pagination = JSON.parse(paginationHeaders || 'null');
+      var pagination: IPagination | null = JSON.parse(
+        paginationHeaders || 'null'
+      );
       const newArticles = await response.json();
 
       setThereIsNoResults(newArticles.length === 0 ? true : false);
