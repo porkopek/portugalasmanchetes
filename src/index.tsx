@@ -18,6 +18,9 @@ if (process.env.NODE_ENV !== 'production') {
   });
 }
 const theme = createMuiTheme({
+  // palette: {
+  //   type: 'dark',
+  // },
   typography: {
     fontFamily:
       "Montserrat,-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Ubuntu', 'sans-serif'",

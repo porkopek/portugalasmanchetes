@@ -1,33 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Container,
   Grid,
   IconButton,
-  Button,
   makeStyles,
   Theme,
   createStyles,
-  fade,
+  Button,
+  SvgIcon,
+  AppBar,
+  Toolbar,
 } from '@material-ui/core';
-import { Link } from 'react-router-dom';
-import ColumnsIcon from '@material-ui/icons/ViewModule';
-import SearchIcon from '@material-ui/icons/ExploreOutlined';
+import { Link, NavLink } from 'react-router-dom';
 
+import CountryMenu, { Language } from './country-menu';
+import { ReactComponent as UpdateIcon } from 'assets/update.svg';
+import { ReactComponent as FireIcon } from 'assets/fire.svg';
+import { ReactComponent as ExploreIcon } from 'assets/explore.svg';
+import { ReactComponent as UserIcon } from 'assets/user.svg';
+import settingsIcon from 'assets/settings.svg';
+import './nav.css';
 export interface INavProps {
   height?: number;
   onDirectionChanges: () => void;
-  onHandleSearch: (searchTerm: string) => void;
 }
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      zIndex: 10,
-      padding: 10,
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
       backgroundColor: 'white',
+      boxShadow: '0 2px 4px rgba(0,0,0,.05)',
     },
     menuButton: {
       [theme.breakpoints.down('sm')]: {
@@ -43,50 +44,99 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
+const initialLanguage =
+  (localStorage.getItem('initialFlag') as Language) || 'pt';
 export default function Nav({ onDirectionChanges }: INavProps) {
+  const [language, setLanguage] = useState<Language>(initialLanguage);
   const classes = useStyles();
+
   return (
-    <nav style={{}} className={classes.root}>
-      <Container>
-        <Grid container alignItems="center" spacing={0}>
-          <Grid item>
-            <Link to="/">
-              <img
-                style={{ height: 30 }}
-                src={process.env.PUBLIC_URL + '/favicon.png'}
-                alt=""
-              />
-            </Link>
-          </Grid>
-          <Grid item>
-            <Link to="/language/es">
-              <Button className={classes.menuButton}>ES</Button>
-            </Link>
-          </Grid>
-          <Grid item>
-            <Link to="/language/en">
-              <Button className={classes.menuButton}>EN</Button>
-            </Link>
-          </Grid>
-          <Grid item>
-            <Link to="/language/pt">
-              <Button className={classes.menuButton}>PT</Button>
-            </Link>
-          </Grid>
-          <Grid item>
-            <Link to="/explore">
+    <AppBar classes={classes}>
+      <Toolbar>
+        <Container>
+          <Grid
+            container
+            alignItems="center"
+            spacing={1}
+            style={{ flexWrap: 'nowrap', overflow: 'auto' }}
+          >
+            {/* <Grid item>
+            <Link to={`/news/relevant/${language}`}>
               <IconButton>
-                <SearchIcon />
+                <img
+                  style={{ height: 30 }}
+                  src={process.env.PUBLIC_URL + '/favicon.png'}
+                  alt=""
+                />
               </IconButton>
             </Link>
+          </Grid> */}
+            <Grid item>
+              <NavLink to={`/news/relevant/${language}`}>
+                <Button
+                  startIcon={
+                    <SvgIcon>
+                      <FireIcon width="24px" height="24px" />
+                    </SvgIcon>
+                  }
+                >
+                  Capa
+                </Button>
+              </NavLink>
+            </Grid>
+            <Grid item>
+              <NavLink to={`/news/new/${language}`}>
+                <Button
+                  startIcon={
+                    <SvgIcon>
+                      <UpdateIcon width="24px" height="24px" />
+                    </SvgIcon>
+                  }
+                >
+                  Recentes
+                </Button>
+              </NavLink>
+            </Grid>
+
+            <Grid item>
+              <NavLink to={`/explore/${language}`}>
+                <Button
+                  startIcon={
+                    <SvgIcon>
+                      <ExploreIcon />
+                    </SvgIcon>
+                  }
+                >
+                  Explorar
+                </Button>
+              </NavLink>
+            </Grid>
+            <Grid item>
+              <NavLink to={`/explore/${language}`}>
+                <Button>
+                  <img
+                    style={{ height: 20 }}
+                    src={process.env.PUBLIC_URL + '/favicon.png'}
+                    alt=""
+                  />{' '}
+                  Meus
+                </Button>
+              </NavLink>
+            </Grid>
+            <Grid item>
+              <CountryMenu
+                initialFlag={initialLanguage}
+                onLanguageChanges={setLanguage}
+              />
+            </Grid>
+            <Grid item>
+              <IconButton onClick={onDirectionChanges}>
+                <img src={settingsIcon} alt="" style={{ width: 20 }} />
+              </IconButton>
+            </Grid>
           </Grid>
-          <Grid item>
-            <IconButton onClick={onDirectionChanges}>
-              <ColumnsIcon style={{ display: 'block' }} />
-            </IconButton>
-          </Grid>
-        </Grid>
-      </Container>
-    </nav>
+        </Container>
+      </Toolbar>
+    </AppBar>
   );
 }

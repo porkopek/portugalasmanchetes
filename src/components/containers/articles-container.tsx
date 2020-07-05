@@ -24,17 +24,19 @@ export default function ArticlesContainer({
 
   const [articles, setArticles] = useState<IArticle[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [thereIsNoResults, setThereIsNoResults] = useState(false);
+  const [noSearchResults, setNoSearchResults] = useState<boolean>(false);
   //pageNumber starts at 2 because first page is loaded by useffect
   const [pageNumber, setPageNumber] = useState<number>(2);
   const [sources, setSources] = useState<string[]>([]);
-  const { language, searchTerm, domain } = useParams();
-  const getApiUrl = (pageNumber: number) =>
-    `https://pokopek.com/api/articles?language=${
+  const { language, searchTerm, domain, order } = useParams();
+
+  const getApiUrl = (pageNumber: number) => {
+    return `https://pokopek.com/api/articles?language=${
       language ?? ''
     }&pagenumber=${pageNumber}&search=${searchTerm ?? ''}&domain=${
       domain ?? ''
-    }`;
+    }&order=${order ?? ''}`;
+  };
 
   //for sources
   useEffect(() => {
@@ -53,7 +55,6 @@ export default function ArticlesContainer({
 
   // for fetch articles
   useEffect(() => {
-    const apagar = window.scrollY;
     const fetchArts = async () => {
       const apiUrl = getApiUrl(1);
       const response = await fetch(apiUrl);
@@ -63,7 +64,7 @@ export default function ArticlesContainer({
       );
       const newArticles = await response.json();
 
-      setThereIsNoResults(newArticles.length === 0 ? true : false);
+      setNoSearchResults(newArticles.length === 0 ? true : false);
       setArticles(newArticles);
       setIsLoading(false);
     };
@@ -73,7 +74,7 @@ export default function ArticlesContainer({
 
     //2 (two), because the first page has been got here, and the infinite scroll should take the second page
     setPageNumber(2);
-  }, [language, domain]);
+  }, [language, domain, order]);
 
   //when reaches end of page
   const loadMore = async () => {
@@ -100,7 +101,7 @@ export default function ArticlesContainer({
           {searchTerm &&
             articles.length > 0 &&
             Message('Artigos que contêm a palavra', searchTerm)}
-          {thereIsNoResults &&
+          {noSearchResults &&
             Message(
               'Não foram encontrados artigos relacionados com a palavra ',
               searchTerm
@@ -126,7 +127,7 @@ export default function ArticlesContainer({
         </InfiniteScroll>
       </Grid>
       {!isMobile && (
-        <Grid md={3}>
+        <Grid item md={3}>
           <SubscriptionsList
             subscriptions={sources}
             subscriptionType="sources"

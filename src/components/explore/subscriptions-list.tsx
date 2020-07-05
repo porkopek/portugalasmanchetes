@@ -4,14 +4,12 @@ import {
   ListItem,
   ListItemText,
   IconButton,
-  useTheme,
   Typography,
   makeStyles,
   createStyles,
-  ThemeProvider,
   Theme,
 } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import StarIcon from '@material-ui/icons/Notifications';
 export interface ISubscriptionsProps {
   subscriptions: string[];
@@ -24,9 +22,11 @@ const useStyles = makeStyles((theme: Theme) =>
       position: 'sticky',
       top: 80,
       maxHeight: '90vh',
-      overflow: 'hidden',
-      '&:hover': {
-        overflowY: 'scroll',
+      [theme.breakpoints.up('md')]: {
+        overflow: 'hidden',
+        '&:hover': {
+          overflowY: 'scroll',
+        },
       },
     },
     header: {
@@ -51,9 +51,8 @@ export default function SubscriptionsList({
   subscriptionType,
   position,
 }: ISubscriptionsProps) {
-  const theme = useTheme();
   const classes = useStyles();
-
+  const { language } = useParams();
   return (
     <div className={position === 'sticky' ? classes.stickyPannel : undefined}>
       <Typography component="h2" variant="h6" className={classes.header}>
@@ -72,9 +71,9 @@ export default function SubscriptionsList({
                 <ListItemText>
                   <Link
                     to={
-                      (subscriptionType === 'trends'
-                        ? '/search/'
-                        : '/source/') + subscription
+                      subscriptionType === 'trends'
+                        ? `/search/${subscription}/${language ?? ''}`
+                        : '/source/' + subscription
                     }
                   >
                     <span className={classes.link}>{subscription}</span>

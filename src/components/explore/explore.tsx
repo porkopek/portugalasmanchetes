@@ -10,17 +10,14 @@ export default function Explore() {
         subscriptionType="trends"
         subscriptions={[
           'coronavirus',
-          'maddie',
-          'estatua',
-          'floyd',
-          'centeno',
-          'iglesias',
+          'covid',
+          'mortos',
+          'casos',
+          'trump',
+          'nova normalidade',
           'governo',
-          'gobierno',
           'praias',
-          'covid-19',
-          'vox',
-          'españa',
+          'espanha',
           'portugal',
         ]}
       />

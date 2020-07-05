@@ -7,7 +7,7 @@ import {
   InputBase,
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/SearchOutlined';
-import { useHistory } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -61,6 +61,7 @@ export default function Search() {
   const [searchTerm, setSearchTerm] = useState('');
   const classes = useStyles();
   const { push } = useHistory();
+  const { language } = useParams();
   return (
     <div className={classes.search}>
       <div className={classes.searchIcon}>
@@ -70,10 +71,10 @@ export default function Search() {
         onSubmit={(_) => {
           _.preventDefault();
 
-          push(`/search/${searchTerm}`);
+          push(`/search/${searchTerm}/${language}`);
         }}
       >
-        {/* // WATCH TODO Show last searches */}
+        {/* //  TODO Show last searches */}
         <InputBase
           value={searchTerm}
           placeholder="Procurar em Portugal às Manchetes"

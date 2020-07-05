@@ -8,4 +8,5 @@ export interface IArticle {
   url: string;
   domain: string;
   fullText: string;
+  ranking: number;
 }
