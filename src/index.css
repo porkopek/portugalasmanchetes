@@ -7,7 +7,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   font-size: 16px;
   padding-top: 50px;
-  /* height: 120vh; */
+  height: 120vh;
 }
 
 code {
@@ -30,7 +30,7 @@ a {
   transition: all 250ms ease-in;
 }
 
-div::-webkit-scrollbar {
+/* div::-webkit-scrollbar {
   width: 5px;
 }
 
@@ -41,4 +41,4 @@ div::-webkit-scrollbar-track {
 div::-webkit-scrollbar-thumb {
   border-radius: 2px;
   background-color: rgba(0, 0, 0, 0.2);
-}
+} */

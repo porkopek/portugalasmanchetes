@@ -22,7 +22,8 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     card: {
       borderRadius: '4px',
-      backgroundColor: 'white',
+      backgroundColor: (props) =>
+        props.direction === 'row' ? 'white' : 'transparent',
       padding: (props) =>
         props.imageUrl
           ? theme.spacing(2)
@@ -32,7 +33,8 @@ const useStyles = makeStyles((theme: Theme) =>
       maxWidth: (props) => (props.direction === 'row' ? '100%' : '32%'),
       minWidth: '100%',
       width: '100%',
-      boxShadow: '0 2px 5px rgba(0,0,0,.2)',
+      boxShadow: (props) =>
+        props.direction === 'row' ? '0 2px 5px rgba(0,0,0,.2)' : 'none',
     },
     body: { width: '100%', overflow: 'hidden' },
     media: {
@@ -44,8 +46,9 @@ const useStyles = makeStyles((theme: Theme) =>
       flexBasis: (props) => (props.direction === 'row' ? '32%' : '100%'),
       width: (props) => (props.direction === 'row' ? '32%' : '100%'),
       minWidth: (props) => (props.direction === 'row' ? '32%' : '100%'),
-      height: (props) => (props.direction === 'column' ? 200 : 'auto'),
-      maxHeight: (props) => (props.direction === 'column' ? 200 : 250),
+      height: (props) => (props.direction === 'column' ? 150 : 'auto'),
+      maxHeight: (props) => (props.direction === 'column' ? 150 : 250),
+      minHeight: (props) => (props.direction === 'column' ? 150 : 250),
       overflow: 'hidden',
       backgroundColor: 'lightgray',
     },
@@ -117,13 +120,15 @@ export default function Article({
   imageUrl,
   fullText,
   url,
+  id,
+  ranking,
 }: IArticleProps) {
   const classes = useStyles({ direction, imageUrl });
   const theme = useTheme();
   const [showDialog, setShowDialog] = useState(false);
   return (
     <>
-      <div className={classes.card}>
+      <div className={classes.card} data-id={id} data-ranking={ranking}>
         {imageUrl && (
           <img
             className={classes.media}
