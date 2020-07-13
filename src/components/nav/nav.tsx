@@ -111,7 +111,7 @@ export default function Nav({ onDirectionChanges }: INavProps) {
                 </Button>
               </NavLink>
             </Grid>
-            <Grid item>
+            {/* <Grid item>
               <NavLink to={`/explore/${language}`}>
                 <Button>
                   <img
@@ -122,7 +122,7 @@ export default function Nav({ onDirectionChanges }: INavProps) {
                   Meus
                 </Button>
               </NavLink>
-            </Grid>
+            </Grid> */}
             <Grid item>
               <CountryMenu
                 initialFlag={initialLanguage}

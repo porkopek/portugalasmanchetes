@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { IArticle } from 'models/IArticle';
 import { Grid, Typography, useMediaQuery, useTheme } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
 
 import Article from 'components/article/article';
 
@@ -21,6 +22,7 @@ export default function ArticlesContainer({
   //state
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'), { noSsr: true });
+  const [err, setErr] = useState<Boolean>(false);
 
   const [articles, setArticles] = useState<IArticle[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -57,15 +59,21 @@ export default function ArticlesContainer({
   useEffect(() => {
     const fetchArts = async () => {
       const apiUrl = getApiUrl(1);
-      const response = await fetch(apiUrl);
-      var paginationHeaders = response.headers.get('X-Pagination');
-      var pagination: IPagination | null = JSON.parse(
-        paginationHeaders || 'null'
-      );
-      const newArticles = await response.json();
+      try {
+        const response = await fetch(apiUrl);
+        var paginationHeaders = response.headers.get('X-Pagination');
+        var pagination: IPagination | null = JSON.parse(
+          paginationHeaders || 'null'
+        );
+        const newArticles = await response.json();
 
-      setNoSearchResults(newArticles.length === 0 ? true : false);
-      setArticles(newArticles);
+        setNoSearchResults(newArticles.length === 0 ? true : false);
+        setArticles(newArticles);
+        setErr(false);
+      } catch {
+        setErr(true);
+      }
+
       setIsLoading(false);
     };
 
@@ -90,6 +98,12 @@ export default function ArticlesContainer({
 
   return (
     <Grid container>
+      {err && (
+        <Alert severity="error">
+          Pedimos desculpas. Neste momento, o site está a implementar algumas
+          mudanças. Volte mais tarde
+        </Alert>
+      )}
       <Grid item sm={12} md={8}>
         <InfiniteScroll
           dataLength={articles.length}

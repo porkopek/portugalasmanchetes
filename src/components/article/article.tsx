@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme: Theme) =>
       minWidth: (props) => (props.direction === 'row' ? '32%' : '100%'),
       height: (props) => (props.direction === 'column' ? 150 : 'auto'),
       maxHeight: (props) => (props.direction === 'column' ? 150 : 250),
-      minHeight: (props) => (props.direction === 'column' ? 150 : 250),
+      minHeight: (props) => (props.direction === 'column' ? 150 : 'unset'),
       overflow: 'hidden',
       backgroundColor: 'lightgray',
     },
