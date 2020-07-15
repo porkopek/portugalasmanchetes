@@ -12,8 +12,9 @@ import {
 import { Link, useParams } from 'react-router-dom';
 import StarIcon from '@material-ui/icons/Notifications';
 export interface ISubscriptionsProps {
+  title: string;
   subscriptions: string[];
-  subscriptionType: 'trends' | 'sources';
+  subscriptionType: 'trends' | 'sources' | 'categories';
   position?: 'sticky';
 }
 const useStyles = makeStyles((theme: Theme) =>
@@ -48,6 +49,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 export default function SubscriptionsList({
   subscriptions,
+  title,
   subscriptionType,
   position,
 }: ISubscriptionsProps) {
@@ -56,8 +58,7 @@ export default function SubscriptionsList({
   return (
     <div className={position === 'sticky' ? classes.stickyPannel : undefined}>
       <Typography component="h2" variant="h6" className={classes.header}>
-        {subscriptionType === 'trends' && 'Tendências'}
-        {subscriptionType === 'sources' && 'Jornais'}
+        {title}
       </Typography>
       <List>
         {subscriptions.length > 0 &&

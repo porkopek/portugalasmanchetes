@@ -15,6 +15,7 @@ import { IArticle } from 'models/IArticle';
 import { htmlDecode } from 'lib/utils';
 import { Link } from 'react-router-dom';
 import FullTextArticle from './fulltext-article';
+import { Category, CategoryColor } from 'models/category';
 export interface IArticleProps extends IArticle {
   direction?: 'row' | 'column';
 }
@@ -54,6 +55,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     title: {
       lineHeight: '1.25em',
+
       overflow: 'hidden',
       maxHeight: 1.25 * 3 + 'em',
       [theme.breakpoints.up('xs')]: { maxHeight: 1.25 * 7 + 'em' },
@@ -76,6 +78,15 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.only('xs')]: {
         display: (props) => (props.direction === 'row' ? 'none' : 'block'),
       },
+    },
+    category: {
+      color: (props) =>
+        (CategoryColor as any)[props.categoryNumber].backgroundColor,
+
+      padding: '2px 6px',
+      borderRadius: '2em',
+      fontSize: 10,
+      display: 'inline-block',
     },
     meta: { fontSize: 14 },
     avatar: {
@@ -122,8 +133,10 @@ export default function Article({
   url,
   id,
   ranking,
+  tags,
+  category: categoryNumber,
 }: IArticleProps) {
-  const classes = useStyles({ direction, imageUrl });
+  const classes = useStyles({ direction, imageUrl, categoryNumber });
   const theme = useTheme();
   const [showDialog, setShowDialog] = useState(false);
   return (
@@ -139,14 +152,20 @@ export default function Article({
           />
         )}
         <div className={classes.body}>
-          <h2>
+          <span className={classes.category}>{Category[categoryNumber]}</span>
+          {/* {tags.map((t) => (
+            <span key={t} className={classes.category}>
+              {t}
+            </span>
+          ))} */}
+          <h2 style={{ marginTop: 0 }}>
             <a
               className={classes.title}
               href={url}
               target="_blank"
               rel="noreferrer noopener"
             >
-              {htmlDecode(title)}
+              {title}
             </a>
           </h2>
           <p className={classes.description}>{description}</p>

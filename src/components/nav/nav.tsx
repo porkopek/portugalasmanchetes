@@ -30,18 +30,18 @@ const useStyles = makeStyles((theme: Theme) =>
       backgroundColor: 'white',
       boxShadow: '0 2px 4px rgba(0,0,0,.05)',
     },
-    menuButton: {
-      [theme.breakpoints.down('sm')]: {
-        minWidth: 44,
-      },
-    },
-    brand: {
-      flexGrow: 1,
-      display: 'none',
-      [theme.breakpoints.up('sm')]: {
-        display: 'block',
-      },
-    },
+    // menuButton: {
+    //   [theme.breakpoints.down('sm')]: {
+    //     minWidth: 44,
+    //   },
+    // },
+    // brand: {
+    //   flexGrow: 1,
+    //   display: 'none',
+    //   [theme.breakpoints.up('sm')]: {
+    //     display: 'block',
+    //   },
+    // },
   })
 );
 const initialLanguage =
@@ -60,17 +60,6 @@ export default function Nav({ onDirectionChanges }: INavProps) {
             spacing={1}
             style={{ flexWrap: 'nowrap', overflow: 'auto' }}
           >
-            {/* <Grid item>
-            <Link to={`/news/relevant/${language}`}>
-              <IconButton>
-                <img
-                  style={{ height: 30 }}
-                  src={process.env.PUBLIC_URL + '/favicon.png'}
-                  alt=""
-                />
-              </IconButton>
-            </Link>
-          </Grid> */}
             <Grid item>
               <NavLink to={`/news/relevant/${language}`}>
                 <Button

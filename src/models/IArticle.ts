@@ -1,3 +1,5 @@
+import { Category } from './category';
+
 export interface IArticle {
   id: number;
   title: string;
@@ -9,4 +11,6 @@ export interface IArticle {
   domain: string;
   fullText: string;
   ranking: number;
+  category: Category;
+  tags: string[];
 }

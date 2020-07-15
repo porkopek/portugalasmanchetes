@@ -11,6 +11,8 @@ import { useParams } from 'react-router-dom';
 import SubscriptionsList from 'components/explore/subscriptions-list';
 import InfiniteScroll from 'components/infinite-scroll/infinite-scroll';
 import { IPagination } from 'models/IPagination';
+import Categories from 'components/explore/categories';
+import { Category } from 'models/category';
 
 export interface IArticlesContainerProps {
   direction: 'row' | 'column';
@@ -23,6 +25,7 @@ export default function ArticlesContainer({
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'), { noSsr: true });
   const [err, setErr] = useState<Boolean>(false);
+  const [categories, setCategories] = useState<string[]>([]);
 
   const [articles, setArticles] = useState<IArticle[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -37,7 +40,7 @@ export default function ArticlesContainer({
       language ?? ''
     }&pagenumber=${pageNumber}&search=${searchTerm ?? ''}&domain=${
       domain ?? ''
-    }&order=${order ?? ''}`;
+    }&category=${categories?.join(',')}&order=${order ?? ''}`;
   };
 
   //for sources
@@ -56,6 +59,7 @@ export default function ArticlesContainer({
   }, []);
 
   // for fetch articles
+  //--Could be custom hook!
   useEffect(() => {
     const fetchArts = async () => {
       const apiUrl = getApiUrl(1);
@@ -142,11 +146,12 @@ export default function ArticlesContainer({
       </Grid>
       {!isMobile && (
         <Grid item md={3}>
-          <SubscriptionsList
+          <Categories />
+          {/* <SubscriptionsList
             subscriptions={sources}
             subscriptionType="sources"
             position="sticky"
-          />
+          /> */}
         </Grid>
       )}
     </Grid>
