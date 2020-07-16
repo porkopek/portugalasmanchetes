@@ -10,7 +10,7 @@ import NotFoundPage from 'components/containers/404';
 interface IRoutesProps {
   direction: 'row' | 'column';
 }
-const language = localStorage.getItem('language') ?? '';
+const language = localStorage.getItem('language') ?? 'all';
 export default function Routes({ direction }: IRoutesProps) {
   return (
     <Container style={{ padding: '28px 0' }}>
@@ -40,9 +40,9 @@ export default function Routes({ direction }: IRoutesProps) {
           <Redirect to={`/${language}/articles/all/relevant/`} />
         </Route>
 
-        {/*//-- no match */}
+        {/*//-- no match =>redirects to origin*/}
         <Route path="*">
-          <NotFoundPage />
+          <Redirect to={`/${language}/articles/all/relevant/`} />
         </Route>
       </Switch>
     </Container>
