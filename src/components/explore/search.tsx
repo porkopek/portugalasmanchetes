@@ -1,11 +1,5 @@
 import React, { useState } from 'react';
-import {
-  makeStyles,
-  Theme,
-  createStyles,
-  fade,
-  InputBase,
-} from '@material-ui/core';
+import { makeStyles, Theme, createStyles, fade, InputBase } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/SearchOutlined';
 import { useHistory, useParams } from 'react-router';
 
@@ -71,7 +65,7 @@ export default function Search() {
         onSubmit={(_) => {
           _.preventDefault();
 
-          push(`/search/${searchTerm}/${language}`);
+          push(`/${language}/search/${searchTerm}`);
         }}
       >
         {/* //  TODO Show last searches */}

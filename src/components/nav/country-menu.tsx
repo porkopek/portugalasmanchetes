@@ -5,10 +5,10 @@ import portugalFlag from 'assets/pt.svg';
 import ukFlag from 'assets/uk.svg';
 import globalFlag from 'assets/global.svg';
 import { useHistory, useLocation } from 'react-router-dom';
-export type Language = 'es' | 'pt' | 'en' | 'gl' | '';
+export type Language = 'es' | 'pt' | 'en' | 'gl' | 'all';
 
 export interface ICountryMenuProps {
-  initialFlag: Language;
+  language: Language;
   onLanguageChanges: (language: Language) => void;
 }
 const chooseFlag = (flag: Language) => {
@@ -30,10 +30,10 @@ const chooseFlag = (flag: Language) => {
   }
 };
 export default function CountryMenu({
-  initialFlag,
+  language,
   onLanguageChanges: onLanguageChange,
 }: ICountryMenuProps) {
-  const [flag, setFlag] = useState(initialFlag);
+  const [flag, setFlag] = useState(language);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const { pathname } = useLocation();
@@ -43,7 +43,7 @@ export default function CountryMenu({
     onLanguageChange(newLanguage);
     setFlag(newLanguage);
 
-    localStorage.setItem('initialFlag', newLanguage);
+    localStorage.setItem('language', newLanguage);
     setAnchorEl(null);
 
     push(pathname.replace(RegExp(`${flag}$`), newLanguage));
@@ -61,7 +61,7 @@ export default function CountryMenu({
         keepMounted
         disableScrollLock={true}
       >
-        <MenuItem onClick={(_) => handleChangeLanguage('')}>
+        <MenuItem onClick={(_) => handleChangeLanguage('all')}>
           <img src={chooseFlag('gl')} alt="" style={{ width: 20 }} />
         </MenuItem>
 

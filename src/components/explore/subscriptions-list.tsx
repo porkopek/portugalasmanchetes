@@ -11,6 +11,7 @@ import {
 } from '@material-ui/core';
 import { Link, useParams } from 'react-router-dom';
 import StarIcon from '@material-ui/icons/Notifications';
+import { Category } from 'models/category';
 export interface ISubscriptionsProps {
   title: string;
   subscriptions: string[];
@@ -26,7 +27,7 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.up('md')]: {
         overflow: 'hidden',
         '&:hover': {
-          overflowY: 'scroll',
+          overflowY: 'auto',
         },
       },
     },
@@ -62,7 +63,13 @@ export default function SubscriptionsList({
       </Typography>
       <List>
         {subscriptions.length > 0 &&
-          subscriptions.map((subscription) => {
+          subscriptions.map((subscription, i) => {
+            const link =
+              subscriptionType === 'trends'
+                ? `/search/${subscription}/${language ?? ''}`
+                : subscriptionType === 'sources'
+                ? '/source/' + subscription
+                : '/all/articles/' + Category[i].english + '/relevant';
             return (
               <ListItem key={subscription}>
                 <IconButton>
@@ -70,13 +77,7 @@ export default function SubscriptionsList({
                 </IconButton>
 
                 <ListItemText>
-                  <Link
-                    to={
-                      subscriptionType === 'trends'
-                        ? `/search/${subscription}/${language ?? ''}`
-                        : '/source/' + subscription
-                    }
-                  >
+                  <Link to={link}>
                     <span className={classes.link}>{subscription}</span>
                   </Link>
                 </ListItemText>

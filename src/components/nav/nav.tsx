@@ -44,8 +44,7 @@ const useStyles = makeStyles((theme: Theme) =>
     // },
   })
 );
-const initialLanguage =
-  (localStorage.getItem('initialFlag') as Language) || 'pt';
+const initialLanguage = (localStorage.getItem('language') as Language) || 'pt';
 export default function Nav({ onDirectionChanges }: INavProps) {
   const [language, setLanguage] = useState<Language>(initialLanguage);
   const classes = useStyles();
@@ -61,7 +60,7 @@ export default function Nav({ onDirectionChanges }: INavProps) {
             style={{ flexWrap: 'nowrap', overflow: 'auto' }}
           >
             <Grid item>
-              <NavLink to={`/news/relevant/${language}`}>
+              <NavLink to={`/${language}/articles/all/relevant`}>
                 <Button
                   startIcon={
                     <SvgIcon>
@@ -74,7 +73,7 @@ export default function Nav({ onDirectionChanges }: INavProps) {
               </NavLink>
             </Grid>
             <Grid item>
-              <NavLink to={`/news/new/${language}`}>
+              <NavLink to={`/${language}/articles/all/new`}>
                 <Button
                   startIcon={
                     <SvgIcon>
@@ -88,7 +87,7 @@ export default function Nav({ onDirectionChanges }: INavProps) {
             </Grid>
 
             <Grid item>
-              <NavLink to={`/explore/${language}`}>
+              <NavLink to={`/${language}/explore`}>
                 <Button
                   startIcon={
                     <SvgIcon>
@@ -100,23 +99,9 @@ export default function Nav({ onDirectionChanges }: INavProps) {
                 </Button>
               </NavLink>
             </Grid>
-            {/* <Grid item>
-              <NavLink to={`/explore/${language}`}>
-                <Button>
-                  <img
-                    style={{ height: 20 }}
-                    src={process.env.PUBLIC_URL + '/favicon.png'}
-                    alt=""
-                  />{' '}
-                  Meus
-                </Button>
-              </NavLink>
-            </Grid> */}
+
             <Grid item>
-              <CountryMenu
-                initialFlag={initialLanguage}
-                onLanguageChanges={setLanguage}
-              />
+              <CountryMenu language={initialLanguage} onLanguageChanges={setLanguage} />
             </Grid>
             <Grid item>
               <IconButton onClick={onDirectionChanges}>

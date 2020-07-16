@@ -11,6 +11,6 @@ export interface IArticle {
   domain: string;
   fullText: string;
   ranking: number;
-  category: Category;
+  category: number;
   tags: string[];
 }

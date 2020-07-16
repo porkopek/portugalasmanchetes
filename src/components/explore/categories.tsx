@@ -6,17 +6,18 @@ export default function Categories() {
     <>
       <SubscriptionsList
         title="Categorias"
-        subscriptionType="trends"
+        subscriptionType="categories"
         position="sticky"
         subscriptions={[
-          'noticias',
+          'actualidade',
           'desporto',
           'cultura',
-          'tecnologia',
           'ciência',
-          'diversão',
           'história',
           'religião',
+          'diversão',
+          'tecnologia',
+          'tempo',
         ]}
       />
     </>

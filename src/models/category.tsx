@@ -1,26 +1,16 @@
-import { useTheme } from '@material-ui/core';
-import {
-  red,
-  yellow,
-  green,
-  blue,
-  orange,
-  grey,
-  brown,
-  pink,
-} from '@material-ui/core/colors';
+import { red, green, blue, orange, grey, brown, pink } from '@material-ui/core/colors';
 
-export enum Category {
-  actualidade = 0,
-  desporto = 1,
-  cultura = 2,
-  ciência = 3,
-  história = 4,
-  religião = 5,
-  diversão = 6,
-  tecnologia = 7,
-  tempo = 8,
-}
+export const Category: { [key: number]: { portuguese: string; english: string } } = {
+  0: { portuguese: 'actualidade', english: 'news' },
+  1: { portuguese: 'desporto', english: 'sports' },
+  2: { portuguese: 'cultura', english: 'culture' },
+  3: { portuguese: 'ciência', english: 'science' },
+  4: { portuguese: 'história', english: 'history' },
+  5: { portuguese: 'religião', english: 'religion' },
+  6: { portuguese: 'diversão', english: 'fun' },
+  7: { portuguese: 'tecnologia', english: 'tech' },
+  8: { portuguese: 'tempo', english: 'weather' },
+};
 
 interface ICategoryColor {
   backgroundColor: string;
@@ -28,13 +18,13 @@ interface ICategoryColor {
 }
 
 export const CategoryColor: { [key: number]: ICategoryColor } = {
-  0: { backgroundColor: red[800], color: 'white' },
-  1: { backgroundColor: brown[800], color: 'black' },
-  2: { backgroundColor: green[800], color: 'white' },
-  3: { backgroundColor: blue[800], color: 'white' },
-  4: { backgroundColor: orange[900], color: 'white' },
-  5: { backgroundColor: grey[500], color: 'white' },
-  6: { backgroundColor: brown[500], color: 'white' },
-  7: { backgroundColor: pink[400], color: 'white' },
-  8: { backgroundColor: green[500], color: 'white' },
+  0: { backgroundColor: '#ff1744', color: 'white' },
+  1: { backgroundColor: '#3d5afe', color: 'white' },
+  2: { backgroundColor: '#009688', color: 'white' },
+  3: { backgroundColor: '#b26a00', color: 'white' },
+  4: { backgroundColor: '#618833', color: 'white' },
+  5: { backgroundColor: '#6d1b7b', color: 'white' },
+  6: { backgroundColor: '#e91e63', color: 'white' },
+  7: { backgroundColor: '#2a3eb1', color: 'white' },
+  8: { backgroundColor: '#00a152', color: 'white' },
 };

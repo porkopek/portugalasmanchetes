@@ -2,14 +2,7 @@ import React, { useState } from 'react';
 import FavoriteIcon from '@material-ui/icons/FavoriteBorder';
 import ShowIcon from '@material-ui/icons/ChromeReaderModeOutlined';
 
-import {
-  makeStyles,
-  Theme,
-  createStyles,
-  IconButton,
-  colors,
-  useTheme,
-} from '@material-ui/core';
+import { makeStyles, Theme, createStyles, IconButton, colors, useTheme } from '@material-ui/core';
 import { red, green } from '@material-ui/core/colors';
 import { IArticle } from 'models/IArticle';
 import { htmlDecode } from 'lib/utils';
@@ -18,30 +11,26 @@ import FullTextArticle from './fulltext-article';
 import { Category, CategoryColor } from 'models/category';
 export interface IArticleProps extends IArticle {
   direction?: 'row' | 'column';
+  onDescriptionTextSelected: (id: number, text?: string) => void;
 }
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     card: {
       borderRadius: '4px',
-      backgroundColor: (props) =>
-        props.direction === 'row' ? 'white' : 'transparent',
+      backgroundColor: (props) => (props.direction === 'row' ? 'white' : 'transparent'),
       padding: (props) =>
-        props.imageUrl
-          ? theme.spacing(2)
-          : `${theme.spacing(4)}px ${theme.spacing(6)}px`,
+        props.imageUrl ? theme.spacing(2) : `${theme.spacing(4)}px ${theme.spacing(6)}px`,
       display: 'flex',
       flexDirection: (props: any) => props.direction,
       maxWidth: (props) => (props.direction === 'row' ? '100%' : '32%'),
       minWidth: '100%',
       width: '100%',
-      boxShadow: (props) =>
-        props.direction === 'row' ? '0 2px 5px rgba(0,0,0,.2)' : 'none',
+      boxShadow: (props) => (props.direction === 'row' ? '0 2px 5px rgba(0,0,0,.2)' : 'none'),
     },
     body: { width: '100%', overflow: 'hidden' },
     media: {
       borderRadius: '4px',
-      marginRight: (props) =>
-        props.direction === 'row' ? theme.spacing(3) : 0,
+      marginRight: (props) => (props.direction === 'row' ? theme.spacing(3) : 0),
       objectFit: 'cover',
       objectPosition: 'center',
       flexBasis: (props) => (props.direction === 'row' ? '32%' : '100%'),
@@ -53,6 +42,7 @@ const useStyles = makeStyles((theme: Theme) =>
       overflow: 'hidden',
       backgroundColor: 'lightgray',
     },
+
     title: {
       lineHeight: '1.25em',
 
@@ -80,8 +70,7 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     category: {
-      color: (props) =>
-        (CategoryColor as any)[props.categoryNumber].backgroundColor,
+      color: (props) => (CategoryColor as any)[props.categoryNumber].backgroundColor,
 
       padding: '2px 6px',
       borderRadius: '2em',
@@ -135,6 +124,7 @@ export default function Article({
   ranking,
   tags,
   category: categoryNumber,
+  onDescriptionTextSelected,
 }: IArticleProps) {
   const classes = useStyles({ direction, imageUrl, categoryNumber });
   const theme = useTheme();
@@ -152,23 +142,31 @@ export default function Article({
           />
         )}
         <div className={classes.body}>
-          <span className={classes.category}>{Category[categoryNumber]}</span>
+          <span className={classes.category}>
+            {url.includes('sport') ||
+            url.includes('deport') ||
+            url.includes('fut') ||
+            url.includes('laliga')
+              ? 'desporto'
+              : Category[categoryNumber].portuguese}
+          </span>
           {/* {tags.map((t) => (
             <span key={t} className={classes.category}>
               {t}
             </span>
           ))} */}
           <h2 style={{ marginTop: 0 }}>
-            <a
-              className={classes.title}
-              href={url}
-              target="_blank"
-              rel="noreferrer noopener"
-            >
+            <a className={classes.title} href={url} target="_blank" rel="noreferrer noopener">
               {title}
             </a>
           </h2>
-          <p className={classes.description}>{description}</p>
+          <p
+            className={classes.description}
+            onMouseUp={(e) =>
+              onDescriptionTextSelected(id, window.getSelection()?.toString().trim())
+            }
+            dangerouslySetInnerHTML={{ __html: description }}
+          ></p>
           <div className={classes.meta}>
             <span>
               <img
@@ -181,9 +179,7 @@ export default function Article({
             <span style={{ display: 'inline-flex', flexDirection: 'column' }}>
               <div style={{ color: 'rgba(0,0,0,.8)', fontWeight: 'bold' }}>
                 <Link to={`/source/${domain}`}>
-                  <span style={{ color: theme.palette.text.primary }}>
-                    {domain}
-                  </span>
+                  <span style={{ color: theme.palette.text.primary }}>{domain}</span>
                 </Link>
               </div>
               <span style={{ color: 'rgba(0,0,0,.6)' }}>{friendlyDate}</span>
