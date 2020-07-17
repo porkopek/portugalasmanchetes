@@ -45,7 +45,7 @@ export default function CountryMenu({
 
     localStorage.setItem('language', newLanguage);
     setAnchorEl(null);
-    const regx = RegExp(`\/${flag}\/`);
+    const regx = RegExp(`/${flag}/`);
     const newRoute = pathname.replace(regx, '/' + newLanguage + '/');
     push(newRoute);
   };

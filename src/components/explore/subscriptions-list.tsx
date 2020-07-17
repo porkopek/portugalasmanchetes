@@ -69,7 +69,7 @@ export default function SubscriptionsList({
                 ? `/${language ?? ''}/trends/${subscription}`
                 : subscriptionType === 'sources'
                 ? '/source/' + subscription
-                : `/${language}/articles/` + Category[i].english + '/relevant';
+                : `/${language || 'all'}/articles/` + Category[i].english + '/relevant';
             return (
               <ListItem key={subscription}>
                 <IconButton>

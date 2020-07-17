@@ -11,6 +11,7 @@ import { useParams } from 'react-router-dom';
 import InfiniteScroll from 'components/infinite-scroll/infinite-scroll';
 import { IPagination } from 'models/IPagination';
 import Categories from 'components/explore/categories';
+import { translateIntoPortuguese } from 'lib/localizer';
 
 export interface IArticlesContainerProps {
   direction: 'row' | 'column';
@@ -104,14 +105,15 @@ export default function ArticlesContainer({ direction }: IArticlesContainerProps
     setIsLoading(false);
   };
 
+  //replace selected text with a link to search that text
   const handleSelectDescriptionText = (articleId: number, selectedText?: string) => {
     if (!selectedText?.trim()) {
       return;
     }
     let article = articles.find((a) => a.id === articleId)!;
     let description = article.description.replace(
-      selectedText,
-      `<a href="/#/${language}/search/${selectedText}" style="font-weight:bold;color:blue;text-decoration:underline">${selectedText}</a>`
+      RegExp(`${selectedText}`),
+      `<a href="/portugalasmanchetes/#/${language}/search/${selectedText}" style="font-weight:bold;color:blue;text-decoration:underline">${selectedText}</a>`
     );
     let newArticles = [...articles];
     newArticles.find((a) => a.id === articleId)!.description = description;
@@ -136,13 +138,27 @@ export default function ArticlesContainer({ direction }: IArticlesContainerProps
             </Alert>
           }
           next={loadMore}
-          hasMore={pagination === undefined || pagination.HasNext}
+          hasMore={isLoading || pagination === undefined || pagination.HasNext}
           loader={null}
           style={{ overflow: 'hidden', padding: '0 8px' }}
         >
-          {searchTerm && articles.length > 0 && Message('Artigos que contêm a palavra', searchTerm)}
-          {noSearchResults &&
-            Message('Não foram encontrados artigos relacionados com a palavra ', searchTerm)}
+          {searchTerm &&
+            articles.length > 0 &&
+            Message(
+              `Há ${pagination?.TotalCount.toLocaleString()} artigos que contêm o texto`,
+              searchTerm
+            )}
+
+          {tagText && (
+            <Alert style={{ margin: '8px 0 16px 0', maxWidth: '83%' }} severity="info">
+              Artigos com a tendência <b>{tagText}</b>
+            </Alert>
+          )}
+          {category && category !== 'all' && (
+            <Alert style={{ margin: '8px 0 16px 0', maxWidth: '83%' }} severity="info">
+              Artigos da categoria <b>{translateIntoPortuguese(category)}</b>
+            </Alert>
+          )}
           <Grid container spacing={2}>
             {isLoading && <NewsLoader fontSize={24} />}
             {!isLoading &&

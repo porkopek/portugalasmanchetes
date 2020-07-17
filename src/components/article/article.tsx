@@ -146,6 +146,8 @@ export default function Article({
             url.includes('fut') ||
             url.includes('laliga')
               ? 'desporto'
+              : url.match(/bulo|fake/i)
+              ? 'fake news'
               : Category[categoryNumber].portuguese}
           </span>
           {/* {tags.map((t) => (
