@@ -26,7 +26,7 @@ export default function ArticlesContainer({ direction }: IArticlesContainerProps
 
   const [articles, setArticles] = useState<IArticle[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [noSearchResults, setNoSearchResults] = useState<boolean>(false);
+  const [, setNoSearchResults] = useState<boolean>(false);
 
   //pageNumber starts at 2 because first page is loaded by useffect
   const [pageNumber, setPageNumber] = useState<number>(2);
@@ -37,24 +37,11 @@ export default function ArticlesContainer({ direction }: IArticlesContainerProps
 
   const getApiUrl = (pageNumber: number) => {
     return `https://pokopek.com/api/articles?language=${
-      language && language !== 'all' ? language : ''
+      language && language !== 'all' && domain === undefined ? language : ''
     }&pagenumber=${pageNumber}&search=${searchTerm ?? ''}&tagtext=${tagText ?? ''}&domain=${
       domain ?? ''
     }&category=${category ?? ''}&order=${order ?? ''}`;
   };
-
-  //for sources
-  useEffect(() => {
-    if (isMobile) {
-      return;
-    }
-    const fetchSources = async () => {
-      const papers = await (await fetch('https://pokopek.com/api/articles/sources')).json();
-
-      setSources(papers.sort());
-    };
-    fetchSources();
-  }, []);
 
   // for fetch articles
   //--Could be custom hook!
@@ -133,7 +120,10 @@ export default function ArticlesContainer({ direction }: IArticlesContainerProps
         <InfiniteScroll
           dataLength={articles.length}
           endMessage={
-            <Alert style={{ marginTop: 18, maxWidth: '83%' }} severity="info">
+            <Alert
+              style={{ marginTop: 18, maxWidth: direction === 'column' ? '100' : '83%' }}
+              severity="info"
+            >
               Não há mais artigos deste tipo
             </Alert>
           }
@@ -142,21 +132,46 @@ export default function ArticlesContainer({ direction }: IArticlesContainerProps
           loader={null}
           style={{ overflow: 'hidden', padding: '0 8px' }}
         >
-          {searchTerm && articles.length > 0 && (
-            <Alert icon={false} style={{ margin: '8px 0 16px 0', maxWidth: '83%' }} severity="info">
+          {!isLoading && searchTerm && articles.length > 0 && (
+            <Alert
+              icon={false}
+              style={{ margin: '8px 0 16px 0', maxWidth: direction === 'column' ? '100' : '83%' }}
+              severity="info"
+            >
               Foram encontrados <b>{pagination?.TotalCount.toLocaleString()}</b> artigos com o texto
-              <b> {searchTerm}</b>
+              <b> {searchTerm}</b> em <b>{translateIntoPortuguese(language)}</b>
             </Alert>
           )}
 
-          {tagText && (
-            <Alert icon={false} style={{ margin: '8px 0 16px 0', maxWidth: '83%' }} severity="info">
-              Artigos com a tendência <b>{tagText}</b>
+          {!isLoading && tagText && (
+            <Alert
+              icon={false}
+              style={{ margin: '8px 0 16px 0', maxWidth: direction === 'column' ? '100' : '83%' }}
+              severity="info"
+            >
+              Há {<b>{pagination?.TotalCount.toLocaleString()}</b>} artigos com a tendência{' '}
+              <b>{tagText}</b> em <b>{translateIntoPortuguese(language)}</b>
             </Alert>
           )}
-          {category && category !== 'all' && (
-            <Alert icon={false} style={{ margin: '8px 0 16px 0', maxWidth: '83%' }} severity="info">
-              Artigos da categoria <b>{translateIntoPortuguese(category)}</b>
+          {!isLoading && category && category !== 'all' && (
+            <Alert
+              icon={false}
+              style={{ margin: '8px 0 16px 0', maxWidth: direction === 'column' ? '100' : '83%' }}
+              severity="info"
+            >
+              Há <b>{pagination?.TotalCount.toLocaleString()}</b> artigos da categoria{' '}
+              <b>{translateIntoPortuguese(category)}</b> em{' '}
+              <b>{translateIntoPortuguese(language)}</b>
+            </Alert>
+          )}
+          {!isLoading && domain && (
+            <Alert
+              icon={false}
+              style={{ margin: '8px 0 16px 0', maxWidth: direction === 'column' ? '100' : '83%' }}
+              severity="info"
+            >
+              Há <b>{pagination?.TotalCount.toLocaleString()}</b> artigos do site <b>{domain}</b> em{' '}
+              <b>{translateIntoPortuguese(language)}</b>
             </Alert>
           )}
           <Grid container spacing={2}>
@@ -194,12 +209,5 @@ export default function ArticlesContainer({ direction }: IArticlesContainerProps
         </Grid>
       )}
     </Grid>
-  );
-}
-function Message(message: string, searchTerm: string): React.ReactNode {
-  return (
-    <Typography component="h2" color="textPrimary" style={{ margin: '1rem' }} variant="h6">
-      {message} <strong>{searchTerm}</strong>
-    </Typography>
   );
 }

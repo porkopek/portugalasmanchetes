@@ -5,7 +5,6 @@ export default function Categories() {
   return (
     <>
       <SubscriptionsList
-        title="Categorias"
         subscriptionType="categories"
         position="sticky"
         subscriptions={[

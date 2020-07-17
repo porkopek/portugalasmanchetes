@@ -133,7 +133,7 @@ export default function Article({
         {imageUrl && (
           <img
             className={classes.media}
-            src={imageUrl}
+            src={imageUrl.replace('http:', 'https:')}
             title={imageTitle}
             onError={(e) => (e.currentTarget.style.display = 'none')}
             alt={imageTitle}
@@ -141,14 +141,9 @@ export default function Article({
         )}
         <div className={classes.body}>
           <span className={classes.category}>
-            {url.includes('sport') ||
-            url.includes('deport') ||
-            url.includes('fut') ||
-            url.includes('laliga')
-              ? 'desporto'
-              : url.match(/bulo|fake/i)
-              ? 'fake news'
-              : Category[categoryNumber].portuguese}
+            <Link to={`/all/articles/` + Category[categoryNumber].english + '/relevant'}>
+              {getCategory()}
+            </Link>
           </span>
           {/* {tags.map((t) => (
             <span key={t} className={classes.category}>
@@ -212,4 +207,12 @@ export default function Article({
       </div>
     </>
   );
+
+  function getCategory(): React.ReactNode {
+    return url.match(/sport|deport|fut.?bol|laliga/i)
+      ? 'desporto'
+      : url.match(/bulo|fake/i)
+      ? 'fake news'
+      : Category[categoryNumber].portuguese;
+  }
 }

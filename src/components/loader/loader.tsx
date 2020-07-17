@@ -5,11 +5,7 @@ interface ILoaderProps {
   fontSize?: number;
   color?: string;
 }
-export default function NewsLoader({
-  text,
-  fontSize = 18,
-  color = grey[600],
-}: ILoaderProps) {
+export default function NewsLoader({ text, fontSize = 18, color = grey[600] }: ILoaderProps) {
   return (
     <div
       style={{

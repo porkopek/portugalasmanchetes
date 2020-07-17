@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   List,
   ListItem,
   ListItemText,
   IconButton,
-  Typography,
   makeStyles,
   createStyles,
   Theme,
@@ -12,10 +11,14 @@ import {
 import { Link, useParams } from 'react-router-dom';
 import StarIcon from '@material-ui/icons/Notifications';
 import { Category } from 'models/category';
+import Filter from './filter';
+
+export type SubscriptionsType = 'trends' | 'sources' | 'categories' | 'subscriptions';
+
 export interface ISubscriptionsProps {
-  title: string;
   subscriptions: string[];
-  subscriptionType: 'trends' | 'sources' | 'categories';
+
+  subscriptionType: SubscriptionsType;
   position?: 'sticky';
 }
 const useStyles = makeStyles((theme: Theme) =>
@@ -50,26 +53,40 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 export default function SubscriptionsList({
   subscriptions,
-  title,
   subscriptionType,
   position,
 }: ISubscriptionsProps) {
   const classes = useStyles();
   const { language } = useParams();
+  const [subs, setSubs] = useState(subscriptions);
+  const getUrl = (subscription: string, subscriptionNumber: number) => {
+    switch (subscriptionType) {
+      case 'categories':
+        return (
+          `/${language || 'all'}/articles/` + Category[subscriptionNumber].english + '/relevant'
+        );
+
+      case 'sources':
+        return '/source/' + subscription;
+
+      case 'subscriptions':
+        return '/subscriptions';
+
+      case 'trends':
+        return `/${language ?? ''}/trends/${subscription}`;
+    }
+  };
+  const handleChange = (filterTerm: string) => {
+    var newSubs = subscriptions.filter((s) => s.includes(filterTerm));
+    setSubs(newSubs);
+  };
   return (
     <div className={position === 'sticky' ? classes.stickyPannel : undefined}>
-      <Typography component="h2" variant="h6" className={classes.header}>
-        {title}
-      </Typography>
+      {subscriptionType !== 'categories' && <Filter onChange={handleChange} />}
       <List>
-        {subscriptions.length > 0 &&
-          subscriptions.map((subscription, i) => {
-            const link =
-              subscriptionType === 'trends'
-                ? `/${language ?? ''}/trends/${subscription}`
-                : subscriptionType === 'sources'
-                ? '/source/' + subscription
-                : `/${language || 'all'}/articles/` + Category[i].english + '/relevant';
+        {subs.length > 0 &&
+          subs.map((subscription, i) => {
+            const link = getUrl(subscription, i);
             return (
               <ListItem key={subscription}>
                 <IconButton>
