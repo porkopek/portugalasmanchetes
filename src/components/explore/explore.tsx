@@ -8,7 +8,7 @@ import { useParams } from 'react-router';
 export default function Explore() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   let { language } = useParams();
-  if (language == 'all') language = '';
+  if (language === 'all') language = '';
 
   const [tags, setTags] = useState<ITag[]>([]);
   useEffect(() => {

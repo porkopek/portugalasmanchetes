@@ -69,7 +69,7 @@ export default function ArticlesContainer({ direction }: IArticlesContainerProps
 
         setNoSearchResults(newArticles.length === 0 ? true : false);
         setArticles(newArticles);
-        setErr(false);
+        if (err === true) setErr(false);
       } catch {
         setErr(true);
       }
@@ -87,9 +87,16 @@ export default function ArticlesContainer({ direction }: IArticlesContainerProps
 
   //when reaches end of page
   const loadMore = async () => {
-    if (isLoading || !pagination?.hasNext) return;
+    if (isLoading || !pagination?.HasNext) {
+      return;
+    }
+
     const apiUrl = getApiUrl(pageNumber);
-    const arts = await (await fetch(apiUrl)).json();
+    const response = await fetch(apiUrl);
+    let paginationHeaders = response.headers.get('X-Pagination')!;
+    let paginationJson: IPagination = JSON.parse(paginationHeaders);
+    setPagination(paginationJson);
+    const arts = await response.json();
     const newArts = [...articles, ...arts];
 
     setArticles(newArts);
@@ -123,8 +130,13 @@ export default function ArticlesContainer({ direction }: IArticlesContainerProps
       <Grid item sm={12} md={8}>
         <InfiniteScroll
           dataLength={articles.length}
+          endMessage={
+            <Alert style={{ marginTop: 18, maxWidth: '83%' }} severity="info">
+              Não há mais artigos deste tipo
+            </Alert>
+          }
           next={loadMore}
-          hasMore={true}
+          hasMore={pagination === undefined || pagination.HasNext}
           loader={null}
           style={{ overflow: 'hidden', padding: '0 8px' }}
         >
