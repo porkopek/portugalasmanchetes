@@ -4,8 +4,6 @@ import { Route, Switch, Redirect } from 'react-router';
 import ArticlesContainer from 'components/containers/articles-container';
 import Explore from 'components/explore/explore';
 import { Container } from '@material-ui/core';
-import { Link } from 'react-router-dom';
-import NotFoundPage from 'components/containers/404';
 
 interface IRoutesProps {
   direction: 'row' | 'column';
@@ -22,6 +20,10 @@ export default function Routes({ direction }: IRoutesProps) {
 
         {/*//-- Searchs: route=>search/ */}
         <Route path="/:language/search/:searchTerm/">
+          <ArticlesContainer direction={direction} />
+        </Route>
+        {/*//-- Searchs: route=>search/ */}
+        <Route path="/:language/trends/:tagText/">
           <ArticlesContainer direction={direction} />
         </Route>
 

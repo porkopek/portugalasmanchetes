@@ -66,10 +66,10 @@ export default function SubscriptionsList({
           subscriptions.map((subscription, i) => {
             const link =
               subscriptionType === 'trends'
-                ? `/search/${subscription}/${language ?? ''}`
+                ? `/${language ?? ''}/trends/${subscription}`
                 : subscriptionType === 'sources'
                 ? '/source/' + subscription
-                : '/all/articles/' + Category[i].english + '/relevant';
+                : `/${language}/articles/` + Category[i].english + '/relevant';
             return (
               <ListItem key={subscription}>
                 <IconButton>

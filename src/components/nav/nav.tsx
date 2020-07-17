@@ -4,44 +4,30 @@ import {
   Grid,
   IconButton,
   makeStyles,
-  Theme,
   createStyles,
   Button,
   SvgIcon,
   AppBar,
   Toolbar,
 } from '@material-ui/core';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 import CountryMenu, { Language } from './country-menu';
 import { ReactComponent as UpdateIcon } from 'assets/update.svg';
 import { ReactComponent as FireIcon } from 'assets/fire.svg';
 import { ReactComponent as ExploreIcon } from 'assets/explore.svg';
-import { ReactComponent as UserIcon } from 'assets/user.svg';
 import settingsIcon from 'assets/settings.svg';
 import './nav.css';
 export interface INavProps {
   height?: number;
   onDirectionChanges: () => void;
 }
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
     root: {
       backgroundColor: 'white',
       boxShadow: '0 2px 4px rgba(0,0,0,.05)',
     },
-    // menuButton: {
-    //   [theme.breakpoints.down('sm')]: {
-    //     minWidth: 44,
-    //   },
-    // },
-    // brand: {
-    //   flexGrow: 1,
-    //   display: 'none',
-    //   [theme.breakpoints.up('sm')]: {
-    //     display: 'block',
-    //   },
-    // },
   })
 );
 const initialLanguage = (localStorage.getItem('language') as Language) || 'pt';

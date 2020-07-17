@@ -1,5 +1,3 @@
-import { red, green, blue, orange, grey, brown, pink } from '@material-ui/core/colors';
-
 export const Category: { [key: number]: { portuguese: string; english: string } } = {
   0: { portuguese: 'actualidade', english: 'news' },
   1: { portuguese: 'desporto', english: 'sports' },

@@ -5,7 +5,6 @@ import ShowIcon from '@material-ui/icons/ChromeReaderModeOutlined';
 import { makeStyles, Theme, createStyles, IconButton, colors, useTheme } from '@material-ui/core';
 import { red, green } from '@material-ui/core/colors';
 import { IArticle } from 'models/IArticle';
-import { htmlDecode } from 'lib/utils';
 import { Link } from 'react-router-dom';
 import FullTextArticle from './fulltext-article';
 import { Category, CategoryColor } from 'models/category';
@@ -122,7 +121,6 @@ export default function Article({
   url,
   id,
   ranking,
-  tags,
   category: categoryNumber,
   onDescriptionTextSelected,
 }: IArticleProps) {
@@ -162,7 +160,7 @@ export default function Article({
           </h2>
           <p
             className={classes.description}
-            onMouseUp={(e) =>
+            onMouseUp={() =>
               onDescriptionTextSelected(id, window.getSelection()?.toString().trim())
             }
             dangerouslySetInnerHTML={{ __html: description }}

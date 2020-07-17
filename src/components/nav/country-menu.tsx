@@ -5,7 +5,7 @@ import portugalFlag from 'assets/pt.svg';
 import ukFlag from 'assets/uk.svg';
 import globalFlag from 'assets/global.svg';
 import { useHistory, useLocation } from 'react-router-dom';
-export type Language = 'es' | 'pt' | 'en' | 'gl' | 'all';
+export type Language = 'es' | 'pt' | 'en' | 'all';
 
 export interface ICountryMenuProps {
   language: Language;
@@ -22,7 +22,7 @@ const chooseFlag = (flag: Language) => {
     case 'en':
       return ukFlag;
 
-    case 'gl':
+    case 'all':
       return globalFlag;
 
     default:
@@ -45,8 +45,9 @@ export default function CountryMenu({
 
     localStorage.setItem('language', newLanguage);
     setAnchorEl(null);
-
-    push(pathname.replace(RegExp(`${flag}$`), newLanguage));
+    const regx = RegExp(`\/${flag}\/`);
+    const newRoute = pathname.replace(regx, '/' + newLanguage + '/');
+    push(newRoute);
   };
   return (
     <div>
@@ -62,7 +63,7 @@ export default function CountryMenu({
         disableScrollLock={true}
       >
         <MenuItem onClick={(_) => handleChangeLanguage('all')}>
-          <img src={chooseFlag('gl')} alt="" style={{ width: 20 }} />
+          <img src={chooseFlag('all')} alt="" style={{ width: 20 }} />
         </MenuItem>
 
         <MenuItem onClick={(_) => handleChangeLanguage('pt')}>

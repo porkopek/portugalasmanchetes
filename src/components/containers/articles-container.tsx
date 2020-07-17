@@ -8,12 +8,9 @@ import Article from 'components/article/article';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import NewsLoader from 'components/loader/loader';
 import { useParams } from 'react-router-dom';
-import SubscriptionsList from 'components/explore/subscriptions-list';
 import InfiniteScroll from 'components/infinite-scroll/infinite-scroll';
 import { IPagination } from 'models/IPagination';
 import Categories from 'components/explore/categories';
-import { Category } from 'models/category';
-import { stringify } from 'querystring';
 
 export interface IArticlesContainerProps {
   direction: 'row' | 'column';
@@ -24,7 +21,7 @@ export default function ArticlesContainer({ direction }: IArticlesContainerProps
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'), { noSsr: true });
   const [err, setErr] = useState<Boolean>(false);
-  const [, setPagination] = useState<IPagination>();
+  const [pagination, setPagination] = useState<IPagination>();
 
   const [articles, setArticles] = useState<IArticle[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -32,15 +29,15 @@ export default function ArticlesContainer({ direction }: IArticlesContainerProps
 
   //pageNumber starts at 2 because first page is loaded by useffect
   const [pageNumber, setPageNumber] = useState<number>(2);
-  const [sources, setSources] = useState<string[]>([]);
-  let { language, searchTerm, domain, order, category } = useParams();
+  const [, setSources] = useState<string[]>([]);
+  let { language, searchTerm, domain, order, category, tagText } = useParams();
   //if language is not set
   language = language ?? localStorage.getItem('language') ?? 'all';
 
   const getApiUrl = (pageNumber: number) => {
     return `https://pokopek.com/api/articles?language=${
       language && language !== 'all' ? language : ''
-    }&pagenumber=${pageNumber}&search=${searchTerm ?? ''}&domain=${
+    }&pagenumber=${pageNumber}&search=${searchTerm ?? ''}&tagtext=${tagText ?? ''}&domain=${
       domain ?? ''
     }&category=${category}&order=${order ?? ''}`;
   };
@@ -90,7 +87,7 @@ export default function ArticlesContainer({ direction }: IArticlesContainerProps
 
   //when reaches end of page
   const loadMore = async () => {
-    if (isLoading) return;
+    if (isLoading || !pagination?.hasNext) return;
     const apiUrl = getApiUrl(pageNumber);
     const arts = await (await fetch(apiUrl)).json();
     const newArts = [...articles, ...arts];
