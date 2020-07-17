@@ -40,7 +40,7 @@ export default function ArticlesContainer({ direction }: IArticlesContainerProps
       language && language !== 'all' ? language : ''
     }&pagenumber=${pageNumber}&search=${searchTerm ?? ''}&tagtext=${tagText ?? ''}&domain=${
       domain ?? ''
-    }&category=${category}&order=${order ?? ''}`;
+    }&category=${category ?? ''}&order=${order ?? ''}`;
   };
 
   //for sources
@@ -142,20 +142,20 @@ export default function ArticlesContainer({ direction }: IArticlesContainerProps
           loader={null}
           style={{ overflow: 'hidden', padding: '0 8px' }}
         >
-          {searchTerm &&
-            articles.length > 0 &&
-            Message(
-              `Há ${pagination?.TotalCount.toLocaleString()} artigos que contêm o texto`,
-              searchTerm
-            )}
+          {searchTerm && articles.length > 0 && (
+            <Alert icon={false} style={{ margin: '8px 0 16px 0', maxWidth: '83%' }} severity="info">
+              Foram encontrados <b>{pagination?.TotalCount.toLocaleString()}</b> artigos com o texto
+              <b> {searchTerm}</b>
+            </Alert>
+          )}
 
           {tagText && (
-            <Alert style={{ margin: '8px 0 16px 0', maxWidth: '83%' }} severity="info">
+            <Alert icon={false} style={{ margin: '8px 0 16px 0', maxWidth: '83%' }} severity="info">
               Artigos com a tendência <b>{tagText}</b>
             </Alert>
           )}
           {category && category !== 'all' && (
-            <Alert style={{ margin: '8px 0 16px 0', maxWidth: '83%' }} severity="info">
+            <Alert icon={false} style={{ margin: '8px 0 16px 0', maxWidth: '83%' }} severity="info">
               Artigos da categoria <b>{translateIntoPortuguese(category)}</b>
             </Alert>
           )}
