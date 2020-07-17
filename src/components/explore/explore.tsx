@@ -27,12 +27,14 @@ export default function Explore() {
       <Search />
       {isLoading ? (
         <NewsLoader />
-      ) : (
+      ) : tags?.length > 0 ? (
         <SubscriptionsList
           title="Tendências"
           subscriptionType="trends"
-          subscriptions={tags.map((s) => s.text)}
+          subscriptions={tags?.map((s) => s.text)}
         />
+      ) : (
+        <h3>Não há tendências para esta língua neste momento. Volta mais tarde</h3>
       )}
     </>
   );
