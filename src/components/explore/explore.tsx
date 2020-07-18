@@ -5,7 +5,6 @@ import { useParams } from 'react-router';
 import ExploreTabs from 'components/explore/explore-tabs';
 export default function Explore() {
   let { language } = useParams();
-  if (language === 'all') language = '';
 
   return (
     <>

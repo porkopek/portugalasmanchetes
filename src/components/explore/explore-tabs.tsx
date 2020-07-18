@@ -30,6 +30,7 @@ export default function ExploreTabs({ language }: IExploreTabsProps) {
         <TabPanel
           subscriptionsType="categories"
           value={value}
+          language={language}
           index={0}
           staticSubscriptions={[
             'actualidade',
@@ -46,20 +47,22 @@ export default function ExploreTabs({ language }: IExploreTabsProps) {
 
         <TabPanel
           subscriptionsType="sources"
+          language={language}
           value={value}
           index={1}
-          url="https://pokopek.com/api/articles/sources"
+          url={`https://pokopek.com/api/articles/sources/${language}`}
         />
 
         <TabPanel
           subscriptionsType="trends"
           value={value}
+          language={language}
           index={2}
           subscriptionsProperty="text"
           url={`https://pokopek.com/api/explore/tags/${language}`}
         />
 
-        <TabPanel subscriptionsType="subscriptions" value={value} index={3}>
+        <TabPanel language={language} subscriptionsType="subscriptions" value={value} index={3}>
           Subscripções (brevemente)
         </TabPanel>
       </div>

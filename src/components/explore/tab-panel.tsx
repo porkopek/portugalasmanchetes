@@ -13,6 +13,7 @@ export interface TabPanelProps {
   index: any;
 
   value: any;
+  language: string;
 
   //The url of the API to fetch the subscriptions
   url?: string;
@@ -29,10 +30,11 @@ export function TabPanel(props: TabPanelProps) {
     subscriptionsProperty,
     staticSubscriptions,
     subscriptionsType,
+    language,
     ...other
   } = props;
-  const [, setIsLoading] = useState<boolean>(true);
 
+  const [, setIsLoading] = useState<boolean>(true);
   const [subscriptions, setSubscriptions] = useState<string[]>([]);
   const transformJson = (json: []) => {
     var result =
@@ -49,7 +51,7 @@ export function TabPanel(props: TabPanelProps) {
       setIsLoading(false);
     };
     fetchJson();
-  }, [url]);
+  }, [url, language]);
 
   return (
     <div

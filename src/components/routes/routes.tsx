@@ -4,6 +4,7 @@ import { Route, Switch, Redirect } from 'react-router';
 import ArticlesContainer from 'components/containers/articles-container';
 import Explore from 'components/explore/explore';
 import { Container } from '@material-ui/core';
+import PrivacyPolicy from 'components/Privacy/privacy-policy';
 
 interface IRoutesProps {
   direction: 'row' | 'column';
@@ -35,6 +36,11 @@ export default function Routes({ direction }: IRoutesProps) {
         {/*//-- Jornais */}
         <Route path="/source/:domain">
           <ArticlesContainer direction={direction} />
+        </Route>
+
+        {/*//-- home */}
+        <Route path="/RGPD" exact>
+          <PrivacyPolicy />
         </Route>
 
         {/*//-- home */}
