@@ -21,38 +21,48 @@ export default function CookiesConsent() {
 
         flexDirection: 'column',
         justifyContent: 'flex-end',
-        alignItems: 'center',
+        alignItems: 'flex-end',
         display: display,
       }}
     >
       <div
+        className="system-font"
         style={{
-          padding: 18,
+          padding: ' 50px',
           display: 'flex',
-          backgroundColor: '#1c1d1c',
+          backgroundColor: 'white',
           flexDirection: 'column',
           justifyContent: 'center',
-          alignItems: 'center',
-          borderRadius: 20,
-          margin: 18,
+          color: 'rgba(0,0,0,.8)',
+          width: 'auto',
+          maxWidth: 650,
+          borderRadius: '4px',
+          fontSize: 18,
         }}
       >
-        <p>Este sítio web utiliza cookies e armazena alguns dados para a sua comodidade.</p>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <img
+            src={process.env.PUBLIC_URL + '/favicon.png'}
+            alt=""
+            style={{ marginRight: 20, marginLeft: -20 }}
+          />
+          <h1> Portugal ás Manchetes</h1>
+        </div>
+
+        <p>Este sítio utiliza cookies.</p>
         <p>
           Se deseja continuar a navegar, deve dar o seu consentimento. Em caso contrário, deverá
           abandonar o sítio.
+          <br />
+          Pode consultar a nossa Política de Privacidade no seguinte link{' '}
         </p>
-        <p>Pode consultar a nossa Política de Privacidade no seguinte link </p>
         <div style={{ marginBottom: 25 }}>
-          <Link to="/RGPD" style={{ color: '#FF5722' }} onClick={handleAcceptCookies}>
+          <Link to="/RGPD" style={{ color: '#9C27B0' }} onClick={handleAcceptCookies}>
             Política de Privacidade
           </Link>
         </div>
         <div>
-          <Button
-            style={{ marginRight: 18, color: 'white', borderColor: 'white' }}
-            variant="outlined"
-          >
+          <Button style={{ marginRight: 18 }} variant="outlined">
             Recusar
           </Button>
           <Button variant="contained" color="primary" onClick={handleAcceptCookies}>
