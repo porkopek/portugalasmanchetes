@@ -1,16 +1,58 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { TabLabelMenu, useStyles, TabsGroup } from './explore-tab-styles';
 import { TabPanel } from './tab-panel';
-
-interface IExploreTabsProps {
-  language: string;
-}
-export default function ExploreTabs({ language }: IExploreTabsProps) {
+import { Route, useParams, useHistory } from 'react-router';
+export type ITrendType = 'categories' | 'sources' | 'trends' | 'subscriptions';
+export default function ExploreTabs() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+  const { language, trendType } = useParams<{ language: string; trendType: ITrendType }>();
+  const { push } = useHistory();
+
+  useEffect(() => {
+    let newValue = 0;
+
+    switch (trendType) {
+      case 'categories':
+        newValue = 0;
+        break;
+      case 'sources':
+        newValue = 1;
+        break;
+      case 'trends':
+        newValue = 2;
+        break;
+      case 'subscriptions':
+        newValue = 3;
+        break;
+    }
+    setValue(newValue);
+
+    if (!trendType) return;
+
+    push(`/${language}/explore/${trendType}`);
+  }, [trendType, language]);
 
   const handleChange = (_: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
+
+    let newTrendType: ITrendType = 'categories';
+    switch (newValue) {
+      case 0:
+        newTrendType = 'categories';
+        break;
+      case 1:
+        newTrendType = 'sources';
+        break;
+      case 2:
+        newTrendType = 'trends';
+        break;
+      case 3:
+        newTrendType = 'subscriptions';
+        break;
+    }
+
+    push(`/${language}/explore/${newTrendType}`);
   };
 
   return (
@@ -27,6 +69,7 @@ export default function ExploreTabs({ language }: IExploreTabsProps) {
           <TabLabelMenu label="Tendencias" />
           <TabLabelMenu label="Subscripções" />
         </TabsGroup>
+
         <TabPanel
           subscriptionsType="categories"
           value={value}
@@ -64,6 +107,9 @@ export default function ExploreTabs({ language }: IExploreTabsProps) {
 
         <TabPanel language={language} subscriptionsType="subscriptions" value={value} index={3}>
           Subscripções (brevemente)
+          <br />
+          <br />
+          <br />
         </TabPanel>
       </div>
     </div>

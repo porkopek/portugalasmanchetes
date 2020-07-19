@@ -12,13 +12,13 @@ import { Link, useParams } from 'react-router-dom';
 import StarIcon from '@material-ui/icons/Notifications';
 import { Category } from 'models/category';
 import Filter from './filter';
-
-export type SubscriptionsType = 'trends' | 'sources' | 'categories' | 'subscriptions';
+import { ITrendType } from './explore-tabs';
 
 export interface ISubscriptionsProps {
   subscriptions: string[];
+  onFilterSubscriptions?: (filterTerm: string) => void;
 
-  subscriptionType: SubscriptionsType;
+  subscriptionType: ITrendType;
   position?: 'sticky';
 }
 const useStyles = makeStyles((theme: Theme) =>
@@ -55,10 +55,12 @@ export default function SubscriptionsList({
   subscriptions,
   subscriptionType,
   position,
+  onFilterSubscriptions,
 }: ISubscriptionsProps) {
   const classes = useStyles();
   const { language } = useParams();
-  const [subs, setSubs] = useState(subscriptions);
+
+  // url to route the subscription depending on type
   const getUrl = (subscription: string, subscriptionNumber: number) => {
     switch (subscriptionType) {
       case 'categories':
@@ -76,16 +78,15 @@ export default function SubscriptionsList({
         return `/${language ?? ''}/trends/${subscription}`;
     }
   };
-  const handleChange = (filterTerm: string) => {
-    var newSubs = subscriptions.filter((s) => s.includes(filterTerm));
-    setSubs(newSubs);
-  };
+
   return (
     <div className={position === 'sticky' ? classes.stickyPannel : undefined}>
-      {subscriptionType !== 'categories' && <Filter onChange={handleChange} />}
+      {subscriptionType !== 'categories' && subscriptionType !== 'subscriptions' && (
+        <Filter onChange={(e) => onFilterSubscriptions && onFilterSubscriptions(e)} />
+      )}
       <List>
-        {subs.length > 0 &&
-          subs.map((subscription, i) => {
+        {subscriptions.length > 0 &&
+          subscriptions.map((subscription, i) => {
             const link = getUrl(subscription, i);
             return (
               <ListItem key={subscription}>

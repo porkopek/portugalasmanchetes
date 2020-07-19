@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import SubscriptionsList, { SubscriptionsType } from './subscriptions-list';
+import SubscriptionsList from './subscriptions-list';
+import { ITrendType } from './explore-tabs';
+import NewsLoader from 'components/loader/loader';
 
 export interface TabPanelProps {
   children?: React.ReactNode;
 
-  subscriptionsType: SubscriptionsType;
+  subscriptionsType: ITrendType;
 
   //if we already have the subscriptions and not need to fetch,
   //because is a fixed string, pass them in this property
@@ -34,24 +36,36 @@ export function TabPanel(props: TabPanelProps) {
     ...other
   } = props;
 
-  const [, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [subscriptions, setSubscriptions] = useState<string[]>([]);
+  const [originalSubscriptions, setOriginalSubscriptions] = useState<string[]>([]);
+
   const transformJson = (json: []) => {
     var result =
       subscriptionsProperty !== undefined ? json.map((j) => j[subscriptionsProperty]) : json;
     return result as string[];
   };
   useEffect(() => {
-    if (url === undefined || staticSubscriptions) return;
+    if (url === undefined || staticSubscriptions) {
+      setIsLoading(false);
+      return;
+    }
 
     setIsLoading(true);
     const fetchJson = async () => {
       const json: [] = await (await fetch(url)).json();
-      setSubscriptions(transformJson(json));
+      const newSubstriptions = transformJson(json);
+      setOriginalSubscriptions(newSubstriptions);
+      setSubscriptions(newSubstriptions);
       setIsLoading(false);
     };
     fetchJson();
-  }, [url, language]);
+  }, [language]);
+
+  const handleChange = (filterTerm: string) => {
+    var newSubs = originalSubscriptions.filter((s) => s.includes(filterTerm));
+    setSubscriptions(newSubs);
+  };
 
   return (
     <div
@@ -62,10 +76,12 @@ export function TabPanel(props: TabPanelProps) {
       style={{ padding: '16px 8px' }}
       {...other}
     >
-      {value === index && children}
-      {value === index && (
+      {isLoading && <NewsLoader color="#1890ff" />}
+      {isLoading == false && value === index && children}
+      {isLoading == false && value === index && (
         <SubscriptionsList
           subscriptionType={subscriptionsType}
+          onFilterSubscriptions={handleChange}
           subscriptions={staticSubscriptions || subscriptions}
         />
       )}

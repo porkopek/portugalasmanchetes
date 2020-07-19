@@ -9,7 +9,6 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: theme.spacing(),
       width: '100%',
       maxWidth: 250,
-      marginLeft: 24,
     },
     search: {
       position: 'relative',

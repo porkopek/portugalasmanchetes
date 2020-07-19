@@ -27,6 +27,7 @@ export const TabLabelMenu = withStyles((theme: Theme) =>
 )((props: StyledTabProps) => <Tab disableRipple {...props} />);
 interface StyledTabProps {
   label: string;
+  onClick?: (e?: any) => void;
 }
 export const TabsGroup = withStyles({
   root: {

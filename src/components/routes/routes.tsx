@@ -14,8 +14,8 @@ export default function Routes({ direction }: IRoutesProps) {
   return (
     <Container style={{ padding: '28px 0' }}>
       <Switch>
-        {/*//-- *** Trends *** */}
-        <Route path="/:language/explore/">
+        {/*//-- *** Explore *** */}
+        <Route path="/:language/explore/:trendType?">
           <Explore />
         </Route>
 

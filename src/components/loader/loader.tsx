@@ -5,7 +5,7 @@ interface ILoaderProps {
   fontSize?: number;
   color?: string;
 }
-export default function NewsLoader({ text, fontSize = 18, color = grey[600] }: ILoaderProps) {
+export default function NewsLoader({ text, fontSize = 18, color = '#2196f3' }: ILoaderProps) {
   return (
     <div
       style={{
@@ -14,6 +14,8 @@ export default function NewsLoader({ text, fontSize = 18, color = grey[600] }: I
         alignItems: 'center',
         padding: 20,
         clear: 'both',
+        minWidth: 600,
+        width: 600,
       }}
     >
       <span
