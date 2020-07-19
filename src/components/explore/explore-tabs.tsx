@@ -66,7 +66,7 @@ export default function ExploreTabs() {
         >
           <TabLabelMenu label="Categories" />
           <TabLabelMenu label="Jornais" />
-          <TabLabelMenu label="Tendencias" />
+          <TabLabelMenu label="Tendências" />
           <TabLabelMenu label="Subscripções" />
         </TabsGroup>
 

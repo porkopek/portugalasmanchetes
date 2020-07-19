@@ -63,7 +63,8 @@ export function TabPanel(props: TabPanelProps) {
   }, [language]);
 
   const handleChange = (filterTerm: string) => {
-    var newSubs = originalSubscriptions.filter((s) => s.includes(filterTerm));
+    let filterPattern = RegExp(filterTerm, 'i');
+    let newSubs = originalSubscriptions.filter((s) => filterPattern.test(s));
     setSubscriptions(newSubs);
   };
 

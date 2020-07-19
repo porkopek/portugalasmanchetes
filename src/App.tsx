@@ -7,16 +7,14 @@ function App() {
   const directionSetting = localStorage.getItem('direction') as 'row' | 'column';
 
   const [direction, setDirection] = useState<'row' | 'column'>(directionSetting || 'row');
-
+  const handleChangeDirection = () => {
+    const newDirection = direction === 'column' ? 'row' : 'column';
+    localStorage.setItem('direction', newDirection);
+    setDirection(newDirection);
+  };
   return (
     <div className="App">
-      <Nav
-        onDirectionChanges={() => {
-          const newDirection = direction === 'column' ? 'row' : 'column';
-          localStorage.setItem('direction', newDirection);
-          setDirection(newDirection);
-        }}
-      />
+      <Nav onDirectionChanges={handleChangeDirection} />
       <Routes direction={direction} />
       {localStorage.getItem('cookiesConsent') === null && <CookiesConsent />}
     </div>
