@@ -1,19 +1,19 @@
 {
   "files": {
     "main.css": "/portugalasmanchetes/static/css/main.5e9aab33.chunk.css",
-    "main.js": "/portugalasmanchetes/static/js/main.ee665f17.chunk.js",
-    "main.js.map": "/portugalasmanchetes/static/js/main.ee665f17.chunk.js.map",
+    "main.js": "/portugalasmanchetes/static/js/main.5a932059.chunk.js",
+    "main.js.map": "/portugalasmanchetes/static/js/main.5a932059.chunk.js.map",
     "runtime-main.js": "/portugalasmanchetes/static/js/runtime-main.aff7e2d8.js",
     "runtime-main.js.map": "/portugalasmanchetes/static/js/runtime-main.aff7e2d8.js.map",
     "static/css/2.f87e9f44.chunk.css": "/portugalasmanchetes/static/css/2.f87e9f44.chunk.css",
-    "static/js/2.a0e6a4b7.chunk.js": "/portugalasmanchetes/static/js/2.a0e6a4b7.chunk.js",
-    "static/js/2.a0e6a4b7.chunk.js.map": "/portugalasmanchetes/static/js/2.a0e6a4b7.chunk.js.map",
+    "static/js/2.106f6fdb.chunk.js": "/portugalasmanchetes/static/js/2.106f6fdb.chunk.js",
+    "static/js/2.106f6fdb.chunk.js.map": "/portugalasmanchetes/static/js/2.106f6fdb.chunk.js.map",
     "index.html": "/portugalasmanchetes/index.html",
-    "precache-manifest.3318d25ae71699c00b424b578488e81b.js": "/portugalasmanchetes/precache-manifest.3318d25ae71699c00b424b578488e81b.js",
+    "precache-manifest.930e4e03e2862218db0ded449b190ce7.js": "/portugalasmanchetes/precache-manifest.930e4e03e2862218db0ded449b190ce7.js",
     "service-worker.js": "/portugalasmanchetes/service-worker.js",
     "static/css/2.f87e9f44.chunk.css.map": "/portugalasmanchetes/static/css/2.f87e9f44.chunk.css.map",
     "static/css/main.5e9aab33.chunk.css.map": "/portugalasmanchetes/static/css/main.5e9aab33.chunk.css.map",
-    "static/js/2.a0e6a4b7.chunk.js.LICENSE.txt": "/portugalasmanchetes/static/js/2.a0e6a4b7.chunk.js.LICENSE.txt",
+    "static/js/2.106f6fdb.chunk.js.LICENSE.txt": "/portugalasmanchetes/static/js/2.106f6fdb.chunk.js.LICENSE.txt",
     "static/media/es.svg": "/portugalasmanchetes/static/media/es.36938bbe.svg",
     "static/media/explore.851f1176.svg": "/portugalasmanchetes/static/media/explore.851f1176.svg",
     "static/media/fire.4d2360a4.svg": "/portugalasmanchetes/static/media/fire.4d2360a4.svg",
@@ -26,8 +26,8 @@
   "entrypoints": [
     "static/js/runtime-main.aff7e2d8.js",
     "static/css/2.f87e9f44.chunk.css",
-    "static/js/2.a0e6a4b7.chunk.js",
+    "static/js/2.106f6fdb.chunk.js",
     "static/css/main.5e9aab33.chunk.css",
-    "static/js/main.ee665f17.chunk.js"
+    "static/js/main.5a932059.chunk.js"
   ]
 }
