@@ -107,6 +107,12 @@ const useStyles = makeStyles((theme: Theme) =>
         backgroundColor: 'rgba(0, 100, 0, 0.03)',
       },
     },
+    visited: {
+      padding: '2px 4px',
+      fontSize: 12,
+      color: green[500],
+      marginTop: 16,
+    },
   })
 );
 export default function Article({
@@ -123,10 +129,14 @@ export default function Article({
   ranking,
   category: categoryNumber,
   onDescriptionTextSelected,
+  clicks,
 }: IArticleProps) {
   const classes = useStyles({ direction, imageUrl, categoryNumber });
   const theme = useTheme();
   const [showDialog, setShowDialog] = useState(false);
+  async function handleVisit() {
+    await (await fetch(`https://pokopek.com/api/articles/newvisit/${id}`)).json();
+  }
   return (
     <>
       <div className={classes.card} data-id={id} data-ranking={ranking}>
@@ -145,13 +155,15 @@ export default function Article({
               {getCategory()}
             </Link>
           </span>
-          {/* {tags.map((t) => (
-            <span key={t} className={classes.category}>
-              {t}
-            </span>
-          ))} */}
+
           <h2 style={{ marginTop: 0 }}>
-            <a className={classes.title} href={url} target="_blank" rel="noreferrer noopener">
+            <a
+              onClick={handleVisit}
+              className={classes.title}
+              href={url}
+              target="_blank"
+              rel="noreferrer noopener"
+            >
               {title}
             </a>
           </h2>
@@ -184,11 +196,13 @@ export default function Article({
                 <IconButton
                   color="primary"
                   onClick={(_) => {
+                    handleVisit();
                     setShowDialog(!showDialog);
                   }}
                   className={classes.readMore}
                 >
                   <ShowIcon />
+                  {clicks !== 0 && <span className={classes.visited}>{clicks}</span>}
                 </IconButton>
               )}
               <IconButton color={'secondary'} className={classes.heart}>

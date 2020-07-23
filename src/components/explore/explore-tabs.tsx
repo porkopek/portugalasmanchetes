@@ -102,7 +102,7 @@ export default function ExploreTabs() {
           language={language}
           index={2}
           subscriptionsProperty="text"
-          url={`https://pokopek.com/api/explore/tags/${language}`}
+          url={`https://pokopek.com/api/trends?language=${language}`}
         />
 
         <TabPanel language={language} subscriptionsType="subscriptions" value={value} index={3}>

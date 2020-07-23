@@ -5,17 +5,19 @@ interface ILoaderProps {
   fontSize?: number;
   color?: string;
 }
-export default function NewsLoader({ text, fontSize = 18, color = '#2196f3' }: ILoaderProps) {
+export default function NewsLoader({
+  text = 'a carregar',
+  fontSize = 14,
+  color = 'rgb(37 152 243)',
+}: ILoaderProps) {
   return (
     <div
       style={{
         display: 'flex',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         alignItems: 'center',
         padding: 20,
-        clear: 'both',
-        minWidth: 600,
-        width: 600,
+        color: color,
       }}
     >
       <span
@@ -24,7 +26,6 @@ export default function NewsLoader({ text, fontSize = 18, color = '#2196f3' }: I
           fontSize: fontSize,
           lineHeight: 1,
           fontFamily: 'Montserrat',
-          fontWeight: 'bold',
         }}
       >
         {text}

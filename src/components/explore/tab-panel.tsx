@@ -77,7 +77,7 @@ export function TabPanel(props: TabPanelProps) {
       style={{ padding: '16px 8px' }}
       {...other}
     >
-      {isLoading && <NewsLoader color="#1890ff" />}
+      {isLoading && <NewsLoader />}
       {isLoading == false && value === index && children}
       {isLoading == false && value === index && (
         <SubscriptionsList

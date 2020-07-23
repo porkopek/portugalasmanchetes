@@ -13,4 +13,6 @@ export interface IArticle {
   ranking: number;
   category: number;
   tags: string[];
+  daysSince2020First: number;
+  clicks: number;
 }

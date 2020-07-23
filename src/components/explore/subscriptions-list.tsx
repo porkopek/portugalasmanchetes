@@ -81,9 +81,9 @@ export default function SubscriptionsList({
 
   return (
     <div className={position === 'sticky' ? classes.stickyPannel : undefined}>
-      {subscriptionType !== 'categories' && subscriptionType !== 'subscriptions' && (
+      {/* {subscriptionType !== 'categories' && subscriptionType !== 'subscriptions' && (
         <Filter onChange={(e) => onFilterSubscriptions && onFilterSubscriptions(e)} />
-      )}
+      )} */}
       <List>
         {subscriptions.length > 0 &&
           subscriptions.map((subscription, i) => {

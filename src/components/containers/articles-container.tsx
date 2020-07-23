@@ -31,16 +31,16 @@ export default function ArticlesContainer({ direction }: IArticlesContainerProps
   //pageNumber starts at 2 because first page is loaded by useffect
   const [pageNumber, setPageNumber] = useState<number>(2);
   const [, setSources] = useState<string[]>([]);
-  let { language, searchTerm, domain, order, category, tagText } = useParams();
+  let { language, searchTerm, domain, order, category } = useParams();
   //if language is not set
   language = language ?? localStorage.getItem('language') ?? 'all';
 
   const getApiUrl = (pageNumber: number) => {
     return `https://pokopek.com/api/articles?language=${
       language && language !== 'all' && domain === undefined ? language : ''
-    }&pagenumber=${pageNumber}&search=${searchTerm ?? ''}&tagtext=${tagText ?? ''}&domain=${
-      domain ?? ''
-    }&category=${category ?? ''}&order=${order ?? ''}`;
+    }&pagenumber=${pageNumber}&search=${searchTerm ?? ''}&domain=${domain ?? ''}&category=${
+      category ?? ''
+    }&order=${order ?? ''}`;
   };
 
   // for fetch articles
@@ -143,16 +143,6 @@ export default function ArticlesContainer({ direction }: IArticlesContainerProps
             </Alert>
           )}
 
-          {!isLoading && tagText && (
-            <Alert
-              icon={false}
-              style={{ margin: '8px 0 16px 0', maxWidth: direction === 'column' ? '100' : '83%' }}
-              severity="info"
-            >
-              Há {<b>{pagination?.TotalCount.toLocaleString()}</b>} artigos com a tendência{' '}
-              <b>{tagText}</b> em <b>{translateIntoPortuguese(language)}</b>
-            </Alert>
-          )}
           {!isLoading && category && category !== 'all' && (
             <Alert
               icon={false}
@@ -175,9 +165,9 @@ export default function ArticlesContainer({ direction }: IArticlesContainerProps
             </Alert>
           )}
           <Grid container spacing={2}>
-            {isLoading && <NewsLoader fontSize={24} />}
+            {isLoading && <NewsLoader text="a carregar" fontSize={14} />}
             {!isLoading &&
-              articles.map((article) => {
+              articles.map((article, i, arts) => {
                 return (
                   <Grid
                     item
@@ -187,6 +177,10 @@ export default function ArticlesContainer({ direction }: IArticlesContainerProps
                     md={direction === 'row' ? 10 : 4}
                     lg={direction === 'row' ? 10 : 4}
                   >
+                    {i === 0 && <h2>Hoje</h2>}
+                    {i !== 0 && arts[i - 1].daysSince2020First !== article.daysSince2020First && (
+                      <h2>{article.friendlyDate}</h2>
+                    )}
                     <Article
                       direction={direction}
                       {...article}
