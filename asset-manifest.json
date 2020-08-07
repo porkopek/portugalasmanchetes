@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/portugalasmanchetes/static/css/main.5e9aab33.chunk.css",
-    "main.js": "/portugalasmanchetes/static/js/main.efc824be.chunk.js",
-    "main.js.map": "/portugalasmanchetes/static/js/main.efc824be.chunk.js.map",
+    "main.js": "/portugalasmanchetes/static/js/main.ca8fdd2b.chunk.js",
+    "main.js.map": "/portugalasmanchetes/static/js/main.ca8fdd2b.chunk.js.map",
     "runtime-main.js": "/portugalasmanchetes/static/js/runtime-main.aff7e2d8.js",
     "runtime-main.js.map": "/portugalasmanchetes/static/js/runtime-main.aff7e2d8.js.map",
     "static/css/2.f87e9f44.chunk.css": "/portugalasmanchetes/static/css/2.f87e9f44.chunk.css",
     "static/js/2.601c78dd.chunk.js": "/portugalasmanchetes/static/js/2.601c78dd.chunk.js",
     "static/js/2.601c78dd.chunk.js.map": "/portugalasmanchetes/static/js/2.601c78dd.chunk.js.map",
     "index.html": "/portugalasmanchetes/index.html",
-    "precache-manifest.0351cfe755c996f5a67f83b81742129a.js": "/portugalasmanchetes/precache-manifest.0351cfe755c996f5a67f83b81742129a.js",
+    "precache-manifest.d1e2b4bf0289648d3180c594d7a624c3.js": "/portugalasmanchetes/precache-manifest.d1e2b4bf0289648d3180c594d7a624c3.js",
     "service-worker.js": "/portugalasmanchetes/service-worker.js",
     "static/css/2.f87e9f44.chunk.css.map": "/portugalasmanchetes/static/css/2.f87e9f44.chunk.css.map",
     "static/css/main.5e9aab33.chunk.css.map": "/portugalasmanchetes/static/css/main.5e9aab33.chunk.css.map",
@@ -28,6 +28,6 @@
     "static/css/2.f87e9f44.chunk.css",
     "static/js/2.601c78dd.chunk.js",
     "static/css/main.5e9aab33.chunk.css",
-    "static/js/main.efc824be.chunk.js"
+    "static/js/main.ca8fdd2b.chunk.js"
   ]
 }
