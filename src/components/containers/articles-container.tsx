@@ -31,16 +31,18 @@ export default function ArticlesContainer({ direction }: IArticlesContainerProps
   //pageNumber starts at 2 because first page is loaded by useffect
   const [pageNumber, setPageNumber] = useState<number>(2);
   const [, setSources] = useState<string[]>([]);
-  let { language, searchTerm, domain, order, category } = useParams();
+  let { language, searchTerm, domain, order, category, ids } = useParams();
   //if language is not set
   language = language ?? localStorage.getItem('language') ?? 'all';
 
   const getApiUrl = (pageNumber: number) => {
-    return `https://pokopek.com/api/articles?language=${
-      language && language !== 'all' && domain === undefined ? language : ''
-    }&pagenumber=${pageNumber}&search=${searchTerm ?? ''}&domain=${domain ?? ''}&category=${
-      category ?? ''
-    }&order=${order ?? ''}`;
+    return ids !== undefined
+      ? `https://pokopek.com/api/articles/topic?ids=${ids}&pagenumber=${pageNumber}`
+      : `https://pokopek.com/api/articles?language=${
+          language && language !== 'all' && domain === undefined ? language : ''
+        }&pagenumber=${pageNumber}&search=${searchTerm ?? ''}&domain=${domain ?? ''}&category=${
+          category && category !== 'all' ? category : ''
+        }&order=${order ?? ''}`;
   };
 
   // for fetch articles
@@ -128,7 +130,7 @@ export default function ArticlesContainer({ direction }: IArticlesContainerProps
             </Alert>
           }
           next={loadMore}
-          hasMore={isLoading || pagination === undefined || pagination.HasNext}
+          hasMore={isLoading || pagination === undefined || pagination?.HasNext}
           loader={null}
           style={{ overflow: 'hidden', padding: '0 8px' }}
         >
@@ -169,24 +171,27 @@ export default function ArticlesContainer({ direction }: IArticlesContainerProps
             {!isLoading &&
               articles.map((article, i, arts) => {
                 return (
-                  <Grid
-                    item
-                    key={article.id}
-                    xs={12}
-                    sm={direction === 'row' ? 12 : 6}
-                    md={direction === 'row' ? 10 : 4}
-                    lg={direction === 'row' ? 10 : 4}
-                  >
-                    {i === 0 && <h2>Hoje</h2>}
+                  <>
+                    {i === 0 && <h2 style={{ width: '100%' }}>Hoje</h2>}
                     {i !== 0 && arts[i - 1].daysSince2020First !== article.daysSince2020First && (
-                      <h2>{article.friendlyDate}</h2>
+                      <h2 style={{ width: '100%' }}>{article.friendlyDate}</h2>
                     )}
-                    <Article
-                      direction={direction}
-                      {...article}
-                      onDescriptionTextSelected={handleSelectDescriptionText}
-                    />
-                  </Grid>
+                    <Grid
+                      item
+                      key={article.id}
+                      xs={12}
+                      sm={direction === 'row' ? 12 : 6}
+                      md={direction === 'row' ? 10 : 4}
+                      lg={direction === 'row' ? 10 : 4}
+                      style={{ maxWidth: '100vw !important' }}
+                    >
+                      <Article
+                        direction={direction}
+                        {...article}
+                        onDescriptionTextSelected={handleSelectDescriptionText}
+                      />
+                    </Grid>
+                  </>
                 );
               })}
           </Grid>

@@ -64,9 +64,7 @@ export default function SubscriptionsList({
   const getUrl = (subscription: string, subscriptionNumber: number) => {
     switch (subscriptionType) {
       case 'categories':
-        return (
-          `/${language || 'all'}/articles/` + Category[subscriptionNumber].english + '/relevant'
-        );
+        return `/${language || ''}/articles/` + Category[subscriptionNumber].english + '/relevant';
 
       case 'sources':
         return '/source/' + subscription;
@@ -75,7 +73,7 @@ export default function SubscriptionsList({
         return '/subscriptions';
 
       case 'trends':
-        return `/${language ?? ''}/trends/${subscription}`;
+        return `/${language ?? ''}/articles/topic?ids=${subscriptions}`;
     }
   };
 

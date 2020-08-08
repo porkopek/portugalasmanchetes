@@ -1,12 +1,19 @@
 import React, { useEffect } from 'react';
 import { TabLabelMenu, useStyles, TabsGroup } from './explore-tab-styles';
-import { TabPanel } from './tab-panel';
+import { TabPanel2 } from './tab-panel2';
 import { Route, useParams, useHistory } from 'react-router';
+import Categories from './categories';
+import TabPanel from './tab-panel';
+import DailyTopicList from './daily-topic-list';
+import { TwoLetterLanguage } from 'models/types';
 export type ITrendType = 'categories' | 'sources' | 'trends' | 'subscriptions';
 export default function ExploreTabs() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
-  const { language, trendType } = useParams<{ language: string; trendType: ITrendType }>();
+  const { language, trendType } = useParams<{
+    language: TwoLetterLanguage;
+    trendType: ITrendType;
+  }>();
   const { push } = useHistory();
 
   useEffect(() => {
@@ -66,51 +73,36 @@ export default function ExploreTabs() {
         >
           <TabLabelMenu label="Categories" />
           <TabLabelMenu label="Jornais" />
-          <TabLabelMenu label="Tendências" />
+          <TabLabelMenu label="Manchetes" />
           <TabLabelMenu label="Subscripções" />
         </TabsGroup>
-
-        <TabPanel
-          subscriptionsType="categories"
-          value={value}
-          language={language}
-          index={0}
-          staticSubscriptions={[
-            'actualidade',
-            'desporto',
-            'cultura',
-            'ciência',
-            'história',
-            'religião',
-            'diversão',
-            'tecnologia',
-            'tempo',
-          ]}
-        />
-
-        <TabPanel
+        {value === 0 && <Categories />}
+        <TabPanel2
           subscriptionsType="sources"
           language={language}
           value={value}
           index={1}
           url={`https://pokopek.com/api/articles/sources/${language}`}
         />
+        <TabPanel value={value} index={2}>
+          <DailyTopicList language={language} />
+        </TabPanel>
 
-        <TabPanel
+        {/* <TabPanel
           subscriptionsType="trends"
           value={value}
           language={language}
           index={2}
-          subscriptionsProperty="text"
-          url={`https://pokopek.com/api/trends?language=${language}`}
-        />
+          subscriptionsProperty="mainTitle"
+          url={`https://pokopek.com/api/dailytopics/trends?language=${language}`}
+        /> */}
 
-        <TabPanel language={language} subscriptionsType="subscriptions" value={value} index={3}>
+        <TabPanel2 language={language} subscriptionsType="subscriptions" value={value} index={3}>
           Subscripções (brevemente)
           <br />
           <br />
           <br />
-        </TabPanel>
+        </TabPanel2>
       </div>
     </div>
   );

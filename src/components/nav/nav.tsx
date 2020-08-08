@@ -30,7 +30,8 @@ const useStyles = makeStyles(() =>
     },
   })
 );
-const initialLanguage = (localStorage.getItem('language') as Language) || 'pt';
+//-- TODO detect change in language. Manage state of CountryMenu
+const initialLanguage = (localStorage.getItem('language') as Language) || 'all';
 export default function Nav({ onDirectionChanges }: INavProps) {
   const [language, setLanguage] = useState<Language>(initialLanguage);
   const classes = useStyles();

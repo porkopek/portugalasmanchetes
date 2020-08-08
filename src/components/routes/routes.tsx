@@ -23,6 +23,10 @@ export default function Routes({ direction }: IRoutesProps) {
         <Route path="/:language/search/:searchTerm/">
           <ArticlesContainer direction={direction} />
         </Route>
+        {/*//-- Searchs: route=>search/ */}
+        <Route path="/topic/:ids/">
+          <ArticlesContainer direction={direction} />
+        </Route>
         {/*//-- Trends: route=>trends/ */}
         <Route path="/:language/trends/:searchTerm/">
           <ArticlesContainer direction={direction} />

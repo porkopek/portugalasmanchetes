@@ -12,11 +12,6 @@ export interface ICountryMenuProps {
   onLanguageChanges: (language: Language) => void;
 }
 const chooseFlag = (flag: Language) => {
-  const language = localStorage.getItem('language');
-
-  if (!flag && language) {
-    flag = language as Language;
-  }
   switch (flag) {
     case 'es':
       return spainFlag;
