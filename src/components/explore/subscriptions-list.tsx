@@ -12,13 +12,13 @@ import { Link, useParams } from 'react-router-dom';
 import StarIcon from '@material-ui/icons/Notifications';
 import { Category } from 'models/category';
 import Filter from './filter';
-import { ITrendType } from './explore-tabs';
+import { ITab } from './explore-tabs';
 
 export interface ISubscriptionsProps {
   subscriptions: string[];
   onFilterSubscriptions?: (filterTerm: string) => void;
 
-  subscriptionType: ITrendType;
+  subscriptionType: ITab;
   position?: 'sticky';
 }
 const useStyles = makeStyles((theme: Theme) =>

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import SubscriptionsList from './subscriptions-list';
-import { ITrendType } from './explore-tabs';
+import { ITab } from './explore-tabs';
 import NewsLoader from 'components/loader/loader';
 
 export interface TabPanelProps {
   children?: React.ReactNode;
 
-  subscriptionsType: ITrendType;
+  subscriptionsType: ITab;
 
   //if we already have the subscriptions and not need to fetch,
   //because is a fixed string, pass them in this property

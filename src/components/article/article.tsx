@@ -5,7 +5,7 @@ import ShowIcon from '@material-ui/icons/ChromeReaderModeOutlined';
 import { makeStyles, Theme, createStyles, IconButton, colors, useTheme } from '@material-ui/core';
 import { red, green } from '@material-ui/core/colors';
 import { IArticle } from 'models/IArticle';
-import { Link } from 'react-router-dom';
+import { Link, useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 import FullTextArticle from './fulltext-article';
 import { Category, CategoryColor } from 'models/category';
 export interface IArticleProps extends IArticle {
@@ -132,6 +132,9 @@ export default function Article({
   clicks,
 }: IArticleProps) {
   const classes = useStyles({ direction, imageUrl, categoryNumber });
+  const { push } = useHistory();
+  const { url: path } = useRouteMatch();
+
   const theme = useTheme();
   const [showDialog, setShowDialog] = useState(false);
   async function handleVisit() {
@@ -196,6 +199,8 @@ export default function Article({
                 <IconButton
                   color="primary"
                   onClick={(_) => {
+                    // -- TODO close modal with back button
+                    //  push(`${path}#${id}`);
                     handleVisit();
                     setShowDialog(!showDialog);
                   }}

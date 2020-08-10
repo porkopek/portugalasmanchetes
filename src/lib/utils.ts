@@ -11,3 +11,10 @@ export function reduceTags(tags: string): string[] {
 
   return result;
 }
+export const getStoredCategoriesArray = () => {
+  const storedCategoriesString = localStorage.getItem('categories');
+  const result = storedCategoriesString === null ? null : JSON.parse(storedCategoriesString);
+  return result;
+};
+
+export const getStoredCategoriesString = () => getStoredCategoriesArray()?.join(',');

@@ -31,7 +31,7 @@ export default function ArticlesContainer({ direction }: IArticlesContainerProps
   //pageNumber starts at 2 because first page is loaded by useffect
   const [pageNumber, setPageNumber] = useState<number>(2);
   const [, setSources] = useState<string[]>([]);
-  let { language, searchTerm, domain, order, category, ids } = useParams();
+  let { language, searchTerm, domain, order, categories, ids } = useParams();
   //if language is not set
   language = language ?? localStorage.getItem('language') ?? 'all';
 
@@ -40,8 +40,8 @@ export default function ArticlesContainer({ direction }: IArticlesContainerProps
       ? `https://pokopek.com/api/articles/topic?ids=${ids}&pagenumber=${pageNumber}`
       : `https://pokopek.com/api/articles?language=${
           language && language !== 'all' && domain === undefined ? language : ''
-        }&pagenumber=${pageNumber}&search=${searchTerm ?? ''}&domain=${domain ?? ''}&category=${
-          category && category !== 'all' ? category : ''
+        }&pagenumber=${pageNumber}&search=${searchTerm ?? ''}&domain=${domain ?? ''}&categories=${
+          categories && categories !== 'all' ? categories : ''
         }&order=${order ?? ''}`;
   };
 
@@ -73,7 +73,7 @@ export default function ArticlesContainer({ direction }: IArticlesContainerProps
     //2 (two), because the first page has been got here, and the infinite scroll should take the second page
     setPageNumber(2);
     //-- useEffect dependencies array
-  }, [language, domain, order, category, searchTerm]);
+  }, [language, domain, order, categories, searchTerm]);
 
   //when reaches end of page
   const loadMore = async () => {
@@ -145,14 +145,14 @@ export default function ArticlesContainer({ direction }: IArticlesContainerProps
             </Alert>
           )}
 
-          {!isLoading && category && category !== 'all' && (
+          {!isLoading && categories && categories !== 'all' && (
             <Alert
               icon={false}
               style={{ margin: '8px 0 16px 0', maxWidth: direction === 'column' ? '100' : '83%' }}
               severity="info"
             >
               Há <b>{pagination?.TotalCount.toLocaleString()}</b> artigos da categoria{' '}
-              <b>{translateIntoPortuguese(category)}</b> em{' '}
+              <b>{translateIntoPortuguese(categories)}</b> em{' '}
               <b>{translateIntoPortuguese(language)}</b>
             </Alert>
           )}

@@ -1,24 +1,94 @@
-import React from 'react';
-import SubscriptionsList from 'components/explore/subscriptions-list';
+import React, { useState } from 'react';
+import {
+  List,
+  ListItem,
+  Switch,
+  ListItemText,
+  makeStyles,
+  Theme,
+  createStyles,
+} from '@material-ui/core';
+import { Category } from 'models/category';
+import { getStoredCategoriesArray } from 'lib/utils';
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    stickyPannel: {
+      position: 'sticky',
+      top: 80,
+      maxHeight: '90vh',
+      [theme.breakpoints.up('md')]: {
+        overflow: 'hidden',
+        '&:hover': {
+          overflowY: 'auto',
+        },
+      },
+    },
+    header: {
+      fontWeight: 'bold',
+      marginTop: theme.spacing(2),
+      marginLeft: theme.spacing(2),
+      paddingBottom: 3,
+      borderBottom: '1px solid ',
+      display: 'inline-block',
+    },
+    link: {
+      color: theme.palette.text.primary,
+      '&:hover': {
+        color: '#1e88e5',
+        transition: 'color .2s',
+      },
+    },
+  })
+);
+const categoriesNumbers = Object.keys(Category).map((c) => Number(c));
 
 export default function Categories() {
+  const storedCategories = getStoredCategoriesArray();
+
+  const [categories, setCategories] = useState<number[]>(storedCategories ?? categoriesNumbers);
+
+  const handleToggleCategory = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const category = Number(e.target.name);
+
+    let newCategories: number[] = [...categories];
+
+    if (categories.includes(category)) {
+      newCategories = categories.filter((c) => c !== category);
+    } else {
+      newCategories.push(category);
+    }
+    localStorage.setItem('categories', JSON.stringify(newCategories));
+    setCategories(newCategories);
+  };
+  const classes = useStyles();
   return (
     <>
-      <SubscriptionsList
-        subscriptionType="categories"
-        position="sticky"
-        subscriptions={[
-          'actualidade',
-          'desporto',
-          'cultura',
-          'ciência',
-          'história',
-          'religião',
-          'diversão',
-          'tecnologia',
-          'tempo',
-        ]}
-      />
+      <div className={classes.stickyPannel}>
+        {/* {subscriptionType !== 'categories' && subscriptionType !== 'subscriptions' && (
+          <Filter onChange={(e) => onFilterSubscriptions && onFilterSubscriptions(e)} />
+        )} */}
+
+        <List>
+          {Object.values(Category).map((category, i) => {
+            return (
+              <ListItem key={category.portuguese}>
+                <Switch
+                  checked={categories.includes(i)}
+                  name={i.toString()}
+                  color="primary"
+                  onChange={handleToggleCategory}
+                  size="small"
+                />
+
+                <ListItemText>
+                  <span style={{ marginLeft: 8 }}>{category.portuguese}</span>
+                </ListItemText>
+              </ListItem>
+            );
+          })}
+        </List>
+      </div>
     </>
   );
 }

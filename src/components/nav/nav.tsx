@@ -18,6 +18,7 @@ import { ReactComponent as FireIcon } from 'assets/fire.svg';
 import { ReactComponent as ExploreIcon } from 'assets/explore.svg';
 import settingsIcon from 'assets/settings.svg';
 import './nav.css';
+import { getStoredCategoriesString } from 'lib/utils';
 export interface INavProps {
   height?: number;
   onDirectionChanges: () => void;
@@ -35,7 +36,7 @@ const initialLanguage = (localStorage.getItem('language') as Language) || 'all';
 export default function Nav({ onDirectionChanges }: INavProps) {
   const [language, setLanguage] = useState<Language>(initialLanguage);
   const classes = useStyles();
-
+  const categories = getStoredCategoriesString();
   return (
     <AppBar classes={classes}>
       <Toolbar>
@@ -47,7 +48,7 @@ export default function Nav({ onDirectionChanges }: INavProps) {
             style={{ flexWrap: 'nowrap', overflow: 'auto' }}
           >
             <Grid item>
-              <NavLink to={`/${language}/articles/all/relevant`}>
+              <NavLink to={`/${language}/articles/${categories}/relevant`}>
                 <Button
                   startIcon={
                     <SvgIcon>
@@ -60,7 +61,7 @@ export default function Nav({ onDirectionChanges }: INavProps) {
               </NavLink>
             </Grid>
             <Grid item>
-              <NavLink to={`/${language}/articles/all/new`}>
+              <NavLink to={`/${language}/articles/${categories}/new`}>
                 <Button
                   startIcon={
                     <SvgIcon>

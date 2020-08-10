@@ -1,25 +1,27 @@
 import React, { useEffect } from 'react';
 import { TabLabelMenu, useStyles, TabsGroup } from './explore-tab-styles';
 import { TabPanel2 } from './tab-panel2';
-import { Route, useParams, useHistory } from 'react-router';
+import { useParams, useHistory } from 'react-router';
 import Categories from './categories';
 import TabPanel from './tab-panel';
 import DailyTopicList from './daily-topic-list';
 import { TwoLetterLanguage } from 'models/types';
-export type ITrendType = 'categories' | 'sources' | 'trends' | 'subscriptions';
+import { getStoredCategoriesString } from 'lib/utils';
+export type ITab = 'categories' | 'sources' | 'trends' | 'subscriptions';
+let categories: string = '';
 export default function ExploreTabs() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
-  const { language, trendType } = useParams<{
+  const { language, tab } = useParams<{
     language: TwoLetterLanguage;
-    trendType: ITrendType;
+    tab: ITab;
   }>();
   const { push } = useHistory();
 
   useEffect(() => {
     let newValue = 0;
 
-    switch (trendType) {
+    switch (tab) {
       case 'categories':
         newValue = 0;
         break;
@@ -34,16 +36,16 @@ export default function ExploreTabs() {
         break;
     }
     setValue(newValue);
+    categories = getStoredCategoriesString();
+    if (!tab) return;
 
-    if (!trendType) return;
-
-    push(`/${language}/explore/${trendType}`);
-  }, [trendType, language]);
+    push(`/${language}/explore/${tab}`);
+  }, [tab, language]);
 
   const handleChange = (_: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
 
-    let newTrendType: ITrendType = 'categories';
+    let newTrendType: ITab = 'categories';
     switch (newValue) {
       case 0:
         newTrendType = 'categories';
@@ -71,12 +73,15 @@ export default function ExploreTabs() {
           onChange={handleChange}
           aria-label="ant example"
         >
-          <TabLabelMenu label="Categories" />
+          <TabLabelMenu label="Categorias" />
           <TabLabelMenu label="Jornais" />
           <TabLabelMenu label="Manchetes" />
-          <TabLabelMenu label="Subscripções" />
+          <TabLabelMenu label="Subscrições" />
         </TabsGroup>
-        {value === 0 && <Categories />}
+
+        <TabPanel value={value} index={0}>
+          <Categories />
+        </TabPanel>
         <TabPanel2
           subscriptionsType="sources"
           language={language}
@@ -85,24 +90,15 @@ export default function ExploreTabs() {
           url={`https://pokopek.com/api/articles/sources/${language}`}
         />
         <TabPanel value={value} index={2}>
-          <DailyTopicList language={language} />
+          <DailyTopicList language={language} categories={categories} />
         </TabPanel>
 
-        {/* <TabPanel
-          subscriptionsType="trends"
-          value={value}
-          language={language}
-          index={2}
-          subscriptionsProperty="mainTitle"
-          url={`https://pokopek.com/api/dailytopics/trends?language=${language}`}
-        /> */}
-
-        <TabPanel2 language={language} subscriptionsType="subscriptions" value={value} index={3}>
-          Subscripções (brevemente)
+        <TabPanel value={value} index={3}>
+          Subscrições (brevemente)
           <br />
           <br />
           <br />
-        </TabPanel2>
+        </TabPanel>
       </div>
     </div>
   );
