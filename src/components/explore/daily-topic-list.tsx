@@ -15,9 +15,9 @@ export default function DailyTopicList({ language, categories }: DailyTopicListP
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const url = `https://pokopek.com/api/dailytopics/trends?language=${language}&categories=${
-      categories ?? ''
-    }`;
+    const url = `https://pokopek.com/api/dailytopics/trends?language=${
+      language === 'all' ? '' : language
+    }&categories=${categories ?? ''}`;
     const getTopics = async () => {
       setIsLoading(true);
 
@@ -41,7 +41,7 @@ export default function DailyTopicList({ language, categories }: DailyTopicListP
               key={topic.id}
               alignItems="flex-start"
               button
-              component={(props) => <Link to={`/topic/${ids}`} {...props} />}
+              component={(props) => <Link to={`/${language}/topic/${ids}`} {...props} />}
               divider
               style={{ padding: 10, display: 'flex', alignItems: 'centar' }}
             >

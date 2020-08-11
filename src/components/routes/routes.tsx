@@ -23,8 +23,8 @@ export default function Routes({ direction }: IRoutesProps) {
         <Route path="/:language/search/:searchTerm/">
           <ArticlesContainer direction={direction} />
         </Route>
-        {/*//-- Searchs: route=>search/ */}
-        <Route path="/topic/:ids/">
+        {/*//-- daily topics */}
+        <Route path="/:language/topic/:ids/">
           <ArticlesContainer direction={direction} />
         </Route>
 
