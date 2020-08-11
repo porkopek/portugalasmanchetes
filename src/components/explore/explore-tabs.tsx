@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { TabLabelMenu, useStyles, TabsGroup } from './explore-tab-styles';
 import { TabPanel2 } from './tab-panel2';
 import { useParams, useHistory } from 'react-router';
-import Categories from './categories';
+import CategoriesList from './categories-list';
 import TabPanel from './tab-panel';
 import DailyTopicList from './daily-topic-list';
 import { TwoLetterLanguage } from 'models/types';
@@ -80,7 +80,7 @@ export default function ExploreTabs() {
         </TabsGroup>
 
         <TabPanel value={value} index={0}>
-          <Categories />
+          <CategoriesList />
         </TabPanel>
         <TabPanel2
           subscriptionsType="sources"

@@ -4,12 +4,11 @@ import spainFlag from 'assets/es.svg';
 import portugalFlag from 'assets/pt.svg';
 import ukFlag from 'assets/uk.svg';
 import globalFlag from 'assets/global.svg';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useLocation, matchPath } from 'react-router-dom';
 export type Language = 'es' | 'pt' | 'en' | 'all';
 
 export interface ICountryMenuProps {
   language: Language;
-  onLanguageChanges: (language: Language) => void;
 }
 const chooseFlag = (flag: Language) => {
   switch (flag) {
@@ -29,30 +28,23 @@ const chooseFlag = (flag: Language) => {
       return globalFlag;
   }
 };
-export default function CountryMenu({
-  language,
-  onLanguageChanges: onLanguageChange,
-}: ICountryMenuProps) {
-  const [flag, setFlag] = useState(language);
+export default function CountryMenu({ language }: ICountryMenuProps) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const { pathname } = useLocation();
   const { push } = useHistory();
-
+  // const apagar = matchPath(pathname, { path: '/:language/' });
   const handleChangeLanguage = (newLanguage: Language) => {
-    onLanguageChange(newLanguage);
-    setFlag(newLanguage);
-
     localStorage.setItem('language', newLanguage);
     setAnchorEl(null);
-    const regx = RegExp(`/${flag}/`);
+    const regx = RegExp(`/${language}/`);
     const newRoute = pathname.replace(regx, '/' + newLanguage + '/');
     push(newRoute);
   };
   return (
     <div>
       <IconButton onClick={(e) => setAnchorEl(e.currentTarget)}>
-        <img src={chooseFlag(flag)} alt="" style={{ width: 20 }} />
+        <img src={chooseFlag(language)} alt="" style={{ width: 20 }} />
       </IconButton>
 
       <Menu

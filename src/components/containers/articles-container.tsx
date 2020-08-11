@@ -10,9 +10,9 @@ import NewsLoader from 'components/loader/loader';
 import { useParams } from 'react-router-dom';
 import InfiniteScroll from 'components/infinite-scroll/infinite-scroll';
 import { IPagination } from 'models/IPagination';
-import Categories from 'components/explore/categories';
+import CategoriesList from 'components/explore/categories-list';
 import { translateIntoPortuguese } from 'lib/localizer';
-import { useCategories } from 'state/routes-context';
+import { useCategories } from 'state/settings-context';
 
 export interface IArticlesContainerProps {
   direction: 'row' | 'column';
@@ -199,7 +199,7 @@ export default function ArticlesContainer({ direction }: IArticlesContainerProps
       </Grid>
       {!isMobile && (
         <Grid item md={3}>
-          <Categories />
+          <CategoriesList />
           {/* <SubscriptionsList
             subscriptions={sources}
             subscriptionType="sources"

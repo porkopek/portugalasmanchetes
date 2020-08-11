@@ -10,7 +10,7 @@ import {
   AppBar,
   Toolbar,
 } from '@material-ui/core';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useParams, useRouteMatch, useLocation } from 'react-router-dom';
 
 import CountryMenu, { Language } from './country-menu';
 import { ReactComponent as UpdateIcon } from 'assets/update.svg';
@@ -33,7 +33,8 @@ const useStyles = makeStyles(() =>
 //-- TODO detect change in language. Manage state of CountryMenu
 const initialLanguage = (localStorage.getItem('language') as Language) || 'all';
 export default function Nav({ onDirectionChanges }: INavProps) {
-  const [language, setLanguage] = useState<Language>(initialLanguage);
+  const { pathname } = useLocation();
+  const language = (pathname.split('/').filter((z) => z)[0] || initialLanguage) as Language;
   const classes = useStyles();
   return (
     <AppBar classes={classes}>
@@ -87,7 +88,7 @@ export default function Nav({ onDirectionChanges }: INavProps) {
             </Grid>
 
             <Grid item>
-              <CountryMenu language={initialLanguage} onLanguageChanges={setLanguage} />
+              <CountryMenu language={language} />
             </Grid>
             <Grid item>
               <IconButton onClick={onDirectionChanges}>

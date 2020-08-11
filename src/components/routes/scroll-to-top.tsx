@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
-import { useCategories } from 'state/routes-context';
+import { useCategories } from 'state/settings-context';
 export default function ScrollToTop() {
   const { pathname } = useLocation();
   const [categories] = useCategories();

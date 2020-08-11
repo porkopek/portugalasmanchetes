@@ -9,7 +9,7 @@ import {
   createStyles,
 } from '@material-ui/core';
 import { Category } from 'models/category';
-import { useCategories } from 'state/routes-context';
+import { useCategories } from 'state/settings-context';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default function Categories() {
+export default function CategoriesList() {
   const [categories, setCategories] = useCategories();
   const handleToggleCategory = (e: React.ChangeEvent<HTMLInputElement>) => {
     const category = Number(e.target.name);
