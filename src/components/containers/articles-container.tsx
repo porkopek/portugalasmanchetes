@@ -12,6 +12,7 @@ import InfiniteScroll from 'components/infinite-scroll/infinite-scroll';
 import { IPagination } from 'models/IPagination';
 import Categories from 'components/explore/categories';
 import { translateIntoPortuguese } from 'lib/localizer';
+import { useCategories } from 'state/routes-context';
 
 export interface IArticlesContainerProps {
   direction: 'row' | 'column';
@@ -30,8 +31,8 @@ export default function ArticlesContainer({ direction }: IArticlesContainerProps
 
   //pageNumber starts at 2 because first page is loaded by useffect
   const [pageNumber, setPageNumber] = useState<number>(2);
-  const [, setSources] = useState<string[]>([]);
-  let { language, searchTerm, domain, order, categories, ids } = useParams();
+  const [categories] = useCategories();
+  let { language, searchTerm, domain, order, ids } = useParams();
   //if language is not set
   language = language ?? localStorage.getItem('language') ?? 'all';
 
@@ -40,9 +41,9 @@ export default function ArticlesContainer({ direction }: IArticlesContainerProps
       ? `https://pokopek.com/api/articles/topic?ids=${ids}&pagenumber=${pageNumber}`
       : `https://pokopek.com/api/articles?language=${
           language && language !== 'all' && domain === undefined ? language : ''
-        }&pagenumber=${pageNumber}&search=${searchTerm ?? ''}&domain=${domain ?? ''}&categories=${
-          categories && categories !== 'all' ? categories : ''
-        }&order=${order ?? ''}`;
+        }&pagenumber=${pageNumber}&search=${searchTerm ?? ''}&domain=${
+          domain ?? ''
+        }&categories=${categories.join(',')}&order=${order ?? ''}`;
   };
 
   // for fetch articles
@@ -145,14 +146,13 @@ export default function ArticlesContainer({ direction }: IArticlesContainerProps
             </Alert>
           )}
 
-          {!isLoading && categories && categories !== 'all' && (
+          {!isLoading && categories && (
             <Alert
               icon={false}
               style={{ margin: '8px 0 16px 0', maxWidth: direction === 'column' ? '100' : '83%' }}
               severity="info"
             >
-              Há <b>{pagination?.TotalCount.toLocaleString()}</b> artigos da categoria{' '}
-              <b>{translateIntoPortuguese(categories)}</b> em{' '}
+              Há <b>{pagination?.TotalCount.toLocaleString()}</b> artigos em{' '}
               <b>{translateIntoPortuguese(language)}</b>
             </Alert>
           )}

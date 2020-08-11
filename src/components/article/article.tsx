@@ -155,7 +155,7 @@ export default function Article({
         <div className={classes.body}>
           <span className={classes.category}>
             <Link to={`/all/articles/` + Category[categoryNumber].english + '/relevant'}>
-              {getCategory()}
+              {Category[categoryNumber].portuguese}
             </Link>
           </span>
 
@@ -227,11 +227,11 @@ export default function Article({
     </>
   );
 
-  function getCategory(): React.ReactNode {
-    return url.match(/sport|deport|fut.?bol|laliga/i)
-      ? 'desporto'
-      : url.match(/bulo|fake/i)
-      ? 'fake news'
-      : Category[categoryNumber].portuguese;
-  }
+  // function getCategory(): React.ReactNode {
+  //   return url.match(/desport|deport|fut.?bol|laliga/i)
+  //     ? 'desporto'
+  //     : url.match(/bulo|fake/i)
+  //     ? 'fake news'
+  //     : Category[categoryNumber].portuguese;
+  // }
 }

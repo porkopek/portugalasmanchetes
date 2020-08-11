@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   List,
   ListItem,
@@ -9,7 +9,7 @@ import {
   createStyles,
 } from '@material-ui/core';
 import { Category } from 'models/category';
-import { getStoredCategoriesArray } from 'lib/utils';
+import { useCategories } from 'state/routes-context';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -41,20 +41,16 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
-const categoriesNumbers = Object.keys(Category).map((c) => Number(c));
 
 export default function Categories() {
-  const storedCategories = getStoredCategoriesArray();
-
-  const [categories, setCategories] = useState<number[]>(storedCategories ?? categoriesNumbers);
-
+  const [categories, setCategories] = useCategories();
   const handleToggleCategory = (e: React.ChangeEvent<HTMLInputElement>) => {
     const category = Number(e.target.name);
 
     let newCategories: number[] = [...categories];
 
     if (categories.includes(category)) {
-      newCategories = categories.filter((c) => c !== category);
+      newCategories = categories.filter((c: any) => c !== category);
     } else {
       newCategories.push(category);
     }
@@ -65,10 +61,6 @@ export default function Categories() {
   return (
     <>
       <div className={classes.stickyPannel}>
-        {/* {subscriptionType !== 'categories' && subscriptionType !== 'subscriptions' && (
-          <Filter onChange={(e) => onFilterSubscriptions && onFilterSubscriptions(e)} />
-        )} */}
-
         <List>
           {Object.values(Category).map((category, i) => {
             return (

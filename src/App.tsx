@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Nav from 'components/nav/nav';
 import Routes from 'components/routes/routes';
 import CookiesConsent from 'components/Privacy/cookies-consent';
+import { CategoriesProvider } from 'state/routes-context';
 
 function App() {
   const directionSetting = localStorage.getItem('direction') as 'row' | 'column';
