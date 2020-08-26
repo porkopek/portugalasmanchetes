@@ -194,7 +194,7 @@ export default function Article({
 
             <span style={{ display: 'inline-flex', flexDirection: 'column' }}>
               <div style={{ color: 'rgba(0,0,0,.8)', fontWeight: 'bold' }}>
-                <Link to={`/${language}/source/${domain}/`}>
+                <Link to={`/${language.toLowerCase()}/source/${domain}/`}>
                   <span style={{ color: theme.palette.text.primary }}>{domain}</span>
                 </Link>
               </div>
