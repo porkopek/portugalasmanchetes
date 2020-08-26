@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   List,
   ListItem,
@@ -9,13 +9,13 @@ import {
   createStyles,
 } from '@material-ui/core';
 import { Category } from 'models/category';
-import { useCategories } from 'context/settings-context';
+import { getStoredCategoriesArray } from 'lib/utils';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     stickyPannel: {
-      position: (props: CategoriesListProps) => props.position,
-      top: 180,
+      position: 'sticky',
+      top: 80,
       maxHeight: '90vh',
       [theme.breakpoints.up('md')]: {
         overflow: 'hidden',
@@ -41,29 +41,34 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
+const categoriesNumbers = Object.keys(Category).map((c) => Number(c));
 
-interface CategoriesListProps {
-  position?: 'fixed' | undefined;
-}
-export default function CategoriesList({ position }: CategoriesListProps) {
-  const { categories, setCategories } = useCategories();
+export default function Categories() {
+  const storedCategories = getStoredCategoriesArray();
+
+  const [categories, setCategories] = useState<number[]>(storedCategories ?? categoriesNumbers);
+
   const handleToggleCategory = (e: React.ChangeEvent<HTMLInputElement>) => {
     const category = Number(e.target.name);
 
     let newCategories: number[] = [...categories];
 
     if (categories.includes(category)) {
-      newCategories = categories.filter((c: any) => c !== category);
+      newCategories = categories.filter((c) => c !== category);
     } else {
       newCategories.push(category);
     }
     localStorage.setItem('categories', JSON.stringify(newCategories));
     setCategories(newCategories);
   };
-  const classes = useStyles({ position });
+  const classes = useStyles();
   return (
     <>
       <div className={classes.stickyPannel}>
+        {/* {subscriptionType !== 'categories' && subscriptionType !== 'subscriptions' && (
+          <Filter onChange={(e) => onFilterSubscriptions && onFilterSubscriptions(e)} />
+        )} */}
+
         <List>
           {Object.values(Category).map((category, i) => {
             return (

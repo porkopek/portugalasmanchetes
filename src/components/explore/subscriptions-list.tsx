@@ -67,7 +67,7 @@ export default function SubscriptionsList({
         return `/${language || ''}/articles/` + Category[subscriptionNumber].english + '/relevant';
 
       case 'sources':
-        return '/source/' + subscription;
+        return `/${language}/source/` + subscription;
 
       case 'subscriptions':
         return '/subscriptions';

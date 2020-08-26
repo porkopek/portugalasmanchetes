@@ -3,21 +3,22 @@ import { List, ListItem, ListItemAvatar, Avatar, ListItemText, Chip } from '@mat
 import { TwoLetterLanguage } from 'models/types';
 import { IDailyTopic } from 'models/IDailyTopic';
 import { Link } from 'react-router-dom';
-import { reduceTags, getStoredCategoriesString } from 'lib/utils';
+import { reduceTags, getStoredCategoriesString, getDaysSince2020First } from 'lib/utils';
 import NewsLoader from 'components/loader/loader';
+import { useCategories } from 'context/settings-context';
 
 export interface DailyTopicListProps {
   language: TwoLetterLanguage;
-  categories?: string;
+  daysSince2020First: string;
 }
-export default function DailyTopicList({ language, categories }: DailyTopicListProps) {
+export default function DailyTopicList({ language, daysSince2020First }: DailyTopicListProps) {
   const [dailyTopics, setDailyTopics] = useState<IDailyTopic[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-
+  const { categories } = useCategories();
   useEffect(() => {
     const url = `https://pokopek.com/api/dailytopics/trends?language=${
       language === 'all' ? '' : language
-    }&categories=${categories ?? ''}`;
+    }&categories=${categories ?? ''}&dayssince2020first=${daysSince2020First}`;
     const getTopics = async () => {
       setIsLoading(true);
 
@@ -28,37 +29,42 @@ export default function DailyTopicList({ language, categories }: DailyTopicListP
     };
 
     getTopics();
-  }, [language, categories]);
+  }, [language, categories, daysSince2020First]);
 
   return (
     <>
       {isLoading && <NewsLoader />}
       <List>
-        {dailyTopics?.map((topic) => {
-          const ids = topic.articlesIds.join(',');
-          return (
-            <ListItem
-              key={topic.id}
-              alignItems="flex-start"
-              button
-              component={(props) => <Link to={`/${language}/topic/${ids}`} {...props} />}
-              divider
-              style={{ padding: 10, display: 'flex', alignItems: 'centar' }}
-            >
-              <ListItemAvatar>
-                <Avatar src={`${topic.favicon}`} />
-              </ListItemAvatar>
-              <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <h3 style={{ margin: 8 }}>{topic.mainTitle} </h3>
-                <div>
-                  {reduceTags(topic.tagsText).map((tag) => (
-                    <Chip size="small" label={tag} key={tag} style={{ margin: 2, maxWidth: 250 }} />
-                  ))}
+        {dailyTopics.length > 0 &&
+          dailyTopics?.map((topic) => {
+            return (
+              <ListItem
+                key={topic.id}
+                alignItems="flex-start"
+                button
+                component={(props) => <Link to={`/${language}/topic/${topic.id}`} {...props} />}
+                divider
+                style={{ padding: 10, display: 'flex', alignItems: 'centar' }}
+              >
+                <ListItemAvatar>
+                  <Avatar src={`${topic.favicon}`} />
+                </ListItemAvatar>
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                  <h3 style={{ margin: 8 }}>{topic.mainTitle} </h3>
+                  <div>
+                    {reduceTags(topic.tagsText).map((tag) => (
+                      <Chip
+                        size="small"
+                        label={tag}
+                        key={tag}
+                        style={{ margin: 2, maxWidth: 250 }}
+                      />
+                    ))}
+                  </div>
                 </div>
-              </div>
-            </ListItem>
-          );
-        })}
+              </ListItem>
+            );
+          })}
       </List>
     </>
   );

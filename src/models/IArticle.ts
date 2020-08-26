@@ -10,9 +10,11 @@ export interface IArticle {
   url: string;
   domain: string;
   fullText: string;
+  favicon: string;
   ranking: number;
   category: number;
   tags: string[];
   daysSince2020First: number;
   clicks: number;
+  language: string;
 }

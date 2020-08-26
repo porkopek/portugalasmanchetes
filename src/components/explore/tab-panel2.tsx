@@ -79,8 +79,8 @@ export function TabPanel2(props: TabPanelProps) {
       {...other}
     >
       {isLoading && <NewsLoader />}
-      {isLoading == false && value === index && children}
-      {isLoading == false && value === index && (
+      {isLoading === false && value === index && children}
+      {isLoading === false && value === index && (
         <SubscriptionsList
           subscriptionType={subscriptionsType}
           onFilterSubscriptions={handleChange}

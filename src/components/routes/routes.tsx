@@ -3,20 +3,20 @@ import React from 'react';
 import { Route, Switch, Redirect } from 'react-router';
 import ArticlesContainer from 'components/containers/articles-container';
 import Explore from 'components/explore/explore';
-import { Container } from '@material-ui/core';
 import PrivacyPolicy from 'components/Privacy/privacy-policy';
 
 interface IRoutesProps {
   direction: 'row' | 'column';
+  daysSince2020First: string;
 }
 const language = localStorage.getItem('language') ?? 'all';
-export default function Routes({ direction }: IRoutesProps) {
+export default function Routes({ direction, daysSince2020First }: IRoutesProps) {
   return (
-    <Container style={{ padding: '28px 0' }}>
+    <>
       <Switch>
         {/*//-- *** Explore *** */}
-        <Route path="/:language/explore/:tab?/">
-          <Explore />
+        <Route path={`/:language/explore/:tab/:daysSince2020First?/`}>
+          <Explore daysSince2020First={daysSince2020First} />
         </Route>
 
         {/*//-- Searchs: route=>search/ */}
@@ -24,35 +24,35 @@ export default function Routes({ direction }: IRoutesProps) {
           <ArticlesContainer direction={direction} />
         </Route>
         {/*//-- daily topics */}
-        <Route path="/:language/topic/:ids/">
+        <Route path="/:language/topic/:topicId/">
           <ArticlesContainer direction={direction} />
         </Route>
 
         {/*//-- News*/}
-        <Route path="/:language/articles/:order/">
+        <Route path={`/:language/articles/:order/:daysSince2020First?/`}>
           <ArticlesContainer direction={direction} />
         </Route>
 
         {/*//-- Jornais */}
-        <Route path="/source/:domain">
+        <Route path="/:language/source/:domain/:daysSince2020First?/">
           <ArticlesContainer direction={direction} />
         </Route>
 
         {/*//-- home */}
-        <Route path="/RGPD" exact>
+        <Route path="/:language/RGPD" exact>
           <PrivacyPolicy />
         </Route>
 
         {/*//-- home */}
         <Route path="/" exact>
-          <Redirect to={`/${language}/articles/relevant/`} />
+          <Redirect to={`/${language}/articles/relevant/${daysSince2020First}/`} />
         </Route>
 
         {/*//-- no match =>redirects to origin*/}
         <Route path="*">
-          <Redirect to={`/${language}/articles/relevant/`} />
+          <Redirect to={`/${language}/articles/relevant/${daysSince2020First}/`} />
         </Route>
       </Switch>
-    </Container>
+    </>
   );
 }

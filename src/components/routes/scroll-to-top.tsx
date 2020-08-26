@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
-import { useCategories } from 'state/settings-context';
+import { useCategories } from 'context/settings-context';
 export default function ScrollToTop() {
   const { pathname } = useLocation();
-  const [categories] = useCategories();
+  const { categories } = useCategories();
   // const { action } = useHistory();
   useEffect(() => {
     //if (action === 'POP') return;

@@ -18,13 +18,16 @@ const useStyles = makeStyles((theme: Theme) =>
       borderRadius: '4px',
       backgroundColor: (props) => (props.direction === 'row' ? 'white' : 'transparent'),
       padding: (props) =>
-        props.imageUrl ? theme.spacing(2) : `${theme.spacing(4)}px ${theme.spacing(6)}px`,
+        props.imageUrl || props.direction === 'column'
+          ? theme.spacing(2)
+          : `${theme.spacing(4)}px ${theme.spacing(6)}px`,
       display: 'flex',
       flexDirection: (props: any) => props.direction,
       maxWidth: (props) => (props.direction === 'row' ? '100%' : '32%'),
       minWidth: '100%',
       width: '100%',
-      boxShadow: (props) => (props.direction === 'row' ? '0 2px 5px rgba(0,0,0,.2)' : 'none'),
+      boxShadow: (props) =>
+        props.direction === 'row' || !props.imageUrl ? '0 2px 5px rgba(0,0,0,.2)' : 'none',
     },
     body: { width: '100%', overflow: 'hidden' },
     media: {
@@ -130,6 +133,9 @@ export default function Article({
   category: categoryNumber,
   onDescriptionTextSelected,
   clicks,
+  favicon,
+  language,
+  daysSince2020First,
 }: IArticleProps) {
   const classes = useStyles({ direction, imageUrl, categoryNumber });
   const { push } = useHistory();
@@ -178,17 +184,17 @@ export default function Article({
             dangerouslySetInnerHTML={{ __html: description }}
           ></p>
           <div className={classes.meta}>
-            <span>
-              <img
-                src={`https://${domain}/favicon.ico`}
-                className={classes.avatar}
-                onError={(e) => (e.currentTarget.style.display = 'none')}
-                alt="icon"
-              ></img>
-            </span>
+            <img
+              src={favicon}
+              className={classes.avatar}
+              onError={(e) => (e.currentTarget.style.display = 'none')}
+              alt="icon"
+              style={favicon === null ? { display: 'none' } : undefined}
+            />
+
             <span style={{ display: 'inline-flex', flexDirection: 'column' }}>
               <div style={{ color: 'rgba(0,0,0,.8)', fontWeight: 'bold' }}>
-                <Link to={`/source/${domain}`}>
+                <Link to={`/${language}/source/${domain}/`}>
                   <span style={{ color: theme.palette.text.primary }}>{domain}</span>
                 </Link>
               </div>
@@ -226,12 +232,4 @@ export default function Article({
       </div>
     </>
   );
-
-  // function getCategory(): React.ReactNode {
-  //   return url.match(/desport|deport|fut.?bol|laliga/i)
-  //     ? 'desporto'
-  //     : url.match(/bulo|fake/i)
-  //     ? 'fake news'
-  //     : Category[categoryNumber].portuguese;
-  // }
 }

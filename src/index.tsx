@@ -7,7 +7,7 @@ import * as serviceWorker from './serviceWorker';
 import { MuiThemeProvider, createMuiTheme, CssBaseline } from '@material-ui/core';
 import { HashRouter as Router } from 'react-router-dom';
 import ScrollToTop from 'components/routes/scroll-to-top';
-import { CategoriesProvider } from 'state/settings-context';
+import { SettingsProvider } from 'context/settings-context';
 if (process.env.NODE_ENV !== 'production') {
   const whyDidYouRender = require('@welldone-software/why-did-you-render');
   whyDidYouRender(React, {
@@ -16,7 +16,8 @@ if (process.env.NODE_ENV !== 'production') {
 }
 const theme = createMuiTheme({
   palette: {
-    primary: { light: '#1890ff', main: '#1890ff' },
+    type: 'light',
+    primary: { main: '#1890ff' },
   },
   typography: {
     fontFamily:
@@ -29,10 +30,10 @@ ReactDOM.render(
     <MuiThemeProvider theme={theme}>
       <CssBaseline />
       <Router>
-        <CategoriesProvider>
+        <SettingsProvider>
           <ScrollToTop />
           <App />
-        </CategoriesProvider>
+        </SettingsProvider>
       </Router>
     </MuiThemeProvider>
   </React.StrictMode>,

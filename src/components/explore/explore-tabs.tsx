@@ -6,10 +6,11 @@ import CategoriesList from './categories-list';
 import TabPanel from './tab-panel';
 import DailyTopicList from './daily-topic-list';
 import { TwoLetterLanguage } from 'models/types';
-import { getStoredCategoriesString } from 'lib/utils';
+import { useCategories } from 'context/settings-context';
+
 export type ITab = 'categories' | 'sources' | 'trends' | 'subscriptions';
-let categories: string = '';
-export default function ExploreTabs() {
+
+export default function ExploreTabs({ daysSince2020First }: { daysSince2020First: string }) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
   const { language, tab } = useParams<{
@@ -22,13 +23,13 @@ export default function ExploreTabs() {
     let newValue = 0;
 
     switch (tab) {
-      case 'categories':
+      case 'trends':
         newValue = 0;
         break;
       case 'sources':
         newValue = 1;
         break;
-      case 'trends':
+      case 'categories':
         newValue = 2;
         break;
       case 'subscriptions':
@@ -36,32 +37,32 @@ export default function ExploreTabs() {
         break;
     }
     setValue(newValue);
-    categories = getStoredCategoriesString();
+
     if (!tab) return;
 
-    push(`/${language}/explore/${tab}`);
-  }, [tab, language]);
+    push(`/${language}/explore/${tab}/${daysSince2020First}`);
+  }, [tab, language, daysSince2020First]);
 
   const handleChange = (_: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
 
-    let newTrendType: ITab = 'categories';
+    let tab: ITab = 'categories';
     switch (newValue) {
       case 0:
-        newTrendType = 'categories';
+        tab = 'trends';
         break;
       case 1:
-        newTrendType = 'sources';
+        tab = 'sources';
         break;
       case 2:
-        newTrendType = 'trends';
+        tab = 'categories';
         break;
       case 3:
-        newTrendType = 'subscriptions';
+        tab = 'subscriptions';
         break;
     }
-
-    push(`/${language}/explore/${newTrendType}`);
+    //a mudar para ver a hemeroteca
+    push(`/${language}/explore/${tab}/${daysSince2020First}`);
   };
 
   return (
@@ -73,13 +74,13 @@ export default function ExploreTabs() {
           onChange={handleChange}
           aria-label="ant example"
         >
-          <TabLabelMenu label="Categorias" />
-          <TabLabelMenu label="Jornais" />
           <TabLabelMenu label="Manchetes" />
+          <TabLabelMenu label="Jornais" />
+          <TabLabelMenu label="Categorias" />
           <TabLabelMenu label="Subscrições" />
         </TabsGroup>
 
-        <TabPanel value={value} index={0}>
+        <TabPanel value={value} index={2}>
           <CategoriesList />
         </TabPanel>
         <TabPanel2
@@ -89,8 +90,8 @@ export default function ExploreTabs() {
           index={1}
           url={`https://pokopek.com/api/articles/sources/${language}`}
         />
-        <TabPanel value={value} index={2}>
-          <DailyTopicList language={language} categories={categories} />
+        <TabPanel value={value} index={0}>
+          <DailyTopicList language={language} daysSince2020First={daysSince2020First} />
         </TabPanel>
 
         <TabPanel value={value} index={3}>
