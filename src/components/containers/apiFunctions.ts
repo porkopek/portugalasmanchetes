@@ -29,7 +29,7 @@ export const getApiUrl = ({
   }
 
   if (searchTerm) {
-    parts.push(`searchterm=${searchTerm}`);
+    parts.push(`search=${searchTerm}`);
   }
 
   if (daysSince2020First && !domain) {
