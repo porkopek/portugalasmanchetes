@@ -44,7 +44,7 @@ export default function DailyTopicList({ language, daysSince2020First }: DailyTo
                 button
                 component={(props) => <Link to={`/${language}/topic/${topic.id}`} {...props} />}
                 divider
-                style={{ padding: 10, display: 'flex', alignItems: 'centar' }}
+                style={{ padding: 10, display: 'flex' }}
               >
                 <ListItemAvatar>
                   <Avatar src={`${topic.favicon}`} />

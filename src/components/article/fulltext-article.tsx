@@ -68,23 +68,17 @@ export default function FullTextArticle({
       >
         <CloseIcon />
       </IconButton>
-      <img
-        src={imageUrl}
-        alt=""
-        style={{ width: '100%', objectFit: 'cover' }}
-      />
+      <img src={imageUrl} alt="" style={{ width: '100%', objectFit: 'cover' }} />
       <div
         style={{
-          padding: useMediaQuery(theme.breakpoints.up('md'))
-            ? '20px 40px 200px'
-            : '0',
+          padding: useMediaQuery(theme.breakpoints.up('md')) ? '20px 40px 200px' : '0',
         }}
       >
         <DialogTitle disableTypography={true} className={classes.dialogTitle}>
           {title}
         </DialogTitle>
         <DialogContent>
-          {fullText.split(/[\n]/g).map((p, i) => (
+          {fullText?.split(/[\n]/g).map((p, i) => (
             <p
               style={{
                 color: theme.palette.grey[800],
