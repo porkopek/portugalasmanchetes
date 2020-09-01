@@ -8,9 +8,12 @@ import { IArticle } from 'models/IArticle';
 import { Link, useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 import FullTextArticle from './fulltext-article';
 import { Category, CategoryColor } from 'models/category';
+import { CSSProperties } from '@material-ui/core/styles/withStyles';
 export interface IArticleProps extends IArticle {
   direction?: 'row' | 'column';
-  onDescriptionTextSelected: (id: number, text?: string) => void;
+  bordered?: boolean;
+
+  onDescriptionTextSelected?: (id: number, text?: string) => void;
 }
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -26,8 +29,7 @@ const useStyles = makeStyles((theme: Theme) =>
       maxWidth: (props) => (props.direction === 'row' ? '100%' : '32%'),
       minWidth: '100%',
       width: '100%',
-      boxShadow: (props) =>
-        props.direction === 'row' || !props.imageUrl ? '0 2px 5px rgba(0,0,0,.2)' : 'none',
+      boxShadow: (props) => (props.bordered ? '0 2px 5px rgba(0,0,0,.2)' : 'none'),
     },
     body: { width: '100%', overflow: 'hidden' },
     media: {
@@ -135,11 +137,9 @@ export default function Article({
   clicks,
   favicon,
   language,
-  daysSince2020First,
+  bordered = false,
 }: IArticleProps) {
-  const classes = useStyles({ direction, imageUrl, categoryNumber });
-  const { push } = useHistory();
-  const { url: path } = useRouteMatch();
+  const classes = useStyles({ direction, imageUrl, categoryNumber, bordered });
 
   const theme = useTheme();
   const [showDialog, setShowDialog] = useState(false);
@@ -179,6 +179,7 @@ export default function Article({
           <p
             className={classes.description}
             onMouseUp={() =>
+              onDescriptionTextSelected &&
               onDescriptionTextSelected(id, window.getSelection()?.toString().trim())
             }
             dangerouslySetInnerHTML={{ __html: description }}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { List, ListItem, ListItemAvatar, Avatar, ListItemText, Chip } from '@material-ui/core';
 import { TwoLetterLanguage } from 'models/types';
-import { IDailyTopic } from 'models/IDailyTopic';
+import { ITrend } from 'models/ITrend';
 import { Link } from 'react-router-dom';
 import { reduceTags, getStoredCategoriesString, getDaysSince2020First } from 'lib/utils';
 import NewsLoader from 'components/loader/loader';
@@ -12,7 +12,7 @@ export interface DailyTopicListProps {
   daysSince2020First: string;
 }
 export default function DailyTopicList({ language, daysSince2020First }: DailyTopicListProps) {
-  const [dailyTopics, setDailyTopics] = useState<IDailyTopic[]>([]);
+  const [dailyTopics, setDailyTopics] = useState<ITrend[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const { categories } = useCategories();
   useEffect(() => {
@@ -22,7 +22,7 @@ export default function DailyTopicList({ language, daysSince2020First }: DailyTo
     const getTopics = async () => {
       setIsLoading(true);
 
-      const topics: IDailyTopic[] = await (await fetch(url)).json();
+      const topics: ITrend[] = await (await fetch(url)).json();
       setDailyTopics(topics);
 
       setIsLoading(false);

@@ -4,6 +4,7 @@ import { Route, Switch, Redirect } from 'react-router';
 import ArticlesContainer from 'components/containers/articles-container';
 import Explore from 'components/explore/explore';
 import PrivacyPolicy from 'components/Privacy/privacy-policy';
+import FrontContainer from 'components/containers/front-container';
 
 interface IRoutesProps {
   direction: 'row' | 'column';
@@ -33,24 +34,29 @@ export default function Routes({ direction, daysSince2020First }: IRoutesProps) 
           <ArticlesContainer direction={direction} />
         </Route>
 
+        {/*//-- Front*/}
+        <Route path={`/:language/front/`}>
+          <FrontContainer direction={direction} />
+        </Route>
+
         {/*//-- Jornais */}
         <Route path="/:language/source/:domain/:daysSince2020First?/">
           <ArticlesContainer direction={direction} />
         </Route>
 
-        {/*//-- home */}
+        {/*//-- RGOD */}
         <Route path="/:language/RGPD" exact>
           <PrivacyPolicy />
         </Route>
 
         {/*//-- home */}
         <Route path="/" exact>
-          <Redirect to={`/${language}/articles/relevant/${daysSince2020First}/`} />
+          <Redirect to={`/${language}/front/`} />
         </Route>
 
         {/*//-- no match =>redirects to origin*/}
         <Route path="*">
-          <Redirect to={`/${language}/articles/relevant/${daysSince2020First}/`} />
+          <Redirect to={`/${language}/front/`} />
         </Route>
       </Switch>
     </>

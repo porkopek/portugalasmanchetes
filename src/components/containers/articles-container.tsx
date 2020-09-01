@@ -43,15 +43,19 @@ export default function ArticlesContainer({ direction }: IArticlesContainerProps
   //--Could be custom hook!
   useEffect(() => {
     const fetchArts = async () => {
+      const baseUrl = topicId
+        ? `https://pokopek.com/api/articles/topic`
+        : `https://pokopek.com/api/articles`;
       const apiUrl = getApiUrl({
         pageNumber: 1,
+        baseUrl,
         categories,
         daysSince2020First,
         domain,
         language,
         order,
         searchTerm,
-        topicId,
+        id: topicId,
       });
       try {
         const response = await fetch(apiUrl);
@@ -83,8 +87,11 @@ export default function ArticlesContainer({ direction }: IArticlesContainerProps
     if (isLoading || !pagination?.HasNext) {
       return;
     }
-
+    const baseUrl = topicId
+      ? `https://pokopek.com/api/articles/topic`
+      : `https://pokopek.com/api/articles`;
     const apiUrl = getApiUrl({
+      baseUrl,
       pageNumber,
       categories,
       daysSince2020First,
@@ -92,7 +99,7 @@ export default function ArticlesContainer({ direction }: IArticlesContainerProps
       language,
       order,
       searchTerm,
-      topicId,
+      id: topicId,
     });
     const response = await fetch(apiUrl);
     let paginationHeaders = response.headers.get('X-Pagination')!;
@@ -159,7 +166,7 @@ export default function ArticlesContainer({ direction }: IArticlesContainerProps
             </Alert>
           )}
 
-          {!isLoading && categories && (
+          {!isLoading && !searchTerm && categories && (
             <Alert
               icon={false}
               style={{ margin: '8px 0 16px 0', maxWidth: direction === 'column' ? '100' : '83%' }}

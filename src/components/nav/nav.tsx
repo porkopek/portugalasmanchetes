@@ -51,7 +51,7 @@ export default function Nav({ daysSince2020First }: INavProps) {
             style={{ flexWrap: 'nowrap', overflow: 'auto' }}
           >
             <Grid item>
-              <NavLink to={`/${language}/articles/relevant/${daysSince2020First}/`}>
+              <NavLink to={`/${language}/front/`}>
                 <Button
                   startIcon={
                     <SvgIcon>
@@ -59,7 +59,7 @@ export default function Nav({ daysSince2020First }: INavProps) {
                     </SvgIcon>
                   }
                 >
-                  <span className={classes.buttonLabel}>Capa</span>
+                  <span className={classes.buttonLabel}>Destaques</span>
                 </Button>
               </NavLink>
             </Grid>
