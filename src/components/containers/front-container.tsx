@@ -136,7 +136,7 @@ export default function FrontContainer({ direction }: IFrontContainerProps) {
                     className="daily-topic"
                     style={{ marginBottom: 24 }}
                   >
-                    <Grid item md={10} spacing={0}>
+                    <Grid item xs={12} spacing={0}>
                       <Alert severity="info" icon={false} style={{ margin: 8 }}>
                         <b>Temas:</b>
                         {topic.tagsText
@@ -169,30 +169,7 @@ export default function FrontContainer({ direction }: IFrontContainerProps) {
                       </Grid>
 
                       <Grid item xs={12} md={10}>
-                        <List>
-                          {topic.articles
-                            .filter((a) => a.id !== topic.mainArticle.id)
-                            .sort((a, b) => b.id - a.id)
-                            .slice(0, 4)
-                            .map((art: IArticle) => (
-                              <ListItem
-                                key={art.id}
-                                button
-                                style={{ padding: 4 }}
-                                component={(props) => (
-                                  <Link to={`/${language}/topic/${topic.id}`} {...props} />
-                                )}
-                              >
-                                <ListItemIcon>
-                                  <Avatar
-                                    src={`${art.favicon}`}
-                                    style={{ width: 30, height: 30 }}
-                                  />
-                                </ListItemIcon>
-                                <ListItemText primary={art.title}></ListItemText>
-                              </ListItem>
-                            ))}
-                        </List>
+                        {ArticlesList(topic, language)}
                       </Grid>
                     </Grid>
                   </Grid>
@@ -202,5 +179,29 @@ export default function FrontContainer({ direction }: IFrontContainerProps) {
         </InfiniteScroll>
       </Grid>
     </Grid>
+  );
+}
+
+function ArticlesList(topic: IDailyTopic, language: any) {
+  return (
+    <List>
+      {topic.articles
+        .filter((a) => a.id !== topic.mainArticle.id)
+        .sort((a, b) => b.id - a.id)
+        .slice(0, 4)
+        .map((art: IArticle) => (
+          <ListItem
+            key={art.id}
+            button
+            style={{ padding: 4 }}
+            component={(props) => <Link to={`/${language}/topic/${topic.id}`} {...props} />}
+          >
+            <ListItemIcon>
+              <Avatar src={`${art.favicon}`} style={{ width: 30, height: 30 }} />
+            </ListItemIcon>
+            <ListItemText primary={art.title}></ListItemText>
+          </ListItem>
+        ))}
+    </List>
   );
 }

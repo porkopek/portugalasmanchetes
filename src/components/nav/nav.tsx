@@ -28,9 +28,17 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       backgroundColor: theme.palette.type === 'light' ? 'white' : '#252424',
       boxShadow: '0 2px 4px rgba(0,0,0,.15)',
+      [theme.breakpoints.down('sm')]: {
+        bottom: 0,
+        top: 'unset',
+        boxShadow: '0 -2px 4px rgba(0,0,0,.15)',
+      },
     },
     buttonLabel: {
       color: theme.typography.body2.color,
+      [theme.breakpoints.down('sm')]: {
+        display: 'none',
+      },
     },
   })
 );
@@ -72,7 +80,7 @@ export default function Nav({ daysSince2020First }: INavProps) {
                     </SvgIcon>
                   }
                 >
-                  Recentes
+                  <span className={classes.buttonLabel}>Recentes</span>
                 </Button>
               </NavLink>
             </Grid>
@@ -86,7 +94,7 @@ export default function Nav({ daysSince2020First }: INavProps) {
                     </SvgIcon>
                   }
                 >
-                  Explorar
+                  <span className={classes.buttonLabel}>Explorar</span>
                 </Button>
               </NavLink>
             </Grid>
@@ -103,7 +111,7 @@ export default function Nav({ daysSince2020First }: INavProps) {
                     </SvgIcon>
                   }
                 >
-                  Definições
+                  <span className={classes.buttonLabel}>Definições</span>
                 </Button>
               </Link>
             </Grid>

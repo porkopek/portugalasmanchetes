@@ -192,7 +192,7 @@ export default function ArticlesContainer({ direction }: IArticlesContainerProps
                 return (
                   <>
                     {i !== 0 && arts[i - 1].daysSince2020First !== article.daysSince2020First && (
-                      <h2 style={{ width: '100%' }}>{article.friendlyDate}</h2>
+                      <h2 style={{ width: '100%', paddingLeft: 8 }}>{article.friendlyDate}</h2>
                     )}
                     <Grid
                       item
