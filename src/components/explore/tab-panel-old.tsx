@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import SubscriptionsList from './subscriptions-list';
-import { ITab } from './explore-tabs';
+import SubscriptionsListOld from './subscriptions-list-old';
+import { ITab } from './tabs/explore-tabs';
 import NewsLoader from 'components/loader/loader';
 
 export interface TabPanelProps {
@@ -23,7 +23,7 @@ export interface TabPanelProps {
   //the property of the object returned by the API where is the text
   subscriptionsProperty?: string;
 }
-export function TabPanel2(props: TabPanelProps) {
+export function TabPanelOld(props: TabPanelProps) {
   const {
     children,
     value,
@@ -81,7 +81,7 @@ export function TabPanel2(props: TabPanelProps) {
       {isLoading && <NewsLoader />}
       {isLoading === false && value === index && children}
       {isLoading === false && value === index && (
-        <SubscriptionsList
+        <SubscriptionsListOld
           subscriptionType={subscriptionsType}
           onFilterSubscriptions={handleChange}
           subscriptions={staticSubscriptions || subscriptions}

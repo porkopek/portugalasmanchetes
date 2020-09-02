@@ -148,7 +148,7 @@ export default function FrontContainer({ direction }: IFrontContainerProps) {
                                 key={tag}
                                 style={{
                                   marginLeft: 12,
-
+                                  display: 'inline-flex',
                                   maxWidth: 250,
                                   fontSize: '.84rem',
                                   padding: '2px 4px',

@@ -55,7 +55,7 @@ export default function Search() {
   const [searchTerm, setSearchTerm] = useState('');
   const classes = useStyles();
   const { push } = useHistory();
-  const { language } = useParams();
+  const { language } = useParams<any>();
   return (
     <div className={classes.search}>
       <div className={classes.searchIcon}>

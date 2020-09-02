@@ -10,7 +10,7 @@ import NewsLoader from 'components/loader/loader';
 import { useParams } from 'react-router-dom';
 import InfiniteScroll from 'components/infinite-scroll/infinite-scroll';
 import { IPagination } from 'models/IPagination';
-import CategoriesList from 'components/explore/categories-list';
+import CategoriesList from 'components/explore/categories/categories-list';
 import { translateIntoPortuguese } from 'lib/localizer';
 import { useCategories } from 'context/settings-context';
 import { getApiUrl } from './apiFunctions';
@@ -147,7 +147,7 @@ export default function ArticlesContainer({ direction }: IArticlesContainerProps
               style={{ marginTop: 18, maxWidth: direction === 'column' ? '100' : '83%' }}
               severity="info"
             >
-              Não há mais artigos deste tipo
+              Não há mais artigos deste tipo em <b>{translateIntoPortuguese(language)}</b>
             </Alert>
           }
           next={loadMore}

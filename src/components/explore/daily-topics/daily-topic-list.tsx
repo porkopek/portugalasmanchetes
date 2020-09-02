@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { List, ListItem, ListItemAvatar, Avatar, ListItemText, Chip } from '@material-ui/core';
+import { List, ListItem, ListItemAvatar, Avatar, Chip } from '@material-ui/core';
 import { TwoLetterLanguage } from 'models/types';
 import { ITrend } from 'models/ITrend';
 import { Link } from 'react-router-dom';
-import { reduceTags, getStoredCategoriesString, getDaysSince2020First } from 'lib/utils';
+import { reduceTags } from 'lib/utils';
 import NewsLoader from 'components/loader/loader';
 import { useCategories } from 'context/settings-context';
 

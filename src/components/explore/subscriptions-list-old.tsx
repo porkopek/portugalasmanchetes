@@ -12,7 +12,7 @@ import { Link, useParams } from 'react-router-dom';
 import StarIcon from '@material-ui/icons/Notifications';
 import { Category } from 'models/category';
 import Filter from './filter';
-import { ITab } from './explore-tabs';
+import { ITab } from './tabs/explore-tabs';
 
 export interface ISubscriptionsProps {
   subscriptions: string[];
@@ -51,14 +51,14 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
-export default function SubscriptionsList({
+export default function SubscriptionsListOld({
   subscriptions,
   subscriptionType,
   position,
   onFilterSubscriptions,
 }: ISubscriptionsProps) {
   const classes = useStyles();
-  const { language } = useParams();
+  const { language } = useParams<any>();
 
   // url to route the subscription depending on type
   const getUrl = (subscription: string, subscriptionNumber: number) => {

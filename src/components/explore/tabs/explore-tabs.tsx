@@ -1,12 +1,14 @@
 import React, { useEffect } from 'react';
 import { TabLabelMenu, useStyles, TabsGroup } from './explore-tab-styles';
-import { TabPanel2 } from './tab-panel2';
+import { TabPanelOld } from '../tab-panel-old';
 import { useParams, useHistory } from 'react-router';
-import CategoriesList from './categories-list';
+import CategoriesList from '../categories/categories-list';
 import TabPanel from './tab-panel';
-import DailyTopicList from './daily-topic-list';
+import DailyTopicList from '../daily-topics/daily-topic-list';
 import { TwoLetterLanguage } from 'models/types';
 import { useCategories } from 'context/settings-context';
+import SubscriptionsInput from '../subscriptions/subscriptions-input';
+import Subscriptions from '../subscriptions/subscriptions';
 
 export type ITab = 'categories' | 'sources' | 'trends' | 'subscriptions';
 
@@ -68,12 +70,7 @@ export default function ExploreTabs({ daysSince2020First }: { daysSince2020First
   return (
     <div className={classes.root}>
       <div>
-        <TabsGroup
-          scrollButtons="on"
-          value={value}
-          onChange={handleChange}
-          aria-label="ant example"
-        >
+        <TabsGroup scrollButtons="on" value={value} onChange={handleChange} aria-label="menú">
           <TabLabelMenu label="Manchetes" />
           <TabLabelMenu label="Jornais" />
           <TabLabelMenu label="Categorias" />
@@ -83,23 +80,22 @@ export default function ExploreTabs({ daysSince2020First }: { daysSince2020First
         <TabPanel value={value} index={2}>
           <CategoriesList />
         </TabPanel>
-        <TabPanel2
+
+        <TabPanel value={value} index={0}>
+          <DailyTopicList language={language} daysSince2020First={daysSince2020First} />
+        </TabPanel>
+
+        <TabPanel value={value} index={3}>
+          <Subscriptions />
+        </TabPanel>
+
+        <TabPanelOld
           subscriptionsType="sources"
           language={language}
           value={value}
           index={1}
           url={`https://pokopek.com/api/articles/sources/${language}`}
         />
-        <TabPanel value={value} index={0}>
-          <DailyTopicList language={language} daysSince2020First={daysSince2020First} />
-        </TabPanel>
-
-        <TabPanel value={value} index={3}>
-          Subscrições (brevemente)
-          <br />
-          <br />
-          <br />
-        </TabPanel>
       </div>
     </div>
   );

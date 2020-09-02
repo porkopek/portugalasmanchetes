@@ -11,13 +11,18 @@ export function reduceTags(tags: string): string[] {
 
   return result;
 }
-export const getStoredCategoriesArray = () => {
-  const storedCategoriesString = localStorage.getItem('categories');
-  const result = storedCategoriesString === null ? null : JSON.parse(storedCategoriesString);
-  return result;
-};
 
-export const getStoredCategoriesString = () => getStoredCategoriesArray()?.join(',');
+export function getLocalStorageObject<T>(item: string) {
+  const storedCategoriesString = localStorage.getItem(item);
+  const result: T | null =
+    storedCategoriesString === null ? null : JSON.parse(storedCategoriesString);
+  return result;
+}
+
+export function setLocalStorageObject(item: string, object: any) {
+  const stringObject = JSON.stringify(object);
+  localStorage.setItem(item, stringObject);
+}
 
 export const getDaysSince2020First = (today?: Date) => {
   const firstDay = new Date(2020, 0, 1);

@@ -1,7 +1,7 @@
 import { TwoLetterLanguage } from './types';
 
 export interface IApiParameters {
-  pageNumber: number;
+  pageNumber?: number;
 
   pageSize?: number;
   language?: TwoLetterLanguage;

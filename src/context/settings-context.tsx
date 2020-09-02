@@ -1,8 +1,9 @@
-import { getStoredCategoriesArray } from 'lib/utils';
+import { getLocalStorageObject } from 'lib/utils';
 import React, { createContext, useContext, useState, useMemo } from 'react';
 import { Category } from 'models/category';
 
-const initialCategories = getStoredCategoriesArray() || Object.keys(Category).map((c) => Number(c));
+const initialCategories =
+  getLocalStorageObject<any>('categories') || Object.keys(Category).map((c) => Number(c));
 
 const CategoriesContext = createContext(initialCategories);
 
