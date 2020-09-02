@@ -10,8 +10,8 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
       padding: '78px 8px 28px',
-      [theme.breakpoints.down('xl')]: {
-        padding: '0 8px ',
+      [theme.breakpoints.down('sm')]: {
+        padding: '8px ',
       },
     },
   })
