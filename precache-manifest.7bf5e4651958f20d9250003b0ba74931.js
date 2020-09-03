@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "759b918cf58cc363b136b9f664cc7ba0",
+    "revision": "1c71ca6d17a21041450fbdbd961ba479",
     "url": "/portugalasmanchetes/index.html"
   },
   {
