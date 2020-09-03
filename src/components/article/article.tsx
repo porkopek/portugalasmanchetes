@@ -1,14 +1,22 @@
 import React, { useState } from 'react';
 import FavoriteIcon from '@material-ui/icons/FavoriteBorder';
 import ShowIcon from '@material-ui/icons/ChromeReaderModeOutlined';
+import WhatsAppIcon from '@material-ui/icons/WhatsApp';
 
-import { makeStyles, Theme, createStyles, IconButton, colors, useTheme } from '@material-ui/core';
+import {
+  makeStyles,
+  Theme,
+  createStyles,
+  IconButton,
+  colors,
+  useTheme,
+  Hidden,
+} from '@material-ui/core';
 import { red, green } from '@material-ui/core/colors';
 import { IArticle } from 'models/IArticle';
-import { Link, useHistory, useLocation, useRouteMatch } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import FullTextArticle from './fulltext-article';
 import { Category, CategoryColor } from 'models/category';
-import { CSSProperties } from '@material-ui/core/styles/withStyles';
 export interface IArticleProps extends IArticle {
   direction?: 'row' | 'column';
   bordered?: boolean;
@@ -202,6 +210,13 @@ export default function Article({
               <span style={{ color: 'rgba(0,0,0,.6)' }}>{friendlyDate}</span>
             </span>
             <span className={classes.actions}>
+              <Hidden smUp>
+                <a href={`whatsapp://send?text=${url} (via Às Manchetes)`}>
+                  <IconButton color={'primary'} className={classes.readMore}>
+                    <WhatsAppIcon />
+                  </IconButton>
+                </a>
+              </Hidden>
               {fullText && (
                 <IconButton
                   color="primary"
