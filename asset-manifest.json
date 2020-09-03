@@ -1,19 +1,19 @@
 {
   "files": {
     "main.css": "/portugalasmanchetes/static/css/main.bb376527.chunk.css",
-    "main.js": "/portugalasmanchetes/static/js/main.d4bb045b.chunk.js",
-    "main.js.map": "/portugalasmanchetes/static/js/main.d4bb045b.chunk.js.map",
+    "main.js": "/portugalasmanchetes/static/js/main.f1222814.chunk.js",
+    "main.js.map": "/portugalasmanchetes/static/js/main.f1222814.chunk.js.map",
     "runtime-main.js": "/portugalasmanchetes/static/js/runtime-main.851f3c0f.js",
     "runtime-main.js.map": "/portugalasmanchetes/static/js/runtime-main.851f3c0f.js.map",
     "static/css/2.f87e9f44.chunk.css": "/portugalasmanchetes/static/css/2.f87e9f44.chunk.css",
-    "static/js/2.1d836705.chunk.js": "/portugalasmanchetes/static/js/2.1d836705.chunk.js",
-    "static/js/2.1d836705.chunk.js.map": "/portugalasmanchetes/static/js/2.1d836705.chunk.js.map",
+    "static/js/2.82c48ed0.chunk.js": "/portugalasmanchetes/static/js/2.82c48ed0.chunk.js",
+    "static/js/2.82c48ed0.chunk.js.map": "/portugalasmanchetes/static/js/2.82c48ed0.chunk.js.map",
     "index.html": "/portugalasmanchetes/index.html",
-    "precache-manifest.dd283a45b9e96621d3b09b41138f86be.js": "/portugalasmanchetes/precache-manifest.dd283a45b9e96621d3b09b41138f86be.js",
+    "precache-manifest.1664f0f0c29c0b5d3c6cf0f9018e129c.js": "/portugalasmanchetes/precache-manifest.1664f0f0c29c0b5d3c6cf0f9018e129c.js",
     "service-worker.js": "/portugalasmanchetes/service-worker.js",
     "static/css/2.f87e9f44.chunk.css.map": "/portugalasmanchetes/static/css/2.f87e9f44.chunk.css.map",
     "static/css/main.bb376527.chunk.css.map": "/portugalasmanchetes/static/css/main.bb376527.chunk.css.map",
-    "static/js/2.1d836705.chunk.js.LICENSE.txt": "/portugalasmanchetes/static/js/2.1d836705.chunk.js.LICENSE.txt",
+    "static/js/2.82c48ed0.chunk.js.LICENSE.txt": "/portugalasmanchetes/static/js/2.82c48ed0.chunk.js.LICENSE.txt",
     "static/media/es.svg": "/portugalasmanchetes/static/media/es.36938bbe.svg",
     "static/media/global.svg": "/portugalasmanchetes/static/media/global.11093ee1.svg",
     "static/media/pt.svg": "/portugalasmanchetes/static/media/pt.70a47eed.svg",
@@ -22,8 +22,8 @@
   "entrypoints": [
     "static/js/runtime-main.851f3c0f.js",
     "static/css/2.f87e9f44.chunk.css",
-    "static/js/2.1d836705.chunk.js",
+    "static/js/2.82c48ed0.chunk.js",
     "static/css/main.bb376527.chunk.css",
-    "static/js/main.d4bb045b.chunk.js"
+    "static/js/main.f1222814.chunk.js"
   ]
 }
