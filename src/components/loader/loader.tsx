@@ -1,24 +1,110 @@
 import React from 'react';
-import { CircularProgress, Box, Typography } from '@material-ui/core';
-
-interface ILoaderProps {}
-export default function Loader({}: ILoaderProps) {
+import { grey } from '@material-ui/core/colors';
+interface ILoaderProps {
+  text?: string;
+  fontSize?: number;
+  color?: string;
+}
+export default function NewsLoader({
+  text = 'a carregar',
+  fontSize = 14,
+  color = 'rgb(37 152 243)',
+}: ILoaderProps) {
   return (
-    <Box
-      display="flex"
-      alignItems="center"
-      justifyContent="center"
-      left={0}
-      right={0}
-      top={0}
-      bottom={0}
-      height="100vh"
-      width="100vw"
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        padding: 20,
+        color: color,
+      }}
     >
-      <CircularProgress />
-      <Typography variant="caption" component="span">
-        A carregar o conteúdo...
-      </Typography>
-    </Box>
+      <span
+        style={{
+          marginRight: '1em',
+          fontSize: fontSize,
+          lineHeight: 1,
+          fontFamily: 'Montserrat',
+        }}
+      >
+        {text}
+      </span>
+
+      <svg
+        width={fontSize * 2}
+        height={fontSize}
+        viewBox="0 0 120 30"
+        xmlns="http://www.w3.org/2000/svg"
+        fill={color}
+      >
+        <circle cx="15" cy="15" r="15">
+          <animate
+            attributeName="r"
+            from="15"
+            to="15"
+            begin="0s"
+            dur="0.8s"
+            values="15;9;15"
+            calcMode="linear"
+            repeatCount="indefinite"
+          />
+          <animate
+            attributeName="fill-opacity"
+            from="1"
+            to="1"
+            begin="0s"
+            dur="0.8s"
+            values="1;.5;1"
+            calcMode="linear"
+            repeatCount="indefinite"
+          />
+        </circle>
+        <circle cx="60" cy="15" r="9" fillOpacity="0.3">
+          <animate
+            attributeName="r"
+            from="9"
+            to="9"
+            begin="0s"
+            dur="0.8s"
+            values="9;15;9"
+            calcMode="linear"
+            repeatCount="indefinite"
+          />
+          <animate
+            attributeName="fill-opacity"
+            from="0.5"
+            to="0.5"
+            begin="0s"
+            dur="0.8s"
+            values=".5;1;.5"
+            calcMode="linear"
+            repeatCount="indefinite"
+          />
+        </circle>
+        <circle cx="105" cy="15" r="15">
+          <animate
+            attributeName="r"
+            from="15"
+            to="15"
+            begin="0s"
+            dur="0.8s"
+            values="15;9;15"
+            calcMode="linear"
+            repeatCount="indefinite"
+          />
+          <animate
+            attributeName="fill-opacity"
+            from="1"
+            to="1"
+            begin="0s"
+            dur="0.8s"
+            values="1;.5;1"
+            calcMode="linear"
+            repeatCount="indefinite"
+          />
+        </circle>
+      </svg>
+    </div>
   );
 }

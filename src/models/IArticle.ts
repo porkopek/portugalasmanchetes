@@ -1,4 +1,7 @@
+import { Category } from './category';
+
 export interface IArticle {
+  id: number;
   title: string;
   description: string;
   imageUrl: string;
@@ -6,4 +9,12 @@ export interface IArticle {
   friendlyDate: string;
   url: string;
   domain: string;
+  fullText: string;
+  favicon: string;
+  ranking: number;
+  category: number;
+  tags: string[];
+  daysSince2020First: number;
+  clicks: number;
+  language: string;
 }
